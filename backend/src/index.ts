@@ -6,6 +6,8 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import { logger } from './utils/logger';
 import { errorHandler } from './middleware/errorHandler';
+import authRoutes from './routes/auth';
+import analyzeRoutes from './routes/analyze';
 
 // 環境変数読み込み
 dotenv.config();
@@ -40,9 +42,9 @@ app.get('/', (req, res) => {
   });
 });
 
-// TODO: ルート追加
-// app.use('/api/auth', authRoutes);
-// app.use('/api/analyze', analyzeRoutes);
+// ルート
+app.use('/api/auth', authRoutes);
+app.use('/api/analyze', analyzeRoutes);
 
 // エラーハンドリング
 app.use(errorHandler);
