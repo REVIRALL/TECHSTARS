@@ -1,0 +1,87 @@
+{
+  "name": "vibecoding-extension",
+  "displayName": "VIBECODING",
+  "description": "AIコード解説・学習支援VSCode拡張機能",
+  "version": "0.1.0",
+  "publisher": "vibecoding",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Education",
+    "Programming Languages",
+    "Machine Learning"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vibecoding.login",
+        "title": "VIBECODING: ログイン"
+      },
+      {
+        "command": "vibecoding.logout",
+        "title": "VIBECODING: ログアウト"
+      },
+      {
+        "command": "vibecoding.showExplanation",
+        "title": "VIBECODING: 解説を表示"
+      },
+      {
+        "command": "vibecoding.showDashboard",
+        "title": "VIBECODING: ダッシュボードを開く"
+      },
+      {
+        "command": "vibecoding.analyzeCurrentFile",
+        "title": "VIBECODING: 現在のファイルを解析"
+      }
+    ],
+    "configuration": {
+      "title": "VIBECODING",
+      "properties": {
+        "vibecoding.autoAnalyze": {
+          "type": "boolean",
+          "default": true,
+          "description": "Claude Codeで生成されたファイルを自動解析"
+        },
+        "vibecoding.explanationLevel": {
+          "type": "string",
+          "default": "beginner",
+          "enum": ["beginner", "intermediate", "advanced"],
+          "description": "解説レベル"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "test": "jest",
+    "lint": "eslint src --ext ts",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist out"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "ts-loader": "^9.5.1",
+    "@vscode/test-electron": "^2.3.8",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.11"
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "jwt-decode": "^4.0.0"
+  }
+}
