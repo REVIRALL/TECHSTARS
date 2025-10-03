@@ -50,9 +50,9 @@ app.use('/api/analyze', analyzeRoutes);
 app.use(errorHandler);
 
 // サーバー起動
-app.listen(PORT, () => {
-  logger.info(`🚀 Server running on http://localhost:${PORT}`);
-  logger.info(`📝 Environment: ${process.env.NODE_ENV || 'development'}`);
+app.listen(PORT, '0.0.0.0', () => {
+  logger.info(`Server running on http://localhost:${PORT}`);
+  logger.info(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
 export default app;

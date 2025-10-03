@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
 if (!supabaseUrl) {
@@ -12,7 +12,7 @@ if (!supabaseUrl) {
 }
 
 if (!supabaseServiceKey) {
-  throw new Error('SUPABASE_SERVICE_KEY is required');
+  throw new Error('SUPABASE_SERVICE_ROLE_KEY is required');
 }
 
 // Service role client (full access, bypass RLS)

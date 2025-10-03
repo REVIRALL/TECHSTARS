@@ -186,9 +186,12 @@ export class ApiClient {
     detectionMethod?: string;
   }): Promise<ApiResponse<any>> {
     try {
+      console.log('Analyzing code with params:', { ...params, code: `${params.code.substring(0, 50)}...` });
       const response = await this.client.post('/api/analyze', params);
+      console.log('Analysis response:', response.data);
       return response.data;
     } catch (error) {
+      console.error('Analysis error:', error);
       return this.handleError(error);
     }
   }
@@ -201,6 +204,8 @@ export class ApiClient {
     limit?: number;
     language?: string;
     isClaudeGenerated?: boolean;
+    startDate?: string;
+    endDate?: string;
   }): Promise<ApiResponse<any>> {
     try {
       const response = await this.client.get('/api/analyze/history', { params });
@@ -238,15 +243,28 @@ export class ApiClient {
    * エラーハンドリング
    */
   private handleError(error: any): ApiResponse<any> {
-    if (axios.isAxiosError(error) && error.response) {
-      return {
-        success: false,
-        error: error.response.data?.message || error.response.data?.error || 'Request failed',
-      };
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        // サーバーからのエラーレスポンス
+        const errorMsg = error.response.data?.message || error.response.data?.error || `サーバーエラー (${error.response.status})`;
+        console.error('API Error Response:', error.response.status, error.response.data);
+        return {
+          success: false,
+          error: errorMsg,
+        };
+      } else if (error.request) {
+        // リクエストは送信されたがレスポンスなし
+        console.error('No response received:', error.request);
+        return {
+          success: false,
+          error: 'サーバーに接続できません。バックエンドが起動しているか確認してください。',
+        };
+      }
     }
+    console.error('Unknown error:', error);
     return {
       success: false,
-      error: error.message || 'Unknown error',
+      error: error.message || '不明なエラーが発生しました',
     };
   }
 

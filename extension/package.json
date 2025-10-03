@@ -4,6 +4,7 @@
   "description": "AIコード解説・学習支援VSCode拡張機能",
   "version": "0.1.0",
   "publisher": "vibecoding",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -37,15 +38,54 @@
       {
         "command": "vibecoding.analyzeCurrentFile",
         "title": "VIBECODING: 現在のファイルを解析"
+      },
+      {
+        "command": "vibecoding.analyzeSelection",
+        "title": "VIBECODINGで解説"
       }
     ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "vibecoding",
+          "title": "VIBECODING",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "vibecoding": [
+        {
+          "type": "webview",
+          "id": "vibecoding.learningPanel",
+          "name": "学習パネル"
+        }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "vibecoding.analyzeSelection",
+          "when": "editorHasSelection",
+          "group": "vibecoding"
+        }
+      ]
+    },
     "configuration": {
       "title": "VIBECODING",
       "properties": {
+        "vibecoding.watchFolders": {
+          "type": "array",
+          "default": [],
+          "description": "監視するフォルダのパス（ClaudeCodeで編集するプロジェクトフォルダ）",
+          "items": {
+            "type": "string"
+          }
+        },
         "vibecoding.autoAnalyze": {
           "type": "boolean",
           "default": true,
-          "description": "Claude Codeで生成されたファイルを自動解析"
+          "description": "ファイル変更を自動検知"
         },
         "vibecoding.explanationLevel": {
           "type": "string",

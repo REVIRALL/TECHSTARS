@@ -1,22 +1,37 @@
 import * as vscode from 'vscode';
 import { ApiClient } from '../api/client';
-import { ClaudeDetector, ClaudeDetectionResult } from './claudeDetector';
+
+export interface RecentChange {
+  filePath: string;
+  fileName: string;
+  languageId: string;
+  timestamp: number;
+}
 
 export class FileWatcher {
   private context: vscode.ExtensionContext;
   private apiClient: ApiClient;
-  private claudeDetector: ClaudeDetector;
-  private autoAnalyzeEnabled: boolean = true;
-  private processingQueue: Set<string> = new Set();
+  private recentChanges: RecentChange[] = [];
 
   constructor(context: vscode.ExtensionContext, apiClient: ApiClient) {
     this.context = context;
     this.apiClient = apiClient;
-    this.claudeDetector = new ClaudeDetector();
+  }
 
-    // 設定読み込み
-    const config = vscode.workspace.getConfiguration('vibecoding');
-    this.autoAnalyzeEnabled = config.get('autoAnalyze', true);
+  /**
+   * 最近の変更履歴を取得
+   */
+  public getRecentChanges(): RecentChange[] {
+    console.log('getRecentChanges called, returning', this.recentChanges.length, 'changes');
+    console.log('Recent changes details:', JSON.stringify(this.recentChanges, null, 2));
+    return this.recentChanges;
+  }
+
+  /**
+   * 変更履歴をクリア
+   */
+  public clearRecentChanges(): void {
+    this.recentChanges = [];
   }
 
   /**
@@ -26,89 +41,61 @@ export class FileWatcher {
     // ファイル保存時のイベントリスナー
     vscode.workspace.onDidSaveTextDocument(
       async document => {
-        if (this.autoAnalyzeEnabled) {
-          await this.onFileSaved(document);
-        }
+        await this.onFileSaved(document);
       },
       null,
       this.context.subscriptions
     );
+  }
 
-    // 設定変更の監視
-    vscode.workspace.onDidChangeConfiguration(
-      e => {
-        if (e.affectsConfiguration('vibecoding.autoAnalyze')) {
-          const config = vscode.workspace.getConfiguration('vibecoding');
-          this.autoAnalyzeEnabled = config.get('autoAnalyze', true);
-        }
-      },
-      null,
-      this.context.subscriptions
-    );
+  /**
+   * 最近の変更を記録
+   */
+  private addRecentChange(change: RecentChange): void {
+    console.log('addRecentChange called:', change);
+
+    // 同じファイルの重複を削除
+    this.recentChanges = this.recentChanges.filter(c => c.filePath !== change.filePath);
+
+    // 新しい変更を先頭に追加
+    this.recentChanges.unshift(change);
+
+    // 最大10件まで保持
+    if (this.recentChanges.length > 10) {
+      this.recentChanges = this.recentChanges.slice(0, 10);
+    }
+
+    console.log('Recent changes count:', this.recentChanges.length);
+    console.log('Recent changes:', this.recentChanges);
   }
 
   /**
    * ファイル保存時の処理
    */
   private async onFileSaved(document: vscode.TextDocument): Promise<void> {
+    console.log('File saved:', document.fileName, 'Language:', document.languageId);
+
     // サポート対象の言語かチェック
     if (!this.isSupportedLanguage(document.languageId)) {
+      console.log('Language not supported:', document.languageId);
       return;
     }
 
-    // 認証チェック
-    const isAuthenticated = await this.apiClient.isAuthenticated();
-    if (!isAuthenticated) {
-      return; // 未ログインの場合は何もしない
-    }
+    console.log('Adding to recent changes:', document.fileName);
 
-    // 重複処理防止
-    const fileKey = document.uri.fsPath;
-    if (this.processingQueue.has(fileKey)) {
-      return;
-    }
-
-    try {
-      this.processingQueue.add(fileKey);
-
-      // Claude Code 検知
-      const detection = await this.claudeDetector.detect(document);
-
-      if (detection.isClaudeGenerated) {
-        // Claude Code で生成されたファイル
-        await this.handleClaudeGeneratedFile(document, detection);
-      }
-    } finally {
-      this.processingQueue.delete(fileKey);
-    }
-  }
-
-  /**
-   * Claude Code生成ファイルの処理
-   */
-  private async handleClaudeGeneratedFile(
-    document: vscode.TextDocument,
-    detection: ClaudeDetectionResult
-  ): Promise<void> {
-    // 通知表示
-    const action = await vscode.window.showInformationMessage(
-      `Claude Code で生成されたファイルを検知しました: ${document.fileName}`,
-      '解析する',
-      '今回はスキップ'
-    );
-
-    if (action === '解析する') {
-      await this.analyzeFile(document, detection);
-    }
+    // 変更履歴に追加
+    this.addRecentChange({
+      filePath: document.uri.fsPath,
+      fileName: document.fileName.split('/').pop() || 'unknown',
+      languageId: document.languageId,
+      timestamp: Date.now(),
+    });
   }
 
   /**
    * ファイル解析実行
    */
-  async analyzeFile(
-    document: vscode.TextDocument,
-    detection?: ClaudeDetectionResult
-  ): Promise<void> {
+  async analyzeFile(document: vscode.TextDocument): Promise<void> {
     const code = document.getText();
     const language = this.mapLanguageId(document.languageId);
 
@@ -134,8 +121,6 @@ export class FileWatcher {
             level,
             fileName: document.fileName,
             filePath: document.uri.fsPath,
-            isClaudeGenerated: detection?.isClaudeGenerated || false,
-            detectionMethod: detection?.detectionMethod || 'manual',
           });
 
           if (result.success && result.data) {
@@ -216,7 +201,7 @@ export class FileWatcher {
   </style>
 </head>
 <body>
-  <h1>📚 コード解説</h1>
+  <h1>コード解説</h1>
 
   <div class="summary">
     <strong>要約:</strong> ${explanation.summary || 'N/A'}

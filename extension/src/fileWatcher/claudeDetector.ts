@@ -44,12 +44,10 @@ export class ClaudeDetector {
    */
   private detectByTimestamp(document: vscode.TextDocument): ClaudeDetectionResult {
     const filePath = document.uri.fsPath;
-    const now = Date.now();
 
     try {
       const stats = fs.statSync(filePath);
       const modifiedTime = stats.mtimeMs;
-      const timeDiff = now - modifiedTime;
 
       // 最近保存されたファイルのタイムスタンプ記録
       if (!this.recentTimestamps.has(filePath)) {

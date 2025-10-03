@@ -157,7 +157,7 @@ export const analyzeController = {
         throw new AppError('Authentication required', 401);
       }
 
-      const { page = 1, limit = 20, language, isClaudeGenerated } = req.query;
+      const { page = 1, limit = 20, language, isClaudeGenerated, startDate, endDate } = req.query;
 
       const pageNum = parseInt(page as string, 10);
       const limitNum = parseInt(limit as string, 10);
@@ -176,6 +176,17 @@ export const analyzeController = {
 
       if (isClaudeGenerated !== undefined) {
         query = query.eq('is_claude_generated', isClaudeGenerated === 'true');
+      }
+
+      if (startDate) {
+        query = query.gte('created_at', startDate);
+      }
+
+      if (endDate) {
+        // endDateの終わりまで含める（23:59:59まで）
+        const endDateTime = new Date(endDate as string);
+        endDateTime.setHours(23, 59, 59, 999);
+        query = query.lte('created_at', endDateTime.toISOString());
       }
 
       const { data, error, count } = await query;
