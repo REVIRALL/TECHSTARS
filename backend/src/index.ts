@@ -12,8 +12,8 @@ import analyzeRoutes from './routes/analyze';
 // 環境変数読み込み
 dotenv.config();
 
-const app = express();
-const PORT = process.env.PORT || 3001;
+const app: express.Application = express();
+const PORT = parseInt(process.env.PORT || '3001', 10);
 
 // ミドルウェア
 app.use(helmet());

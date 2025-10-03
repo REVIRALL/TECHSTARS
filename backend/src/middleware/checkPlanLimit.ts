@@ -157,8 +157,8 @@ export async function incrementUsageCount(
       // 更新
       await supabaseAdmin
         .from('usage_stats')
-        .update({ [column]: (existing[column] || 0) + 1 })
-        .eq('id', existing.id);
+        .update({ [column]: ((existing as any)[column] || 0) + 1 })
+        .eq('id', (existing as any).id);
     } else {
       // 挿入
       await supabaseAdmin.from('usage_stats').insert({

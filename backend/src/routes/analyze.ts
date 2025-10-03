@@ -1,9 +1,9 @@
-import { Router } from 'express';
+import express, { Router } from 'express';
 import { analyzeController } from '../controllers/analyzeController';
 import { authenticate } from '../middleware/authenticate';
 import { checkPlanLimit } from '../middleware/checkPlanLimit';
 
-const router = Router();
+const router: express.Router = Router();
 
 /**
  * @route   POST /api/analyze
