@@ -4,6 +4,16 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
 
+// エラーメッセージのマッピング（セキュリティ: 技術的詳細を隠蔽）
+const ERROR_MESSAGES: Record<string, string> = {
+  'Invalid credentials': 'メールアドレスまたはパスワードが正しくありません',
+  'Invalid or expired token': 'トークンが無効または期限切れです',
+  'Email and password are required': 'メールアドレスとパスワードを入力してください',
+  'Password must be at least 8 characters': 'パスワードは8文字以上で入力してください',
+  'User already exists': 'このメールアドレスは既に登録されています',
+  'Too many requests': 'リクエストが多すぎます。しばらく待ってから再度お試しください',
+};
+
 export default function LoginPage() {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
@@ -22,7 +32,9 @@ export default function LoginPage() {
       if (isLogin) {
         const res = await api.post('/api/auth/login', { email, password });
         if (res.data.success) {
+          // アクセストークンとリフレッシュトークンを両方保存
           localStorage.setItem('accessToken', res.data.data.session.accessToken);
+          localStorage.setItem('refreshToken', res.data.data.session.refreshToken);
           router.push('/dashboard');
         }
       } else {
@@ -30,13 +42,17 @@ export default function LoginPage() {
         if (res.data.success) {
           const loginRes = await api.post('/api/auth/login', { email, password });
           if (loginRes.data.success) {
+            // アクセストークンとリフレッシュトークンを両方保存
             localStorage.setItem('accessToken', loginRes.data.data.session.accessToken);
+            localStorage.setItem('refreshToken', loginRes.data.data.session.refreshToken);
             router.push('/dashboard');
           }
         }
       }
     } catch (err: any) {
-      setError(err.response?.data?.error || 'エラーが発生しました');
+      const apiError = err.response?.data?.error || '';
+      // エラーメッセージをマッピング（技術的詳細を隠蔽）
+      setError(ERROR_MESSAGES[apiError] || 'エラーが発生しました。もう一度お試しください。');
     } finally {
       setLoading(false);
     }
