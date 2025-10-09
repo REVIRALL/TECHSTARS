@@ -13,6 +13,43 @@ import adminRoutes from './routes/admin';
 // 環境変数読み込み
 dotenv.config();
 
+/**
+ * 環境変数検証（起動時チェック）
+ * セキュリティ: 必須環境変数の欠如による予期しない動作を防止
+ */
+function validateEnvironment() {
+  const required = [
+    'SUPABASE_URL',
+    'SUPABASE_ANON_KEY',
+    'SUPABASE_SERVICE_KEY',
+  ];
+
+  // AI API キーは少なくとも1つ必要
+  const hasAiKey = process.env.ANTHROPIC_API_KEY || process.env.OPENAI_API_KEY;
+  if (!hasAiKey) {
+    logger.error('FATAL: At least one AI API key is required (ANTHROPIC_API_KEY or OPENAI_API_KEY)');
+    process.exit(1);
+  }
+
+  // 本番環境固有の必須変数
+  if (process.env.NODE_ENV === 'production') {
+    required.push('ALLOWED_ORIGINS', 'REDIS_URL');
+  }
+
+  const missing = required.filter(key => !process.env[key]);
+
+  if (missing.length > 0) {
+    logger.error(`FATAL: Missing required environment variables: ${missing.join(', ')}`);
+    logger.error('Please check your .env file and ensure all required variables are set.');
+    process.exit(1);
+  }
+
+  logger.info('Environment variables validated successfully');
+}
+
+// 環境変数検証を実行
+validateEnvironment();
+
 const app: express.Application = express();
 const PORT = parseInt(process.env.PORT || '3001', 10);
 

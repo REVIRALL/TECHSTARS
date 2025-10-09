@@ -6,6 +6,9 @@ import { incrementUsageCount } from '../middleware/checkPlanLimit';
 import { AppError } from '../middleware/errorHandler';
 import { logger } from '../utils/logger';
 
+// セキュリティ: ページネーション上限（DoS攻撃対策）
+const MAX_PAGE_LIMIT = 100;
+
 export const analyzeController = {
   /**
    * コード解析・解説生成
@@ -159,8 +162,9 @@ export const analyzeController = {
 
       const { page = 1, limit = 20, language, isClaudeGenerated, startDate, endDate } = req.query;
 
-      const pageNum = parseInt(page as string, 10);
-      const limitNum = parseInt(limit as string, 10);
+      const pageNum = Math.max(parseInt(page as string, 10), 1);
+      // ページネーション上限チェック（DoS攻撃対策）
+      const limitNum = Math.min(parseInt(limit as string, 10), MAX_PAGE_LIMIT);
       const offset = (pageNum - 1) * limitNum;
 
       let query = supabaseAdmin

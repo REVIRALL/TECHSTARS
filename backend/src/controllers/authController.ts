@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { supabaseAdmin } from '../config/supabase';
 import { AppError } from '../middleware/errorHandler';
-import { logger } from '../utils/logger';
+import { logger, sanitizeError } from '../utils/logger';
 
 export const authController = {
   /**
@@ -24,14 +24,15 @@ export const authController = {
       const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
         email,
         password,
-        email_confirm: true, // 開発環境では即座に確認済みに
+        // セキュリティ: 本番環境ではメール確認必須（スパムアカウント防止）
+        email_confirm: process.env.NODE_ENV === 'development',
         user_metadata: {
           name: name || email.split('@')[0],
         },
       });
 
       if (authError) {
-        logger.error('Signup error:', authError);
+        logger.error('Signup error:', sanitizeError(authError));
         throw new AppError(authError.message, 400);
       }
 
@@ -48,7 +49,7 @@ export const authController = {
         .single();
 
       if (profileError) {
-        logger.error('Profile fetch error:', profileError);
+        logger.error('Profile fetch error:', sanitizeError(profileError));
       }
 
       logger.info(`New user registered: ${email}`);
@@ -88,7 +89,13 @@ export const authController = {
       });
 
       if (error) {
-        logger.error('Login error:', error);
+        // セキュリティログ: 不正なログイン試行
+        logger.warn('Failed login attempt', {
+          email,
+          error: sanitizeError(error),
+          ip: req.ip,
+          userAgent: req.headers['user-agent'],
+        });
         throw new AppError('Invalid credentials', 401);
       }
 
@@ -103,13 +110,28 @@ export const authController = {
         .eq('id', data.user.id)
         .single();
 
-      // last_login_at 更新
-      await supabaseAdmin
-        .from('profiles')
-        .update({ last_login_at: new Date().toISOString() })
-        .eq('id', data.user.id);
+      // 承認ステータスチェック
+      if (profile?.approval_status === 'rejected') {
+        logger.warn('Rejected user login attempt', {
+          userId: data.user.id,
+          email: data.user.email,
+          ip: req.ip,
+        });
+        throw new AppError('Your account has been rejected. Please contact support.', 403);
+      }
 
-      logger.info(`User logged in: ${email}`);
+      if (profile?.approval_status === 'pending') {
+        // 承認待ちでもログインは許可するが、フラグを返す
+        logger.info(`User logged in (pending approval): ${email}`);
+      } else {
+        // last_login_at 更新（承認済みユーザーのみ）
+        await supabaseAdmin
+          .from('profiles')
+          .update({ last_login_at: new Date().toISOString() })
+          .eq('id', data.user.id);
+
+        logger.info(`User logged in: ${email}`);
+      }
 
       res.json({
         success: true,
@@ -119,6 +141,9 @@ export const authController = {
             email: data.user.email,
             name: profile?.name,
             plan: profile?.plan || 'free',
+            approvalStatus: profile?.approval_status || 'pending',
+            // isAdmin は除去（セキュリティ対策: 管理者アカウント特定の防止）
+            // 必要に応じて /api/auth/me で取得可能
           },
           session: {
             accessToken: data.session.access_token,
@@ -135,6 +160,13 @@ export const authController = {
 
   /**
    * トークンリフレッシュ
+   *
+   * セキュリティ: Refresh Token Rotation
+   * - Supabase は自動的に新しい refresh_token を発行
+   * - クライアントは必ず新しい refresh_token を保存・使用すること
+   * - 古い refresh_token の再利用はセキュリティリスク
+   *
+   * TODO Phase 2: 使用済みトークンのブラックリスト実装
    */
   async refresh(req: Request, res: Response, next: NextFunction) {
     try {
@@ -144,20 +176,24 @@ export const authController = {
         throw new AppError('Refresh token is required', 400);
       }
 
+      // Supabase の refreshSession は自動的にトークンローテーションを実行
       const { data, error } = await supabaseAdmin.auth.refreshSession({
         refresh_token: refreshToken,
       });
 
       if (error || !data.session) {
-        throw new AppError('Invalid refresh token', 401);
+        logger.warn('Refresh token validation failed', { error: error?.message });
+        throw new AppError('Invalid or expired refresh token', 401);
       }
+
+      logger.info(`Token refreshed for user: ${data.user?.id}`);
 
       res.json({
         success: true,
         data: {
           session: {
             accessToken: data.session.access_token,
-            refreshToken: data.session.refresh_token,
+            refreshToken: data.session.refresh_token, // ← 必ず新しいトークンを使用
             expiresIn: data.session.expires_in,
             expiresAt: data.session.expires_at,
           },
@@ -170,14 +206,36 @@ export const authController = {
 
   /**
    * ログアウト
+   *
+   * セキュリティノート:
+   * - JWT はステートレスなため、サーバー側での完全な無効化には
+   *   トークンブラックリスト（Redis等）の実装が必要
+   * - 現在はユーザー特定とログ記録のみ実施
+   * - クライアント側でトークンを削除することで実質的なログアウトを実現
+   *
+   * TODO: トークンブラックリストの実装（Phase 2）
    */
   async logout(req: Request, res: Response, next: NextFunction) {
     try {
-      // クライアント側でトークン削除するだけでOK
-      // 必要に応じて Supabase の signOut を呼ぶ
+      const authHeader = req.headers.authorization;
+
+      // トークンからユーザー特定（ログ記録用）
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const token = authHeader.substring(7);
+
+        const { data, error } = await supabaseAdmin.auth.getUser(token);
+
+        if (!error && data.user) {
+          logger.info(`User logged out: ${data.user.email} (ID: ${data.user.id})`);
+
+          // TODO Phase 2: トークンをブラックリストに追加
+          // await redisClient.setex(`blacklist:${token}`, expiresIn, '1');
+        }
+      }
+
       res.json({
         success: true,
-        message: 'Logged out successfully',
+        message: 'Logged out successfully. Please remove the token from client storage.',
       });
     } catch (error) {
       next(error);
@@ -246,7 +304,7 @@ export const authController = {
       });
 
       if (error) {
-        logger.error('Password reset error:', error);
+        logger.error('Password reset error:', sanitizeError(error));
         // セキュリティのため、エラーでも成功レスポンス
       }
 

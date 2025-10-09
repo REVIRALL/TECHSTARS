@@ -3,6 +3,9 @@ import { supabaseAdmin } from '../config/supabase';
 import { AppError } from '../middleware/errorHandler';
 import { logger } from '../utils/logger';
 
+// セキュリティ: ページネーション上限（DoS攻撃対策）
+const MAX_PAGE_LIMIT = 100;
+
 export const adminController = {
   /**
    * 全ユーザー一覧取得（管理者専用）
@@ -20,6 +23,10 @@ export const adminController = {
       // 承認ステータスでフィルタリング（オプション）
       const { status, limit = 50, offset = 0 } = req.query;
 
+      // ページネーション上限チェック（DoS攻撃対策）
+      const limitNum = Math.min(Number(limit), MAX_PAGE_LIMIT);
+      const offsetNum = Math.max(Number(offset), 0);
+
       let query = supabaseAdmin
         .from('profiles')
         .select(`
@@ -35,7 +42,7 @@ export const adminController = {
           last_login_at
         `, { count: 'exact' })
         .order('created_at', { ascending: false })
-        .range(Number(offset), Number(offset) + Number(limit) - 1);
+        .range(offsetNum, offsetNum + limitNum - 1);
 
       if (status && ['pending', 'approved', 'rejected'].includes(status as string)) {
         query = query.eq('approval_status', status as string);
@@ -66,8 +73,8 @@ export const adminController = {
         data: {
           users: profilesWithEmail,
           total: count,
-          limit: Number(limit),
-          offset: Number(offset),
+          limit: limitNum,
+          offset: offsetNum,
         },
       });
     } catch (error) {
