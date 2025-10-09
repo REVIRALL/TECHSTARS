@@ -8,6 +8,7 @@ import { logger } from './utils/logger';
 import { errorHandler } from './middleware/errorHandler';
 import authRoutes from './routes/auth';
 import analyzeRoutes from './routes/analyze';
+import adminRoutes from './routes/admin';
 
 // 環境変数読み込み
 dotenv.config();
@@ -15,15 +16,57 @@ dotenv.config();
 const app: express.Application = express();
 const PORT = parseInt(process.env.PORT || '3001', 10);
 
+// Trust proxy設定（ロードバランサー/CDN配下でのIP取得用）
+// 本番環境: Vercel/Render等のプロキシを信頼
+// 開発環境: ローカル環境のため不要だが統一性のため設定
+app.set('trust proxy', true);
+
 // ミドルウェア
 app.use(helmet());
+
+// CORS設定（セキュリティ強化版）
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
+  : ['http://localhost:3000', 'http://localhost:3001']; // 開発環境デフォルト
+
+// 本番環境では ALLOWED_ORIGINS 必須
+if (process.env.NODE_ENV === 'production' && !process.env.ALLOWED_ORIGINS) {
+  logger.error('FATAL: ALLOWED_ORIGINS must be set in production environment');
+  process.exit(1);
+}
+
 app.use(cors({
-  origin: process.env.ALLOWED_ORIGINS?.split(',') || '*',
+  origin: (origin, callback) => {
+    // 開発環境: origin未設定（Postman, curl等）を許可
+    // 本番環境: セキュリティのため origin必須（file://, sandboxed iframe攻撃対策）
+    if (!origin) {
+      if (process.env.NODE_ENV === 'production') {
+        logger.warn('CORS blocked request with no origin header in production');
+        return callback(new Error('Origin header required in production'));
+      }
+      // 開発環境のみ許可
+      return callback(null, true);
+    }
+
+    // 許可リストチェック
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      logger.warn(`CORS blocked request from unauthorized origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  maxAge: 86400, // 24時間（preflight cache）
 }));
 app.use(compression());
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
+
+// JSON ペイロードサイズ制限
+// コードサイズ制限 (最大150KB) + JSON構造オーバーヘッド考慮 → 200KB
+app.use(express.json({ limit: '200kb' }));
+app.use(express.urlencoded({ extended: true, limit: '200kb' }));
 app.use(morgan('combined', {
   stream: { write: message => logger.info(message.trim()) },
 }));
@@ -45,6 +88,7 @@ app.get('/', (req, res) => {
 // ルート
 app.use('/api/auth', authRoutes);
 app.use('/api/analyze', analyzeRoutes);
+app.use('/api/admin', adminRoutes);
 
 // エラーハンドリング
 app.use(errorHandler);

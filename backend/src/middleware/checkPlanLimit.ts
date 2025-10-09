@@ -133,8 +133,13 @@ async function checkApiLimit(userId: string, planLimit: any) {
 }
 
 /**
- * 使用量カウンター更新
+ * 使用量カウンター更新（完全アトミック版）
  * 解析成功後に呼び出す
+ *
+ * Race Condition対策:
+ * - PostgreSQL stored procedure (increment_usage_count) を使用
+ * - INSERT ... ON CONFLICT DO UPDATE で完全アトミック
+ * - 並列リクエストでもカウント消失なし
  */
 export async function incrementUsageCount(
   userId: string,
@@ -143,29 +148,18 @@ export async function incrementUsageCount(
   const today = new Date().toISOString().split('T')[0];
 
   try {
-    // UPSERT (存在すれば更新、なければ挿入)
     const column = `${type}_count`;
 
-    const { data: existing } = await supabaseAdmin
-      .from('usage_stats')
-      .select('id, ' + column)
-      .eq('user_id', userId)
-      .eq('date', today)
-      .single();
+    // PostgreSQL の stored procedure を呼び出し
+    // 完全にアトミックな処理で Race Condition を排除
+    const { error } = await supabaseAdmin.rpc('increment_usage_count', {
+      p_user_id: userId,
+      p_date: today,
+      p_column_name: column
+    });
 
-    if (existing) {
-      // 更新
-      await supabaseAdmin
-        .from('usage_stats')
-        .update({ [column]: ((existing as any)[column] || 0) + 1 })
-        .eq('id', (existing as any).id);
-    } else {
-      // 挿入
-      await supabaseAdmin.from('usage_stats').insert({
-        user_id: userId,
-        date: today,
-        [column]: 1,
-      });
+    if (error) {
+      throw error;
     }
   } catch (error) {
     logger.error('Failed to increment usage count:', error);

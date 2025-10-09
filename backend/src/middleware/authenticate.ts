@@ -39,13 +39,46 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
     }
 
     // プロフィール取得 (plan情報が必要)
-    const { data: profile, error: profileError } = await supabaseAdmin
+    let { data: profile, error: profileError } = await supabaseAdmin
       .from('profiles')
       .select('plan')
       .eq('id', data.user.id)
       .single();
 
-    if (profileError) {
+    // profileが存在しない場合は自動作成（既存ユーザー対応）
+    if (profileError && profileError.code === 'PGRST116') {
+      logger.info('Profile not found for user:', data.user.id, 'Creating new profile...');
+
+      const { data: newProfile, error: createError } = await supabaseAdmin
+        .from('profiles')
+        .insert({
+          id: data.user.id,
+          name: data.user.user_metadata?.name || data.user.email?.split('@')[0] || 'User',
+          plan: 'free',
+          created_at: new Date().toISOString(),
+        })
+        .select('plan')
+        .single();
+
+      // UNIQUE constraint violation = 別のリクエストが先に作成済み
+      if (createError && createError.code === '23505') {
+        logger.warn('Profile already created by another request, fetching...');
+        // 再度取得
+        const { data: existingProfile } = await supabaseAdmin
+          .from('profiles')
+          .select('plan')
+          .eq('id', data.user.id)
+          .single();
+
+        profile = existingProfile;
+      } else if (createError) {
+        logger.error('Failed to create profile:', createError);
+        throw new AppError('Failed to create user profile', 500);
+      } else {
+        profile = newProfile;
+        logger.info('Profile created successfully for user:', data.user.id);
+      }
+    } else if (profileError) {
       logger.error('Profile fetch failed:', profileError);
       throw new AppError('User profile not found', 404);
     }
@@ -85,11 +118,38 @@ export const optionalAuthenticate = async (
     const { data, error } = await supabaseAdmin.auth.getUser(token);
 
     if (!error && data.user) {
-      const { data: profile } = await supabaseAdmin
+      let { data: profile, error: profileError } = await supabaseAdmin
         .from('profiles')
         .select('plan')
         .eq('id', data.user.id)
         .single();
+
+      // profileが存在しない場合は自動作成
+      if (profileError && profileError.code === 'PGRST116') {
+        const { data: newProfile, error: createError } = await supabaseAdmin
+          .from('profiles')
+          .insert({
+            id: data.user.id,
+            name: data.user.user_metadata?.name || data.user.email?.split('@')[0] || 'User',
+            plan: 'free',
+            created_at: new Date().toISOString(),
+          })
+          .select('plan')
+          .single();
+
+        // UNIQUE constraint violation = 別のリクエストが先に作成済み
+        if (createError && createError.code === '23505') {
+          const { data: existingProfile } = await supabaseAdmin
+            .from('profiles')
+            .select('plan')
+            .eq('id', data.user.id)
+            .single();
+
+          profile = existingProfile || null;
+        } else {
+          profile = newProfile || null;
+        }
+      }
 
       req.user = {
         id: data.user.id,
