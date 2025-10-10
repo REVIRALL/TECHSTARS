@@ -116,6 +116,7 @@ export default function LoginPage() {
                   onChange={e => setName(e.target.value)}
                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-blue-200/40 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all backdrop-blur-sm"
                   placeholder="山田 太郎"
+                  autoComplete="name"
                   required
                 />
               </div>
@@ -129,6 +130,7 @@ export default function LoginPage() {
                 onChange={e => setEmail(e.target.value)}
                 className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-blue-200/40 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all backdrop-blur-sm"
                 placeholder="example@email.com"
+                autoComplete="email"
                 required
               />
             </div>
@@ -141,6 +143,7 @@ export default function LoginPage() {
                 onChange={e => setPassword(e.target.value)}
                 className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-blue-200/40 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all backdrop-blur-sm"
                 placeholder="8文字以上"
+                autoComplete={isLogin ? 'current-password' : 'new-password'}
                 minLength={8}
                 required
               />
