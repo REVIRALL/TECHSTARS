@@ -201,24 +201,24 @@ export const adminController = {
       // 管理者チェックは isAdmin middleware で実施済み
 
       // ステータス別集計
-      const { data: pending } = await supabaseAdmin
+      const { count: pendingCount } = await supabaseAdmin
         .from('profiles')
         .select('id', { count: 'exact', head: true })
         .eq('approval_status', 'pending');
 
-      const { data: approved } = await supabaseAdmin
+      const { count: approvedCount } = await supabaseAdmin
         .from('profiles')
         .select('id', { count: 'exact', head: true })
         .eq('approval_status', 'approved');
 
-      const { data: rejected } = await supabaseAdmin
+      const { count: rejectedCount } = await supabaseAdmin
         .from('profiles')
         .select('id', { count: 'exact', head: true })
         .eq('approval_status', 'rejected');
 
       // 今日の登録者数
       const today = new Date().toISOString().split('T')[0];
-      const { data: todaySignups } = await supabaseAdmin
+      const { count: todaySignupsCount } = await supabaseAdmin
         .from('profiles')
         .select('id', { count: 'exact', head: true })
         .gte('created_at', `${today}T00:00:00`);
@@ -227,10 +227,10 @@ export const adminController = {
         success: true,
         data: {
           stats: {
-            pending: pending || 0,
-            approved: approved || 0,
-            rejected: rejected || 0,
-            todaySignups: todaySignups || 0,
+            pending: pendingCount || 0,
+            approved: approvedCount || 0,
+            rejected: rejectedCount || 0,
+            todaySignups: todaySignupsCount || 0,
           },
         },
       });
