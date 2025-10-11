@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TECHSTARS - AI時代のエンジニア育成プラットフォーム VSCode拡張機能インストールガイド">
+  <title>TECHSTARS - VSCode拡張機能インストールガイド</title>
+  <style>
+    /* ===== リセット ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* ===== カスタムプロパティ ===== */
+    :root {
+      --primary: #1976d2;
+      --primary-light: #4a90e2;
+      --primary-lighter: #6fa8dc;
+      --primary-ultra-light: #e3f2fd;
+      --accent: #0d47a1;
+      --white: #ffffff;
+      --gray-50: #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #eeeeee;
+      --gray-300: #e0e0e0;
+      --gray-700: #616161;
+      --gray-900: #212121;
+      --success: #4caf50;
+      --warning: #ff9800;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+      --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.16);
+      --radius: 16px;
+      --radius-sm: 8px;
+      --transition: cubic-bezier(0.4, 0, 0.2, 1);
+      --gradient-primary: linear-gradient(135deg, #1976d2 0%, #4a90e2 100%);
+      --gradient-light: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+    }
+
+    /* ===== ベーススタイル ===== */
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans JP', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.7;
+      color: var(--gray-900);
+      background: var(--gradient-light);
+      min-height: 100vh;
+    }
+
+    /* ===== ヘッダー ===== */
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .header-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: clamp(1rem, 3vw, 1.5rem) clamp(1.5rem, 5vw, 2rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo-img {
+      width: clamp(50px, 8vw, 64px);
+      height: clamp(50px, 8vw, 64px);
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-subtitle {
+      font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+      color: var(--gray-700);
+      font-weight: 500;
+    }
+
+    .version-badge {
+      background: var(--primary-ultra-light);
+      color: var(--primary);
+      padding: 0.375rem 1rem;
+      border-radius: 24px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* ===== ヒーローセクション ===== */
+    .hero {
+      max-width: 1280px;
+      margin: clamp(2rem, 5vw, 4rem) auto;
+      padding: 0 clamp(1.5rem, 5vw, 2rem);
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.15;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.375rem);
+      color: var(--gray-700);
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+    }
+
+    .download-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: clamp(2rem, 5vw, 3rem);
+      box-shadow: var(--shadow-lg);
+      max-width: 700px;
+      margin: 0 auto;
+      border: 1px solid var(--gray-200);
+      transition: all 0.3s var(--transition);
+    }
+
+    .download-card:hover {
+      box-shadow: var(--shadow-xl);
+      transform: translateY(-4px);
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: var(--gradient-primary);
+      color: var(--white);
+      padding: 1.125rem clamp(2rem, 5vw, 3rem);
+      border-radius: var(--radius-sm);
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(25, 118, 210, 0.3);
+      transition: all 0.3s var(--transition);
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .download-btn:hover {
+      box-shadow: 0 8px 24px rgba(25, 118, 210, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .download-btn::before {
+      content: '⬇';
+      font-size: 1.5em;
+    }
+
+    .file-info {
+      margin-top: 1.5rem;
+      color: var(--gray-700);
+      font-size: 0.9375rem;
+    }
+
+    /* ===== コンテンツセクション ===== */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: clamp(1.5rem, 5vw, 2rem);
+    }
+
+    .section {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-200);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 2px solid var(--gray-200);
+    }
+
+    .section-number {
+      width: 56px;
+      height: 56px;
+      background: var(--gradient-primary);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      font-weight: 900;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-md);
+    }
+
+    .section-title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    /* ===== ステップ ===== */
+    .step {
+      margin-bottom: 2.5rem;
+      padding-left: 1.25rem;
+      border-left: 3px solid var(--primary-ultra-light);
+      transition: all 0.3s var(--transition);
+    }
+
+    .step:hover {
+      border-left-color: var(--primary);
+      padding-left: 1.5rem;
+    }
+
+    .step-title {
+      font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .step-icon {
+      font-size: 1.5em;
+    }
+
+    .step-content {
+      color: var(--gray-700);
+      line-height: 1.8;
+      font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+    }
+
+    .step-content p {
+      margin-bottom: 1rem;
+    }
+
+    .step-content ul, .step-content ol {
+      margin: 1rem 0 1rem 1.5rem;
+    }
+
+    .step-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* ===== コードブロック ===== */
+    .code-block {
+      background: var(--primary-ultra-light);
+      border-left: 4px solid var(--primary);
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--radius-sm);
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      font-size: 0.9375rem;
+      margin: 1.25rem 0;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+
+    /* ===== インフォボックス ===== */
+    .info-box {
+      background: var(--primary-ultra-light);
+      border-left: 4px solid var(--primary);
+      padding: 1.5rem;
+      border-radius: var(--radius-sm);
+      margin: 1.5rem 0;
+    }
+
+    .info-box-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      font-size: 1.0625rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .warning-box {
+      background: #fff8e1;
+      border-left: 4px solid var(--warning);
+      padding: 1.5rem;
+      border-radius: var(--radius-sm);
+      margin: 1.5rem 0;
+    }
+
+    .warning-box-title {
+      font-weight: 700;
+      color: var(--warning);
+      margin-bottom: 0.75rem;
+      font-size: 1.0625rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .success-box {
+      background: #f1f8f4;
+      border-left: 4px solid var(--success);
+      padding: 1.5rem;
+      border-radius: var(--radius-sm);
+      margin: 1.5rem 0;
+    }
+
+    .success-box-title {
+      font-weight: 700;
+      color: var(--success);
+      margin-bottom: 0.75rem;
+      font-size: 1.0625rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ===== スクリーンショットプレースホルダー ===== */
+    .screenshot {
+      background: var(--gradient-light);
+      border: 2px dashed var(--gray-300);
+      border-radius: var(--radius);
+      padding: clamp(2rem, 5vw, 3rem);
+      text-align: center;
+      margin: 1.5rem 0;
+      color: var(--gray-700);
+      font-style: italic;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .screenshot::before {
+      content: '[IMAGE]';
+      font-size: 2.5rem;
+    }
+
+    /* ===== キーボードキー ===== */
+    .kbd {
+      display: inline-block;
+      padding: 0.375rem 0.75rem;
+      background: var(--white);
+      border: 2px solid var(--gray-300);
+      border-radius: 6px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+      margin: 0 0.25rem;
+    }
+
+    /* ===== ハイライト ===== */
+    .highlight {
+      background: var(--primary-ultra-light);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* ===== チェックリスト ===== */
+    .checklist {
+      list-style: none;
+      padding: 0;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--gray-50);
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.75rem;
+      transition: all 0.3s var(--transition);
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .checklist-item:hover {
+      background: var(--primary-ultra-light);
+      border-color: var(--primary-lighter);
+    }
+
+    .checklist-icon {
+      width: 24px;
+      height: 24px;
+      border: 3px solid var(--primary);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.125rem;
+      transition: all 0.3s var(--transition);
+    }
+
+    .checklist-item.checked .checklist-icon {
+      background: var(--success);
+      border-color: var(--success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: bold;
+    }
+
+    .checklist-item.checked .checklist-icon::after {
+      content: '✓';
+    }
+
+    /* ===== FAQ ===== */
+    .faq-item {
+      margin-bottom: 1rem;
+      border: 2px solid var(--gray-200);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      transition: all 0.3s var(--transition);
+    }
+
+    .faq-item:hover {
+      border-color: var(--primary-lighter);
+    }
+
+    .faq-question {
+      background: var(--gray-50);
+      padding: 1.25rem 1.5rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 1.0625rem;
+      transition: all 0.3s var(--transition);
+    }
+
+    .faq-question:hover {
+      background: var(--primary-ultra-light);
+      color: var(--primary);
+    }
+
+    .faq-question::after {
+      content: '+';
+      font-size: 1.75rem;
+      font-weight: bold;
+      transition: transform 0.3s var(--transition);
+      color: var(--primary);
+    }
+
+    .faq-item.active .faq-question::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 2000px;
+    }
+
+    .faq-answer-content {
+      padding: 1.5rem;
+      color: var(--gray-700);
+      line-height: 1.8;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    /* ===== グリッド ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .card {
+      background: var(--gradient-light);
+      border-radius: var(--radius);
+      padding: 2rem;
+      border: 2px solid var(--gray-200);
+      transition: all 0.3s var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-lighter);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .card-description {
+      color: var(--gray-700);
+      line-height: 1.6;
+      font-size: 0.9375rem;
+    }
+
+    /* ===== フッター ===== */
+    .footer {
+      background: var(--white);
+      border-top: 2px solid var(--gray-200);
+      padding: clamp(2rem, 5vw, 3rem);
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .footer-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-subtitle {
+      color: var(--gray-700);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: clamp(1rem, 3vw, 2rem);
+      flex-wrap: wrap;
+      margin: 1.5rem 0;
+    }
+
+    .footer-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s var(--transition);
+      font-size: 0.9375rem;
+    }
+
+    .footer-link:hover {
+      color: var(--primary-light);
+      text-decoration: underline;
+    }
+
+    .copyright {
+      margin-top: 1.5rem;
+      color: var(--gray-700);
+      font-size: 0.875rem;
+    }
+
+    /* ===== スクロールトップボタン ===== */
+    .scroll-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 56px;
+      height: 56px;
+      background: var(--gradient-primary);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.3s var(--transition);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .scroll-top:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .scroll-top::before {
+      content: '↑';
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* ===== アニメーション ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    /* ===== レスポンシブ ===== */
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .step {
+        padding-left: 0.75rem;
+      }
+
+      .scroll-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 48px;
+        height: 48px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .download-btn {
+        width: 100%;
+      }
+
+      .kbd {
+        display: inline-block;
+        margin: 0.125rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <div class="header-container">
+      <div class="brand">
+        <img src="./techstars-logo.jpg" alt="TECHSTARS Logo" class="logo-img">
+        <div class="brand-text">
+          <h1 class="brand-title">TECHSTARS</h1>
+          <p class="brand-subtitle">AI時代のエンジニア育成</p>
+        </div>
+      </div>
+      <span class="version-badge">v0.2.0 [NEW]</span>
+    </div>
+  </header>
+
+  <!-- ヒーロー -->
+  <section class="hero fade-in">
+    <h2 class="hero-title">VSCode拡張機能<br>インストールガイド</h2>
+    <p class="hero-subtitle">AIが生成したコードを自動で解説する、次世代学習ツール - 全言語対応・非エンジニア向け機能搭載</p>
+
+    <div class="download-card">
+      <a href="./vibecoding-extension-0.2.0.vsix" download class="download-btn">
+        最新版をダウンロード v0.2.0
+      </a>
+      <p class="file-info">[PACKAGE] vibecoding-extension-0.2.0.vsix • [NEW] 全言語対応・非エンジニア向け解説機能搭載</p>
+    </div>
+  </section>
+
+  <!-- メインコンテンツ -->
+  <main class="container">
+    <!-- セクション1: ダウンロード -->
+    <section class="section fade-in">
+      <div class="section-header">
+        <div class="section-number">1</div>
+        <h2 class="section-title">拡張機能をダウンロード</h2>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[DOWNLOAD]</span>
+          VSIXファイルをダウンロード
+        </h3>
+        <div class="step-content">
+          <p>上の青いボタン「拡張機能をダウンロード」をクリックして、VSIXファイルをダウンロードします。</p>
+
+          <div class="info-box">
+            <div class="info-box-title">[INFO] ダウンロードされるファイル</div>
+            <p><strong>ファイル名:</strong> vibecoding-extension-0.2.0.vsix</p>
+            <p><strong>サイズ:</strong> 約 110 KB</p>
+            <p><strong>保存先:</strong> ブラウザのデフォルトダウンロードフォルダ（通常は「ダウンロード」フォルダ）</p>
+            <p><strong>[NEW] 新機能:</strong> 全言語対応・非エンジニア向け解説機能搭載</p>
+          </div>
+
+          <p>ダウンロードが完了したら、ファイルの場所を覚えておいてください。次のステップで使用します。</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[OK]</span>
+          ダウンロード確認
+        </h3>
+        <div class="step-content">
+          <p>以下のチェックリストで確認してください：</p>
+          <ul class="checklist">
+            <li class="checklist-item">
+              <div class="checklist-icon"></div>
+              <div>.vsix拡張子のファイルがダウンロードされている</div>
+            </li>
+            <li class="checklist-item">
+              <div class="checklist-icon"></div>
+              <div>ファイルサイズが約101 KBである</div>
+            </li>
+            <li class="checklist-item">
+              <div class="checklist-icon"></div>
+              <div>ファイルの保存場所を把握している</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- セクション2: インストール -->
+    <section class="section fade-in">
+      <div class="section-header">
+        <div class="section-number">2</div>
+        <h2 class="section-title">VSCodeにインストール</h2>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[FOLDER]</span>
+          VSCodeを起動
+        </h3>
+        <div class="step-content">
+          <p>Visual Studio Code（VSCode）を起動してください。VSCodeがインストールされていない場合は、<a href="https://code.visualstudio.com/" target="_blank" style="color: var(--primary); font-weight: 600;">公式サイト</a>からダウンロードしてください。</p>
+
+          <img src="./images/001.jpg" alt="VSCodeを起動した状態" style="width: 100%; max-width: 900px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); margin: 1.5rem 0;">
+          <p style="text-align: center; color: var(--gray-700); font-size: 0.875rem; font-style: italic; margin-top: -0.5rem;">任意のフォルダを開いている、または新規ウィンドウでも構いません</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[KEY]</span>
+          コマンドパレットを開く
+        </h3>
+        <div class="step-content">
+          <p>VSCodeでコマンドパレットを開きます。以下のキーボードショートカットを使用してください：</p>
+
+          <div class="code-block">
+<strong>Windows / Linux:</strong> <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">P</span><br>
+<strong>Mac:</strong> <span class="kbd">⌘</span> + <span class="kbd">Shift</span> + <span class="kbd">P</span>
+          </div>
+
+          <div class="info-box">
+            <div class="info-box-title">[INFO] コマンドパレットとは？</div>
+            <p>VSCodeのすべての機能にアクセスできる検索ボックスです。画面上部に表示されます。</p>
+          </div>
+
+          <img src="./images/002.jpg" alt="コマンドパレットが開いた状態" style="width: 100%; max-width: 900px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); margin: 1.5rem 0;">
+          <p style="text-align: center; color: var(--gray-700); font-size: 0.875rem; font-style: italic; margin-top: -0.5rem;">画面上部に検索ボックスが表示されます</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[SEARCH]</span>
+          インストールコマンドを検索
+        </h3>
+        <div class="step-content">
+          <p>コマンドパレットに以下のテキストを入力してください：</p>
+
+          <div class="code-block">拡張機能: VSIX からのインストール</div>
+
+          <div class="info-box">
+            <div class="info-box-title">[INFO] 検索のコツ</div>
+            <p>「vsix」または「拡張機能」と入力するだけで、該当するコマンドが表示されます。完全に入力する必要はありません。</p>
+          </div>
+
+          <div class="warning-box">
+            <div class="warning-box-title">[WARNING] 注意</div>
+            <p>「Extensions: Install from VSIX...」という英語のコマンドも同じ機能です。日本語版・英語版どちらを選んでも構いません。</p>
+          </div>
+
+          <p>候補が表示されたら、<span class="highlight">拡張機能: VSIX からのインストール...</span>を選択して<span class="kbd">Enter</span>を押してください。</p>
+
+          <img src="./images/003.jpg" alt="コマンド候補が表示された状態" style="width: 100%; max-width: 900px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); margin: 1.5rem 0;">
+          <p style="text-align: center; color: var(--gray-700); font-size: 0.875rem; font-style: italic; margin-top: -0.5rem;">「拡張機能: VSIX からのインストール...」を選択</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[FILE]</span>
+          VSIXファイルを選択
+        </h3>
+        <div class="step-content">
+          <p>ファイル選択ダイアログが開きます。ステップ1でダウンロードした<span class="highlight">vibecoding-extension-0.1.0.vsix</span>ファイルを探して選択してください。</p>
+
+          <div class="info-box">
+            <div class="info-box-title">[INFO] ファイルの場所</div>
+            <p>通常、ダウンロードフォルダに保存されています：</p>
+            <ul>
+              <li><strong>Windows:</strong> C:\Users\ユーザー名\Downloads</li>
+              <li><strong>Mac:</strong> /Users/ユーザー名/Downloads</li>
+              <li><strong>Linux:</strong> /home/ユーザー名/Downloads</li>
+            </ul>
+          </div>
+
+          <p>ファイルを選択したら、「開く」または「インストール」ボタンをクリックしてください。</p>
+
+          <img src="./images/004.jpg" alt="ファイル選択ダイアログ" style="width: 100%; max-width: 900px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); margin: 1.5rem 0;">
+          <p style="text-align: center; color: var(--gray-700); font-size: 0.875rem; font-style: italic; margin-top: -0.5rem;">vibecoding-extension-0.1.0.vsix を選択</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[WAIT]</span>
+          インストール完了を待つ
+        </h3>
+        <div class="step-content">
+          <p>VSCodeが自動的に拡張機能をインストールします。画面右下に進捗状況が表示されます。</p>
+
+          <div class="success-box">
+            <div class="success-box-title">[OK] インストール成功</div>
+            <p>「拡張機能 'VIBECODING' が正常にインストールされました。」というメッセージが表示されたら成功です！</p>
+          </div>
+
+          <img src="./images/005.jpg" alt="インストール完了通知" style="width: 100%; max-width: 900px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); margin: 1.5rem 0;">
+          <p style="text-align: center; color: var(--gray-700); font-size: 0.875rem; font-style: italic; margin-top: -0.5rem;">画面右下に成功メッセージが表示されます</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[RELOAD]</span>
+          VSCodeをリロード（必要に応じて）
+        </h3>
+        <div class="step-content">
+          <p>拡張機能によっては、VSCodeのリロードが必要な場合があります。メッセージが表示された場合は「Reload Now」または「今すぐ再読み込み」をクリックしてください。</p>
+
+          <div class="info-box">
+            <div class="info-box-title">[INFO] 手動でリロードする方法</div>
+            <p>メッセージが表示されない場合でも、念のためリロードすることをお勧めします：</p>
+            <div class="code-block">
+<strong>Windows / Linux:</strong> <span class="kbd">Ctrl</span> + <span class="kbd">R</span><br>
+<strong>Mac:</strong> <span class="kbd">⌘</span> + <span class="kbd">R</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[PLAY]</span>
+          拡張機能を起動
+        </h3>
+        <div class="step-content">
+          <p>インストールとリロードが完了したら、TECHSTARSを起動しましょう。</p>
+
+          <div class="code-block">
+<strong>手順:</strong>
+1. VSCodeの左サイドバー（アクティビティバー）にあるTECHSTARSアイコンをクリック
+2. 学習パネルが開き、ウェルカム画面またはログイン画面が表示されます
+          </div>
+
+          <img src="./images/006.jpg" alt="TECHSTARSアイコンをクリック" style="width: 100%; max-width: 900px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); margin: 1.5rem 0;">
+          <p style="text-align: center; color: var(--gray-700); font-size: 0.875rem; font-style: italic; margin-top: -0.5rem;">左サイドバーの「VC」マークをクリックして起動</p>
+
+          <div class="success-box">
+            <div class="success-box-title">[OK] 起動成功</div>
+            <p>学習パネルが開いたら、TECHSTARSの起動は成功です！次のセクションで初期設定を行いましょう。</p>
+          </div>
+
+          <div class="warning-box">
+            <div class="warning-box-title">[WARNING] アイコンが見つからない場合</div>
+            <p>以下を確認してください：</p>
+            <ul>
+              <li>VSCodeを完全に再起動（閉じて再度開く）</li>
+              <li>拡張機能ビュー（<span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">X</span>）で「TECHSTARS」または「VIBECODING」を検索し、「有効」になっているか確認</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- セクション3: 初期設定 -->
+    <section class="section fade-in">
+      <div class="section-header">
+        <div class="section-number">3</div>
+        <h2 class="section-title">初期設定</h2>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[SEARCH]</span>
+          拡張機能が表示されているか確認
+        </h3>
+        <div class="step-content">
+          <p>左サイドバーにVIBECODINGのアイコンが表示されているか確認してください。</p>
+
+          <div class="info-box">
+            <div class="info-box-title">[INFO] アイコンの場所</div>
+            <p>VSCodeの左端に縦に並んでいるアイコンバー（アクティビティバー）に、VIBECODINGのアイコン（VCマーク）が追加されています。</p>
+          </div>
+
+          <img src="./images/007.jpg" alt="VIBECODINGアイコン" style="width: 100%; max-width: 900px; border-radius: 12px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15); margin: 1.5rem 0;">
+          <p style="text-align: center; color: var(--gray-700); font-size: 0.875rem; font-style: italic; margin-top: -0.5rem;">左サイドバーの「VC」アイコンをクリック</p>
+
+          <div class="warning-box">
+            <div class="warning-box-title">[WARNING] アイコンが見つからない場合</div>
+            <p>以下を試してください：</p>
+            <ul>
+              <li>VSCodeを完全に再起動（閉じて再度開く）</li>
+              <li>拡張機能ビュー（<span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">X</span>）で「VIBECODING」を検索し、有効になっているか確認</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[USER]</span>
+          ログイン
+        </h3>
+        <div class="step-content">
+          <p>VIBECODINGアイコンをクリックすると、学習パネルが開きます。初めて使用する場合は、ログイン画面が表示されます。</p>
+
+          <div class="code-block">
+<strong>手順:</strong>
+1. 「ログイン」ボタンをクリック
+2. メールアドレスとパスワードを入力
+3. 「ログイン」をクリック
+          </div>
+
+          <div class="info-box">
+            <div class="info-box-title">[INFO] アカウントを持っていない場合</div>
+            <p>「新規登録」タブをクリックして、新しいアカウントを作成できます。</p>
+            <p style="margin-top: 1rem;"><strong>Webダッシュボードからも登録・ログイン可能：</strong><br>
+            <a href="https://techstars-learn.vercel.app/login" target="_blank" style="color: var(--primary); font-weight: 600; text-decoration: underline;">TECHSTARS学習プラットフォーム</a>にアクセスして、Webブラウザから登録・ログインすることもできます。学習履歴やダッシュボードもこちらで確認できます。</p>
+          </div>
+
+          <div class="screenshot">
+            <div>ログイン画面</div>
+            <div style="font-size: 0.875rem;">メールアドレスとパスワードを入力してログイン</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[CONFIG]</span>
+          設定を確認・調整
+        </h3>
+        <div class="step-content">
+          <p>必要に応じて設定を調整できます。設定を開くには：</p>
+
+          <div class="code-block">
+<strong>Windows / Linux:</strong> <span class="kbd">Ctrl</span> + <span class="kbd">,</span><br>
+<strong>Mac:</strong> <span class="kbd">⌘</span> + <span class="kbd">,</span>
+          </div>
+
+          <p>設定画面で「VIBECODING」と検索すると、以下の設定項目が表示されます：</p>
+
+          <div class="grid">
+            <div class="card">
+              <span class="card-icon">[WEB]</span>
+              <h4 class="card-title">API URL</h4>
+              <p class="card-description">バックエンドAPIのURL。デフォルトは本番環境です。</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">[LEVELS]</span>
+              <h4 class="card-title">解説レベル</h4>
+              <p class="card-description">beginner（初心者）/ intermediate（中級）/ advanced（上級）から選択。</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">[TIME]</span>
+              <h4 class="card-title">タイムアウト</h4>
+              <p class="card-description">APIリクエストのタイムアウト時間（デフォルト: 10分）。</p>
+            </div>
+            <div class="card">
+              <span class="card-icon">[FOLDER]</span>
+              <h4 class="card-title">監視フォルダ</h4>
+              <p class="card-description">自動解析するフォルダを指定。</p>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <div class="info-box-title">[INFO] 推奨設定</div>
+            <p>初めて使用する場合は、デフォルト設定のままで問題ありません。使いながら必要に応じて調整してください。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- セクション4: 使い方 -->
+    <section class="section fade-in">
+      <div class="section-header">
+        <div class="section-number">4</div>
+        <h2 class="section-title">使い方</h2>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[NOTE]</span>
+          コードを解析する（基本）
+        </h3>
+        <div class="step-content">
+          <p>TECHSTARSでコードを解析する最も簡単な方法：</p>
+
+          <div class="code-block">
+<strong>手順:</strong>
+1. VSCodeで任意のコードファイルを開く
+2. 解析したいコードを選択（マウスでドラッグまたはキーボードで選択）
+3. 右クリック → 「VIBECODINGで解説」を選択
+4. 解析が完了すると、サイドバーに解説が表示されます
+          </div>
+
+          <div class="screenshot">
+            <div>右クリックメニュー</div>
+            <div style="font-size: 0.875rem;">「VIBECODINGで解説」を選択</div>
+          </div>
+
+          <div class="success-box">
+            <div class="success-box-title">[OK] 解析完了</div>
+            <p>解説が生成されると、VIBECODINGパネルに以下の情報が表示されます：</p>
+            <ul>
+              <li>コードの概要（サマリー）</li>
+              <li>詳細な解説</li>
+              <li>複雑度スコア</li>
+              <li>重要な概念</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[FAST]</span>
+          ファイル全体を解析する
+        </h3>
+        <div class="step-content">
+          <p>ファイル全体を一度に解析することもできます：</p>
+
+          <div class="code-block">
+<strong>手順:</strong>
+1. 解析したいファイルを開く
+2. <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">P</span> でコマンドパレットを開く
+3. 「VIBECODING: 現在のファイルを解析」を選択
+4. 解析が完了するまで待つ
+          </div>
+
+          <div class="info-box">
+            <div class="info-box-title">[INFO] 大きなファイルの場合</div>
+            <p>ファイルが大きい場合、解析に時間がかかることがあります。タイムアウト設定を長めに設定することをお勧めします。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[FOLDER]</span>
+          フォルダを監視して自動解析
+        </h3>
+        <div class="step-content">
+          <p>Claude Codeなどでコードを生成する際、特定のフォルダを監視して自動的に解析できます：</p>
+
+          <div class="code-block">
+<strong>手順:</strong>
+1. VIBECODINGパネルを開く
+2. 「監視フォルダ」セクションで「+ フォルダを追加」をクリック
+3. 監視したいプロジェクトフォルダを選択
+4. フォルダ内のファイルが保存されると、自動的に解析されます
+          </div>
+
+          <div class="warning-box">
+            <div class="warning-box-title">[WARNING] 注意</div>
+            <p>自動解析は設定で有効になっている場合のみ機能します。設定画面で「Vibecoding: Auto Analyze」がオンになっているか確認してください。</p>
+          </div>
+
+          <div class="screenshot">
+            <div>監視フォルダ設定</div>
+            <div style="font-size: 0.875rem;">フォルダを追加すると、ファイル保存時に自動解析されます</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[HISTORY]</span>
+          解析履歴を確認
+        </h3>
+        <div class="step-content">
+          <p>過去に解析したコードの履歴を確認できます：</p>
+
+          <div class="code-block">
+<strong>手順:</strong>
+1. VIBECODINGパネルを開く
+2. 「最近の解析」セクションをスクロール
+3. 見たい履歴項目をクリック
+4. 解説が再表示されます
+          </div>
+
+          <div class="info-box">
+            <div class="info-box-title">[INFO] 履歴の管理</div>
+            <p>履歴は最大10件まで保持されます。古い履歴は自動的に削除されます。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <h3 class="step-title">
+          <span class="step-icon">[RELOAD]</span>
+          パネルを更新
+        </h3>
+        <div class="step-content">
+          <p>最新の情報を取得するには、パネルを更新できます：</p>
+
+          <div class="code-block">VIBECODINGパネル右上の「[RELOAD] 更新」ボタンをクリック</div>
+
+          <p>更新すると、以下の情報が最新化されます：</p>
+          <ul>
+            <li>解析履歴</li>
+            <li>最近の変更</li>
+            <li>監視フォルダ一覧</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- セクション5: トラブルシューティング -->
+    <section class="section fade-in">
+      <div class="section-header">
+        <div class="section-number">5</div>
+        <h2 class="section-title">トラブルシューティング</h2>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          拡張機能が表示されない / アイコンが見つからない
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>解決策：</strong></p>
+            <ol>
+              <li>VSCodeを完全に再起動してください（ウィンドウを閉じて再度開く）。</li>
+              <li>拡張機能ビュー（<span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">X</span>）で「VIBECODING」を検索。</li>
+              <li>「無効」になっている場合は「有効にする」をクリック。</li>
+              <li>それでも表示されない場合は、拡張機能を一度アンインストールして再インストールしてください。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          「ログインが必要です」と表示される
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>原因：</strong> バックエンドAPIにログインしていない状態です。</p>
+            <p><strong>解決策：</strong></p>
+            <ol>
+              <li>VIBECODINGパネルを開く。</li>
+              <li>「ログイン」ボタンをクリック。</li>
+              <li>メールアドレスとパスワードを入力してログイン。</li>
+              <li>アカウントを持っていない場合は「新規登録」タブから作成。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          「タイムアウトしました」というエラーが出る
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>原因：</strong> コードが長すぎる、またはサーバーの制限（Render無料プランは30秒）に達している可能性があります。</p>
+            <p><strong>解決策：</strong></p>
+            <ol>
+              <li><strong>コードを分割して解析：</strong> ファイル全体ではなく、一部分ずつ選択して解析してください。</li>
+              <li><strong>タイムアウト設定を延長：</strong> 設定画面で「Vibecoding: Request Timeout」を長めに設定（最大60000ms = 1分）。ただし、サーバー側の制限は変わりません。</li>
+              <li><strong>再試行：</strong> サーバーが初回起動中の場合、2回目以降は速くなります。もう一度実行してみてください。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          「サーバーに接続できません」というエラーが出る
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>原因：</strong> バックエンドサーバーに接続できない状態です。</p>
+            <p><strong>解決策：</strong></p>
+            <ol>
+              <li><strong>インターネット接続を確認：</strong> ネットワークに接続されているか確認してください。</li>
+              <li><strong>API URLを確認：</strong> 設定画面で「Vibecoding: Api Url」が正しいか確認（デフォルト: https://techstars.onrender.com）。</li>
+              <li><strong>サーバーの状態を確認：</strong> バックエンドサーバーが起動しているか確認してください（管理者に問い合わせ）。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          解析結果が表示されない
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>解決策：</strong></p>
+            <ol>
+              <li>VIBECODINGパネルが開いているか確認してください（左サイドバーのVCアイコンをクリック）。</li>
+              <li>「解説」セクションを展開してください（▼ボタンをクリック）。</li>
+              <li>開発者ツール（<span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">I</span>）のConsoleタブでエラーを確認してください。</li>
+              <li>パネル右上の「[RELOAD] 更新」ボタンをクリックして再読み込みしてください。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          サポート対象の言語は？
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>現在サポートされている言語：</strong></p>
+            <div class="grid">
+              <div class="card">
+                <span class="card-icon">[WEB]</span>
+                <div class="card-description"><strong>Web:</strong> JavaScript, TypeScript, HTML, CSS</div>
+              </div>
+              <div class="card">
+                <span class="card-icon">[CODE]</span>
+                <div class="card-description"><strong>バックエンド:</strong> Python, Java, Go, PHP, Ruby</div>
+              </div>
+              <div class="card">
+                <span class="card-icon">[CONFIG]</span>
+                <div class="card-description"><strong>システム:</strong> C, C++, C#, Rust</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          拡張機能を完全にアンインストールしたい
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p><strong>手順：</strong></p>
+            <ol>
+              <li>拡張機能ビュー（<span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">X</span>）を開く。</li>
+              <li>「VIBECODING」を検索。</li>
+              <li>歯車アイコン[CONFIG]をクリック → 「アンインストール」を選択。</li>
+              <li>VSCodeをリロードまたは再起動。</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- セクション6: よくある質問 -->
+    <section class="section fade-in">
+      <div class="section-header">
+        <div class="section-number">6</div>
+        <h2 class="section-title">よくある質問（FAQ）</h2>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          TECHSTARSは無料で使えますか？
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p>はい、TECHSTARSは無料でご利用いただけます。ただし、バックエンドサーバーにはRender無料プランの制限（30秒タイムアウト）があります。大規模なコードを頻繁に解析する場合は、有料プランへのアップグレードをご検討ください。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          Claude Codeとの連携方法は？
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p>Claude Codeでコードを生成する際、生成先のプロジェクトフォルダをTECHSTARSの監視フォルダに追加してください。ファイルが保存されると自動的に解析が始まります。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          オフラインでも使えますか？
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p>いいえ、TECHSTARSはクラウドベースのAI解析を使用しているため、インターネット接続が必要です。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          解析したコードのプライバシーは保護されますか？
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p>はい、解析したコードはセキュアに送信され、APIサーバーで処理されます。詳細はプライバシーポリシーをご確認ください。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          バグを見つけた場合、どこに報告すればいいですか？
+        </div>
+        <div class="faq-answer">
+          <div class="faq-answer-content">
+            <p>GitHubリポジトリのIssuesセクションに報告してください。詳細な情報（エラーメッセージ、再現手順など）を含めていただけると助かります。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- セクション7: 追加情報 -->
+    <section class="section fade-in">
+      <div class="section-header">
+        <div class="section-number">7</div>
+        <h2 class="section-title">追加情報</h2>
+      </div>
+
+      <div class="grid">
+        <div class="card" style="border: 2px solid var(--primary); background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);">
+          <span class="card-icon">[WEB]</span>
+          <h4 class="card-title">学習プラットフォーム</h4>
+          <p class="card-description">
+            <a href="https://techstars-learn.vercel.app/login" target="_blank" style="color: var(--primary); font-weight: 700; text-decoration: underline;">TECHSTARS学習プラットフォーム</a>で、学習履歴やダッシュボードにアクセスできます。コードの解析結果、進捗状況、統計情報などをWebブラウザで確認・管理できます。
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-icon">[DOCS]</span>
+          <h4 class="card-title">公式ドキュメント</h4>
+          <p class="card-description">詳細な使い方やAPI仕様については、公式ドキュメントをご覧ください。</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">[CHAT]</span>
+          <h4 class="card-title">コミュニティ</h4>
+          <p class="card-description">質問や議論はコミュニティフォーラムでお願いします。</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">[NOTICE]</span>
+          <h4 class="card-title">アップデート情報</h4>
+          <p class="card-description">新機能や改善はCHANGELOG.mdで確認できます。</p>
+        </div>
+        <div class="card">
+          <span class="card-icon">[HAND]</span>
+          <h4 class="card-title">コントリビュート</h4>
+          <p class="card-description">オープンソースプロジェクトです。GitHubでコントリビュートできます。</p>
+        </div>
+      </div>
+
+      <div class="success-box" style="margin-top: 2rem;">
+        <div class="success-box-title">[CELEBRATE] インストール完了おめでとうございます！</div>
+        <p>TECHSTARSを使って、AIが生成したコードを理解し、プログラミングスキルを向上させましょう！</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p class="footer-title">TECHSTARS</p>
+      <p class="footer-subtitle">AI時代のエンジニア育成プラットフォーム</p>
+      <div class="footer-links">
+        <a href="https://github.com/techstars/techstars" class="footer-link" target="_blank">GitHub</a>
+        <a href="#" class="footer-link">ドキュメント</a>
+        <a href="#" class="footer-link">サポート</a>
+        <a href="#" class="footer-link">プライバシーポリシー</a>
+      </div>
+      <p class="copyright">&copy; 2025 TECHSTARS. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- スクロールトップボタン -->
+  <div class="scroll-top" id="scrollTop"></div>
+
+  <!-- JavaScript -->
+  <script>
+    // FAQ アコーディオン
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        const active = item.classList.contains('active');
+
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+
+        if (!active) item.classList.add('active');
+      });
+    });
+
+    // スクロールトップボタン
+    const scrollTop = document.getElementById('scrollTop');
+
+    window.addEventListener('scroll', () => {
+      scrollTop.classList.toggle('visible', window.pageYOffset > 300);
+    });
+
+    scrollTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Intersection Observer でアニメーション
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      observer.observe(el);
+    });
+
+    // チェックリスト
+    document.querySelectorAll('.checklist-item').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('checked');
+      });
+    });
+  </script>
+</body>
+</html>
