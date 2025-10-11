@@ -18,15 +18,10 @@ export default function DashboardPage() {
     try {
       const userRes = await api.get('/api/auth/me');
       if (userRes.data.success) {
-        setUser(userRes.data.data.user);
-      }
-
-      // 管理者権限チェック（/api/admin/statsにアクセスできるか）
-      try {
-        await api.get('/api/admin/stats');
-        setIsAdmin(true);
-      } catch {
-        setIsAdmin(false);
+        const userData = userRes.data.data.user;
+        setUser(userData);
+        // ユーザーデータから管理者権限を取得
+        setIsAdmin(userData.isAdmin || false);
       }
 
       const params: any = { limit: 100 };

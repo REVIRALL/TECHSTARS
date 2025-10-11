@@ -279,6 +279,8 @@ export const authController = {
             plan: profile?.plan || 'free',
             avatarUrl: profile?.avatar_url,
             onboardingCompleted: profile?.onboarding_completed || false,
+            isAdmin: profile?.is_admin || false,
+            approvalStatus: profile?.approval_status || 'pending',
             createdAt: profile?.created_at,
           },
         },
