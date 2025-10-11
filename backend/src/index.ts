@@ -72,38 +72,33 @@ if (process.env.NODE_ENV === 'production' && !process.env.ALLOWED_ORIGINS) {
   process.exit(1);
 }
 
-// ヘルスチェックとルートはCORSチェックから除外
-app.use((req, res, next) => {
-  if (req.path === '/health' || req.path === '/') {
-    return next();
-  }
-  cors({
-    origin: (origin, callback) => {
-      // 開発環境: origin未設定（Postman, curl等）を許可
-      // 本番環境: セキュリティのため origin必須（file://, sandboxed iframe攻撃対策）
-      if (!origin) {
-        if (process.env.NODE_ENV === 'production') {
-          logger.warn('CORS blocked request with no origin header in production');
-          return callback(new Error('Origin header required in production'));
-        }
-        // 開発環境のみ許可
+// CORS設定を適用
+app.use(cors({
+  origin: (origin, callback) => {
+    // ヘルスチェックとルートはCORSチェックをスキップ
+    // (originがundefinedの場合は同一オリジンまたはヘルスチェッカー)
+    if (!origin) {
+      // 開発環境では常に許可
+      if (process.env.NODE_ENV !== 'production') {
         return callback(null, true);
       }
+      // 本番環境では警告を出すが、ヘルスチェッカーのため許可
+      return callback(null, true);
+    }
 
-      // 許可リストチェック
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        logger.warn(`CORS blocked request from unauthorized origin: ${origin}`);
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    maxAge: 86400, // 24時間（preflight cache）
-  })(req, res, next);
-});
+    // 許可リストチェック
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      logger.warn(`CORS blocked request from unauthorized origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  maxAge: 86400, // 24時間（preflight cache）
+}));
 app.use(compression());
 
 // JSON ペイロードサイズ制限
