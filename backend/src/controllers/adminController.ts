@@ -32,7 +32,6 @@ export const adminController = {
         .select(`
           id,
           name,
-          email:id(email),
           plan,
           approval_status,
           approval_notes,

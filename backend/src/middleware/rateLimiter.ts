@@ -118,10 +118,10 @@ function createRateLimitMiddleware(limiter: RateLimiterMemory, name: string) {
         'X-RateLimit-Reset': String(new Date(Date.now() + result.msBeforeNext).toISOString()),
       });
 
-      throw new AppError(
+      return next(new AppError(
         `Too many requests. Please try again in ${retryAfter} seconds.`,
         429
-      );
+      ));
     }
   };
 }
@@ -167,10 +167,10 @@ export const createUserRateLimiter = (points: number, duration: number) => {
         'X-RateLimit-Remaining': String(result.remainingPoints),
       });
 
-      throw new AppError(
+      return next(new AppError(
         `Rate limit exceeded. Please try again in ${retryAfter} seconds.`,
         429
-      );
+      ));
     }
   };
 };
