@@ -51,7 +51,7 @@ export default function LoginPage() {
         }
       }
     } catch (err: any) {
-      const apiError = err.response?.data?.error || '';
+      const apiError = err.response?.data?.message || err.response?.data?.error || '';
 
       // 重複エラーの場合、ログインタブに自動切り替え
       if (apiError === 'A user with this email address has already been registered' && !isLogin) {
