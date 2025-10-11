@@ -13,13 +13,10 @@ import { logger } from '../utils/logger';
 let redisClient: Redis | null = null;
 
 export function getRedisClient(): Redis | null {
-  // 開発環境で Redis URL が未設定の場合、メモリベースにフォールバック
+  // Redis URL が未設定の場合、メモリベースにフォールバック
   if (!process.env.REDIS_URL) {
-    if (process.env.NODE_ENV === 'production') {
-      logger.error('FATAL: REDIS_URL must be set in production environment for rate limiting');
-      process.exit(1);
-    }
-    logger.warn('REDIS_URL not set. Rate limiter will use in-memory storage (development only)');
+    const env = process.env.NODE_ENV || 'development';
+    logger.warn(`REDIS_URL not set. Rate limiter will use in-memory storage (${env})`);
     return null;
   }
 

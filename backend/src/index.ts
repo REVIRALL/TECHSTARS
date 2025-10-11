@@ -33,7 +33,7 @@ function validateEnvironment() {
 
   // 本番環境固有の必須変数
   if (process.env.NODE_ENV === 'production') {
-    required.push('ALLOWED_ORIGINS', 'REDIS_URL');
+    required.push('ALLOWED_ORIGINS');
   }
 
   const missing = required.filter(key => !process.env[key]);
