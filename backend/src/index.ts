@@ -21,7 +21,7 @@ function validateEnvironment() {
   const required = [
     'SUPABASE_URL',
     'SUPABASE_ANON_KEY',
-    'SUPABASE_SERVICE_KEY',
+    'SUPABASE_SERVICE_ROLE_KEY',
   ];
 
   // AI API キーは少なくとも1つ必要
