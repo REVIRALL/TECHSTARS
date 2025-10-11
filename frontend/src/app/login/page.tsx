@@ -61,8 +61,20 @@ export default function LoginPage() {
           setError('');
         }, 2000); // 2秒後に自動切り替え
       } else {
-        // エラーメッセージをマッピング（技術的詳細を隠蔽）
-        setError(ERROR_MESSAGES[apiError] || 'エラーが発生しました。もう一度お試しください。');
+        // エラーメッセージをマッピング（部分一致対応）
+        let mappedError = ERROR_MESSAGES[apiError];
+
+        // 完全一致しない場合は部分一致をチェック
+        if (!mappedError) {
+          for (const [key, value] of Object.entries(ERROR_MESSAGES)) {
+            if (apiError.startsWith(key)) {
+              mappedError = value;
+              break;
+            }
+          }
+        }
+
+        setError(mappedError || 'エラーが発生しました。もう一度お試しください。');
       }
     } finally {
       setLoading(false);
