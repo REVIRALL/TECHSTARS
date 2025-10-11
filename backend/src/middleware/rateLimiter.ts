@@ -75,12 +75,12 @@ const generalLimiter = createRateLimiter({
   blockDuration: 60,  // ブロック時間: 1分
 });
 
-// Admin APIエンドポイント用のレート制限（厳しめ）
-// 1分間に5回まで
+// Admin APIエンドポイント用のレート制限（管理者は複数エンドポイントを使用するため緩め）
+// 1分間に20回まで
 const adminLimiter = createRateLimiter({
-  points: 5,          // 5回のリクエストまで
+  points: 20,         // 20回のリクエストまで
   duration: 60,       // 1分間
-  blockDuration: 300, // ブロック時間: 5分
+  blockDuration: 120, // ブロック時間: 2分
 });
 
 /**

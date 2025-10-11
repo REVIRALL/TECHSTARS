@@ -11,6 +11,7 @@ const ERROR_MESSAGES: Record<string, string> = {
   'Email and password are required': 'メールアドレスとパスワードを入力してください',
   'Password must be at least 8 characters': 'パスワードは8文字以上で入力してください',
   'User already exists': 'このメールアドレスは既に登録されています',
+  'A user with this email address has already been registered': 'このメールアドレスは既に登録されています。ログインしてください。',
   'Too many requests': 'リクエストが多すぎます。しばらく待ってから再度お試しください',
 };
 
@@ -51,8 +52,18 @@ export default function LoginPage() {
       }
     } catch (err: any) {
       const apiError = err.response?.data?.error || '';
-      // エラーメッセージをマッピング（技術的詳細を隠蔽）
-      setError(ERROR_MESSAGES[apiError] || 'エラーが発生しました。もう一度お試しください。');
+
+      // 重複エラーの場合、ログインタブに自動切り替え
+      if (apiError === 'A user with this email address has already been registered' && !isLogin) {
+        setError('このメールアドレスは既に登録されています。ログインしてください。');
+        setTimeout(() => {
+          setIsLogin(true);
+          setError('');
+        }, 2000); // 2秒後に自動切り替え
+      } else {
+        // エラーメッセージをマッピング（技術的詳細を隠蔽）
+        setError(ERROR_MESSAGES[apiError] || 'エラーが発生しました。もう一度お試しください。');
+      }
     } finally {
       setLoading(false);
     }
