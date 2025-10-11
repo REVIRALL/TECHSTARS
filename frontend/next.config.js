@@ -17,9 +17,9 @@ const nextConfig = {
             value: [
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-              "style-src 'self' 'unsafe-inline'",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://code.getmdl.io",
               "img-src 'self' data: https:",
-              "font-src 'self' data:",
+              "font-src 'self' data: https://fonts.gstatic.com",
               "connect-src 'self' " + (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001') + " " + (process.env.NEXT_PUBLIC_SUPABASE_URL || ''),
               "frame-ancestors 'none'",
               "base-uri 'self'",
