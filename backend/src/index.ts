@@ -102,9 +102,9 @@ app.use(cors({
 app.use(compression());
 
 // JSON ペイロードサイズ制限
-// コードサイズ制限 (最大150KB) + JSON構造オーバーヘッド考慮 → 200KB
-app.use(express.json({ limit: '200kb' }));
-app.use(express.urlencoded({ extended: true, limit: '200kb' }));
+// コードサイズ制限 (最大1MB) + JSON構造オーバーヘッド考慮 → 1.5MB
+app.use(express.json({ limit: '1.5mb' }));
+app.use(express.urlencoded({ extended: true, limit: '1.5mb' }));
 app.use(morgan('combined', {
   stream: { write: message => logger.info(message.trim()) },
 }));

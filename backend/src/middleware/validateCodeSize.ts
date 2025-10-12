@@ -13,12 +13,12 @@ import { logger } from '../utils/logger';
  * @security CRITICAL - API料金保護に必須
  */
 
-// プラン別コードサイズ制限 (文字数)
+// コードサイズ制限 (文字数) - 全プラン共通
 const CODE_SIZE_LIMITS = {
-  free: 50000,        // 50KB相当 (約50,000文字 ≈ 12,500トークン)
-  standard: 100000,   // 100KB相当 (約100,000文字 ≈ 25,000トークン)
-  professional: 200000, // 200KB相当 (約200,000文字 ≈ 50,000トークン)
-  enterprise: 500000,  // 500KB相当 (約500,000文字 ≈ 125,000トークン)
+  free: 1000000,        // 1MB (約250,000トークン)
+  standard: 1000000,    // 1MB (約250,000トークン)
+  professional: 1000000, // 1MB (約250,000トークン)
+  enterprise: 1000000,   // 1MB (約250,000トークン)
 };
 
 // 絶対的な上限 (どのプランでも超えられない)
@@ -57,18 +57,8 @@ export const validateCodeSize = (req: Request, res: Response, next: NextFunction
         `Code size exceeded plan limit: user=${req.user?.id}, plan=${plan}, size=${codeSize}, limit=${limit}`
       );
 
-      // プランアップグレード提案
-      let upgradeMessage = '';
-      if (plan === 'free') {
-        upgradeMessage = ' Upgrade to Standard plan for 100KB limit.';
-      } else if (plan === 'standard') {
-        upgradeMessage = ' Upgrade to Professional plan for 200KB limit.';
-      } else if (plan === 'professional') {
-        upgradeMessage = ' Upgrade to Enterprise plan for 500KB limit.';
-      }
-
       throw new AppError(
-        `Code size exceeds your plan limit (${Math.floor(limit / 1000)}KB). Your code is ${Math.floor(codeSize / 1000)}KB.${upgradeMessage}`,
+        `Code size exceeds the limit (${Math.floor(limit / 1000)}KB). Your code is ${Math.floor(codeSize / 1000)}KB.`,
         413 // Payload Too Large
       );
     }

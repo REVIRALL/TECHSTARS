@@ -12,7 +12,7 @@ const router: express.Router = Router();
  * @desc    コード解析・解説生成
  * @access  Private
  * @security レート制限: 1分間に10回まで（API料金爆発防止）
- * @security コードサイズ制限: プラン別制限 (free: 50KB, standard: 100KB, pro: 200KB, enterprise: 500KB)
+ * @security コードサイズ制限: 全プラン共通 1MB (1,000KB)
  */
 router.post('/', rateLimitAnalyze, authenticate, validateCodeSize, checkPlanLimit('analyses'), analyzeController.analyzeCode);
 
