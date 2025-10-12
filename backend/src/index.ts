@@ -117,7 +117,7 @@ app.get('/health', (req, res) => {
 // ルート
 app.get('/', (req, res) => {
   res.json({
-    name: 'VIBECODING API',
+    name: 'TECHSTARS API',
     version: '0.1.0',
     status: 'running',
   });

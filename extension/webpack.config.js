@@ -3,7 +3,7 @@ const path = require('path');
 /**@type {import('webpack').Configuration}*/
 const config = {
   target: 'node',
-  mode: 'none',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
   entry: './src/extension.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -29,7 +29,7 @@ const config = {
       },
     ],
   },
-  devtool: 'nosources-source-map',
+  devtool: process.env.NODE_ENV === 'production' ? 'hidden-source-map' : 'nosources-source-map',
   infrastructureLogging: {
     level: 'log',
   },

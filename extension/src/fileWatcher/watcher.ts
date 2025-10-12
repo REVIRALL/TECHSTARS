@@ -81,12 +81,37 @@ export class FileWatcher {
       return;
     }
 
+    // 監視フォルダ設定を取得
+    const config = vscode.workspace.getConfiguration('vibecoding');
+    const watchFolders = config.get<string[]>('watchFolders', []);
+
+    // 監視フォルダが設定されている場合のみ、そのフォルダ内のファイルを記録
+    // 設定が空の場合は、何も記録しない（意図的に無視）
+    if (watchFolders.length === 0) {
+      console.log('No watch folders configured, skipping file tracking');
+      return;
+    }
+
+    // パスを正規化して比較（Windows/Unix互換）
+    const normalizedFilePath = document.uri.fsPath.replace(/\\/g, '/');
+    const isInWatchFolder = watchFolders.some(folder => {
+      const normalizedFolder = folder.replace(/\\/g, '/');
+      return normalizedFilePath.startsWith(normalizedFolder);
+    });
+
+    if (!isInWatchFolder) {
+      console.log('File not in watch folders:', normalizedFilePath);
+      return;
+    }
+
+    console.log('File is in watch folder, adding to recent changes');
+
     console.log('Adding to recent changes:', document.fileName);
 
     // 変更履歴に追加
     this.addRecentChange({
       filePath: document.uri.fsPath,
-      fileName: document.fileName.split('/').pop() || 'unknown',
+      fileName: document.fileName.split('/').pop() || document.fileName.split('\\').pop() || 'unknown',
       languageId: document.languageId,
       timestamp: Date.now(),
     });
@@ -139,6 +164,22 @@ export class FileWatcher {
   }
 
   /**
+   * HTMLエスケープ（XSS対策）
+   */
+  private escapeHtml(text: string | undefined | null): string {
+    if (!text) return '';
+    const map: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;',
+      '\\': '&#92;'
+    };
+    return String(text).replace(/[&<>"'\\]/g, (m) => map[m]);
+  }
+
+  /**
    * 解説表示 (シンプル版)
    */
   private async showExplanation(data: any): Promise<void> {
@@ -151,7 +192,15 @@ export class FileWatcher {
       }
     );
 
-    const explanation = data.explanation;
+    const explanation = data.explanation || {};
+
+    // 安全にデータを取得（Null参照対策）
+    const summary = this.escapeHtml(explanation.summary || 'N/A');
+    const level = this.escapeHtml(explanation.level || 'beginner');
+    const complexityScore = explanation.complexityScore || 'N/A';
+    const content = this.escapeHtml(explanation.content || '解説がありません');
+    const keyConcepts = Array.isArray(explanation.keyConcepts) ? explanation.keyConcepts : [];
+    const isCached = data.cached === true;
 
     panel.webview.html = `
 <!DOCTYPE html>
@@ -159,6 +208,7 @@ export class FileWatcher {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline';">
   <title>コード解説</title>
   <style>
     body {
@@ -204,35 +254,27 @@ export class FileWatcher {
   <h1>コード解説</h1>
 
   <div class="summary">
-    <strong>要約:</strong> ${explanation.summary || 'N/A'}
+    <strong>要約:</strong> ${summary}
   </div>
 
   <div class="metadata">
-    <span class="badge">レベル: ${explanation.level}</span>
-    <span class="badge">複雑度: ${explanation.complexityScore || 'N/A'}/10</span>
-    ${
-      data.cached
-        ? '<span class="badge" style="background: #28a745;">キャッシュ</span>'
-        : '<span class="badge">新規解析</span>'
-    }
+    <span class="badge">レベル: ${level}</span>
+    <span class="badge">複雑度: ${complexityScore}/10</span>
+    ${isCached ? '<span class="badge" style="background: #28a745;">キャッシュ</span>' : '<span class="badge">新規解析</span>'}
   </div>
 
-  ${
-    explanation.keyConcepts && explanation.keyConcepts.length > 0
-      ? `
+  ${keyConcepts.length > 0 ? `
   <div>
     <strong>重要な概念:</strong>
     <ul>
-      ${explanation.keyConcepts.map((concept: string) => `<li><code>${concept}</code></li>`).join('')}
+      ${keyConcepts.map((concept: string) => `<li><code>${this.escapeHtml(concept)}</code></li>`).join('')}
     </ul>
   </div>
-  `
-      : ''
-  }
+  ` : ''}
 
   <div class="content">
     <h2>詳細解説</h2>
-    <div>${explanation.content.replace(/\n/g, '<br>')}</div>
+    <div>${content.replace(/\n/g, '<br>')}</div>
   </div>
 </body>
 </html>

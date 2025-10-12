@@ -15,14 +15,14 @@ import { logger } from '../utils/logger';
 
 // プラン別コードサイズ制限 (文字数)
 const CODE_SIZE_LIMITS = {
-  free: 5000,        // 5KB相当 (約5,000文字 ≈ 1,250トークン)
-  standard: 20000,   // 20KB相当 (約20,000文字 ≈ 5,000トークン)
-  professional: 50000, // 50KB相当 (約50,000文字 ≈ 12,500トークン)
-  enterprise: 100000,  // 100KB相当 (約100,000文字 ≈ 25,000トークン)
+  free: 50000,        // 50KB相当 (約50,000文字 ≈ 12,500トークン)
+  standard: 100000,   // 100KB相当 (約100,000文字 ≈ 25,000トークン)
+  professional: 200000, // 200KB相当 (約200,000文字 ≈ 50,000トークン)
+  enterprise: 500000,  // 500KB相当 (約500,000文字 ≈ 125,000トークン)
 };
 
 // 絶対的な上限 (どのプランでも超えられない)
-const ABSOLUTE_MAX_SIZE = 150000; // 150KB (約37,500トークン)
+const ABSOLUTE_MAX_SIZE = 1000000; // 1MB (約250,000トークン)
 
 export const validateCodeSize = (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -60,11 +60,11 @@ export const validateCodeSize = (req: Request, res: Response, next: NextFunction
       // プランアップグレード提案
       let upgradeMessage = '';
       if (plan === 'free') {
-        upgradeMessage = ' Upgrade to Standard plan for 20KB limit.';
+        upgradeMessage = ' Upgrade to Standard plan for 100KB limit.';
       } else if (plan === 'standard') {
-        upgradeMessage = ' Upgrade to Professional plan for 50KB limit.';
+        upgradeMessage = ' Upgrade to Professional plan for 200KB limit.';
       } else if (plan === 'professional') {
-        upgradeMessage = ' Upgrade to Enterprise plan for 100KB limit.';
+        upgradeMessage = ' Upgrade to Enterprise plan for 500KB limit.';
       }
 
       throw new AppError(

@@ -2,7 +2,7 @@
 
 ## 概要
 
-VIBECODINGのデータベース設計は、Supabase (PostgreSQL 15) をベースに構築されています。
+TECHSTARSのデータベース設計は、Supabase (PostgreSQL 15) をベースに構築されています。
 
 **設計原則:**
 - Supabase Auth との完全統合

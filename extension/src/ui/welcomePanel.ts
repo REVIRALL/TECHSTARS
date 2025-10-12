@@ -25,10 +25,12 @@ export async function showWelcomePanel(
           await authManager.showLoginWebview();
           panel.dispose();
           break;
-        case 'openDashboard':
-          const dashboardUrl = process.env.FRONTEND_URL || 'http://localhost:3002';
-          vscode.env.openExternal(vscode.Uri.parse(`${dashboardUrl}/login`));
+        case 'openDashboard': {
+          // TECHSTARS学習プラットフォームを開く
+          const dashboardUrl = 'https://techstars-learn.vercel.app/login';
+          vscode.env.openExternal(vscode.Uri.parse(dashboardUrl));
           break;
+        }
         case 'dismiss':
           panel.dispose();
           break;
@@ -47,119 +49,245 @@ function getWelcomeHtml(): string {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VIBECODINGへようこそ</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      padding: 40px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 0;
+      background: linear-gradient(135deg, #0098ff 0%, #00d084 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: white;
       line-height: 1.6;
+      position: relative;
+      overflow: hidden;
+    }
+    body::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: drift 30s linear infinite;
+    }
+    @keyframes drift {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
     }
     .container {
-      max-width: 600px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      position: relative;
+      max-width: 650px;
+      width: 100%;
+      margin: 0 20px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 48px 40px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+      animation: slideIn 0.6s ease-out;
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .logo-icon {
+      width: 72px;
+      height: 72px;
+      background: white;
+      border-radius: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+    .logo-icon::before {
+      content: "V";
+      font-size: 40px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0098ff 0%, #00d084 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 8px;
       text-align: center;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
     .subtitle {
       text-align: center;
-      font-size: 1.2em;
-      opacity: 0.9;
-      margin-bottom: 30px;
+      font-size: 15px;
+      opacity: 0.92;
+      margin-bottom: 36px;
+      font-weight: 500;
     }
     .features {
-      margin: 30px 0;
+      margin: 0 0 36px 0;
     }
     .feature {
       display: flex;
-      align-items: center;
-      margin: 20px 0;
-      padding: 15px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
+      align-items: flex-start;
+      margin: 0 0 20px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: all 0.3s ease;
+    }
+    .feature:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
     .feature-icon {
-      font-size: 2em;
-      margin-right: 15px;
+      font-size: 32px;
+      margin-right: 16px;
+      line-height: 1;
+      flex-shrink: 0;
     }
     .feature-text h3 {
-      margin: 0 0 5px 0;
-      font-size: 1.2em;
+      margin: 0 0 6px 0;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
     }
     .feature-text p {
       margin: 0;
-      opacity: 0.8;
-      font-size: 0.9em;
+      opacity: 0.88;
+      font-size: 14px;
+      line-height: 1.5;
     }
     .buttons {
       display: flex;
-      gap: 15px;
-      margin-top: 40px;
+      gap: 12px;
+      margin-top: 36px;
       justify-content: center;
+      flex-wrap: wrap;
     }
     button {
-      padding: 15px 30px;
-      font-size: 1.1em;
+      padding: 16px 32px;
+      font-size: 15px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
-      font-weight: 600;
-      transition: transform 0.2s, box-shadow 0.2s;
+      font-weight: 700;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      letter-spacing: 0.3px;
+      position: relative;
+      overflow: hidden;
+    }
+    button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+    button:hover::before {
+      left: 100%;
     }
     button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    button:active {
+      transform: translateY(0);
     }
     .primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      background: white;
+      color: #0098ff;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+    .primary:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     }
     .secondary {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.15);
       color: white;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+    }
+    .secondary:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
     }
     .dismiss {
       background: transparent;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 0.9em;
-      padding: 10px 20px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+      padding: 12px 24px;
+      margin-top: 16px;
+    }
+    .dismiss:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .footer {
+      text-align: center;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .footer-text {
+      font-size: 12px;
+      opacity: 0.7;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <div class="logo">
+      <div class="logo-icon"></div>
+    </div>
+
     <h1>VIBECODINGへようこそ</h1>
     <p class="subtitle">AI時代のエンジニア育成プラットフォーム</p>
 
     <div class="features">
       <div class="feature">
-        <div class="feature-icon">[AI]</div>
+        <div class="feature-icon">🤖</div>
         <div class="feature-text">
           <h3>Claude Codeを自動検出</h3>
-          <p>AIが生成したコードを自動で認識し、理解をサポート</p>
+          <p>AIが生成したコードを自動で認識し、即座に学習支援を開始します</p>
         </div>
       </div>
 
       <div class="feature">
-        <div class="feature-icon">[解説]</div>
+        <div class="feature-icon">📚</div>
         <div class="feature-text">
           <h3>リアルタイム解説</h3>
-          <p>コードを書くたびに、自動で分かりやすい解説を生成</p>
+          <p>コードを書くたびに、自動で分かりやすい解説とヒントを生成</p>
         </div>
       </div>
 
       <div class="feature">
-        <div class="feature-icon">[学習]</div>
+        <div class="feature-icon">⚡</div>
         <div class="feature-text">
           <h3>ワンクリックで学習開始</h3>
-          <p>複雑な設定は不要。すぐに学習を始められます</p>
+          <p>複雑な設定は不要。今すぐ効率的な学習を始められます</p>
         </div>
       </div>
     </div>
@@ -173,8 +301,15 @@ function getWelcomeHtml(): string {
       </button>
     </div>
 
-    <div style="text-align: center; margin-top: 20px;">
+    <div style="text-align: center;">
       <button class="dismiss" onclick="dismiss()">後で表示</button>
+    </div>
+
+    <div class="footer">
+      <div class="footer-text">
+        © 2025 VIBECODING / TECHSTARS<br>
+        AI時代のエンジニアを育成する次世代学習プラットフォーム
+      </div>
     </div>
   </div>
 
@@ -182,15 +317,15 @@ function getWelcomeHtml(): string {
     const vscode = acquireVsCodeApi();
 
     function startLearning() {
-      vscode.postMessage({ command: 'startLearning' });
+      vscode.postMessage({ command: "startLearning" });
     }
 
     function openDashboard() {
-      vscode.postMessage({ command: 'openDashboard' });
+      vscode.postMessage({ command: "openDashboard" });
     }
 
     function dismiss() {
-      vscode.postMessage({ command: 'dismiss' });
+      vscode.postMessage({ command: "dismiss" });
     }
   </script>
 </body>

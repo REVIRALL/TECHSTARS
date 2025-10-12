@@ -1,10 +1,14 @@
 {
   "name": "vibecoding-extension",
   "displayName": "VIBECODING",
-  "description": "AIコード解説・学習支援VSCode拡張機能",
-  "version": "0.1.0",
+  "description": "AIコード解説・学習支援VSCode拡張機能 - 全言語対応・非エンジニア向け解説機能搭載",
+  "version": "0.2.0",
   "publisher": "vibecoding",
   "icon": "icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vibecoding/vibecoding"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -14,7 +18,7 @@
     "Machine Learning"
   ],
   "activationEvents": [
-    "onStartupFinished"
+    "*"
   ],
   "main": "./dist/extension.js",
   "contributes": {
@@ -22,6 +26,10 @@
       {
         "command": "vibecoding.login",
         "title": "VIBECODING: ログイン"
+      },
+      {
+        "command": "vibecoding.signup",
+        "title": "VIBECODING: 新規登録"
       },
       {
         "command": "vibecoding.logout",
@@ -42,6 +50,10 @@
       {
         "command": "vibecoding.analyzeSelection",
         "title": "VIBECODINGで解説"
+      },
+      {
+        "command": "vibecoding.generateTest",
+        "title": "VIBECODING: テストコードを生成"
       }
     ],
     "viewsContainers": {
@@ -74,6 +86,11 @@
     "configuration": {
       "title": "VIBECODING",
       "properties": {
+        "vibecoding.apiUrl": {
+          "type": "string",
+          "default": "https://techstars.onrender.com",
+          "description": "バックエンドAPIのURL（本番環境: https://techstars.onrender.com、ローカル: http://localhost:3001）"
+        },
         "vibecoding.watchFolders": {
           "type": "array",
           "default": [],
@@ -92,6 +109,13 @@
           "default": "beginner",
           "enum": ["beginner", "intermediate", "advanced"],
           "description": "解説レベル"
+        },
+        "vibecoding.requestTimeout": {
+          "type": "number",
+          "default": 600000,
+          "minimum": 10000,
+          "maximum": 3600000,
+          "description": "APIリクエストのタイムアウト（ミリ秒）。デフォルト: 600000ms (10分)。Render無料プランは30秒でサーバー側がタイムアウトします。長いコードを解析する場合は、サーバーを有料プランにアップグレードしてください。"
         }
       }
     }
