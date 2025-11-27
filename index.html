@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TECHSTARS AI - 現代のエンジニアへの最短ルート｜199万社が待つDX市場を攻略</title>
+  <meta name="description" content="中小企業の70%がDXを望む未開拓市場15.8兆円。AIで工数85%削減、いきなりプロエンジニアの世界へ。7日で実務レベルにマスターし、スキルアップを目指す。">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/techstars-logo.png">
+  <link rel="apple-touch-icon" href="assets/images/techstars-logo.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- AOS (Animate On Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans JP"', 'sans-serif'],
+            serif: ['"Shippori Mincho"', 'serif'],
+          },
+          colors: {
+            primary: '#0891b2', /* Cyan 600 - More Blueish */
+            secondary: '#f97316', /* Vibrant Orange */
+            dark: '#111827', /* Deep Charcoal */
+            light: '#ecfeff', /* Cyan 50 */
+            surface: '#ffffff',
+            accent: '#cffafe', /* Cyan 100 */
+          },
+          animation: {
+            'marquee': 'marquee 40s linear infinite',
+            'float-slow': 'float 8s ease-in-out infinite',
+          },
+          keyframes: {
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-100%)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-15px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Base Styles */
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      color: #111827;
+      background-color: #ecfeff;
+      /* Cyan 50 */
+      background-image: radial-gradient(#0891b2 0.5px, transparent 0.5px), radial-gradient(#0891b2 0.5px, #ecfeff 0.5px);
+      background-size: 20px 20px;
+      background-position: 0 0, 10px 10px;
+      background-attachment: fixed;
+      /* Parallax effect */
+      /* Extremely subtle opacity */
+      background-blend-mode: multiply;
+      opacity: 1;
+      /* Ensure body is visible */
+    }
+
+    /* Ensure content is readable above the pattern */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(236, 254, 255, 0.85);
+      /* Overlay to soften the pattern */
+      z-index: -50;
+      pointer-events: none;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Shippori Mincho', serif;
+    }
+
+    /* Diagonal Section Dividers */
+    .diagonal-section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .diagonal-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      z-index: -1;
+      transform: skewY(-3deg);
+      transform-origin: top left;
+    }
+
+    /* Diagonal Top Cut */
+    .diagonal-top {
+      clip-path: polygon(0 5vw, 100% 0, 100% 100%, 0 100%);
+      margin-top: -5vw;
+    }
+
+    /* Diagonal Bottom Cut */
+    .diagonal-bottom {
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 5vw), 0 100%);
+      padding-bottom: 5vw;
+    }
+
+    /* Background Video */
+    .hero-video-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(240, 253, 250, 0.92);
+      /* Turquoise Tint Overlay */
+      backdrop-filter: blur(2px);
+    }
+
+    /* Marquee */
+    .marquee-container {
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .marquee-content {
+      display: inline-block;
+      animation: marquee 40s linear infinite;
+    }
+
+    /* Sticky Scroll */
+    .sticky-container {
+      position: sticky;
+      top: 120px;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f0fdfa;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #0d9488;
+      border-radius: 4px;
+    }
+
+    /* Tech Particles */
+    .tech-particle {
+      position: fixed;
+      background: rgba(8, 145, 178, 0.1);
+      /* Primary color with low opacity */
+      border-radius: 2px;
+      pointer-events: none;
+      z-index: 0;
+      /* Behind content but in front of body bg */
+    }
+  </style>
+</head>
+
+<body class="antialiased relative">
+  <!-- Tech Particles Container -->
+  <div id="particles-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+  <!-- ========================================
+       Header
+       ======================================== -->
+  <header
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-teal-100">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <a href="#hero" class="flex items-center gap-3 group">
+          <img src="assets/images/techstars-logo.png" alt="TECHSTARS AI Logo" class="h-10 w-auto">
+          <span class="text-2xl font-bold text-dark tracking-tight font-serif">TECHSTARS AI</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#problem"
+            class="text-slate-600 font-medium hover:text-primary transition-colors text-sm tracking-wide">市場機会</a>
+          <a href="#solution"
+            class="text-slate-600 font-medium hover:text-primary transition-colors text-sm tracking-wide">解決策</a>
+          <a href="#curriculum"
+            class="text-slate-600 font-medium hover:text-primary transition-colors text-sm tracking-wide">カリキュラム</a>
+          <a href="#instructor"
+            class="text-slate-600 font-medium hover:text-primary transition-colors text-sm tracking-wide">講師</a>
+          <a href="#pricing"
+            class="text-slate-600 font-medium hover:text-primary transition-colors text-sm tracking-wide">料金</a>
+          <a href="#cta"
+            class="bg-primary text-white font-bold px-6 py-3 rounded-lg shadow-md hover:shadow-lg hover:bg-teal-700 transition-all duration-300 transform hover:-translate-y-0.5 text-sm">
+            無料で詳細を見る
+          </a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden text-dark p-2 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================
+       Hero Section (Diagonal Bottom)
+       ======================================== -->
+  <section id="hero"
+    class="relative min-h-screen flex items-center justify-center pt-20 pb-32 diagonal-bottom bg-light/90 overflow-hidden z-10">
+
+    <!-- Video Background -->
+    <div class="hero-video-container">
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="assets/videos/movietech.mp4" type="video/mp4">
+      </video>
+      <div class="hero-overlay"></div>
+    </div>
+
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+
+      <!-- Text Content -->
+      <div class="text-left" data-aos="fade-right" data-aos-duration="1000">
+        <div class="inline-block bg-white/90 border border-teal-200 px-4 py-1 rounded-full mb-6 shadow-sm">
+          <span class="text-primary font-bold text-sm tracking-widest uppercase">新時代のエンジニアリング</span>
+        </div>
+
+        <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-dark leading-[1.1] mb-8">
+          AIを相棒に、<br>
+          <span class="text-primary relative inline-block">
+            7日間
+            <svg class="absolute w-full h-3 -bottom-1 left-0 text-secondary opacity-40" viewBox="0 0 100 10"
+              preserveAspectRatio="none">
+              <path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="8" fill="none" />
+            </svg>
+          </span>で<br>
+          プロの世界へ。
+        </h1>
+
+        <p class="text-lg text-slate-600 leading-relaxed mb-10 max-w-lg font-medium">
+          未経験からシステム開発の前線へ。<br>
+          AIを活用し、圧倒的なスピードで<br>
+          プロフェッショナルなスキルを習得する<br>
+          次世代型エンジニア育成プログラム。
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="#cta"
+            class="bg-secondary text-white text-lg font-bold px-10 py-4 rounded-lg shadow-lg hover:shadow-xl hover:bg-orange-600 transition-all duration-300 text-center">
+            無料で詳細を見る
+          </a>
+          <a href="#curriculum"
+            class="bg-white/90 text-dark border border-gray-200 text-lg font-bold px-10 py-4 rounded-lg shadow-sm hover:shadow-md hover:border-primary transition-all duration-300 text-center">
+            カリキュラムを見る
+          </a>
+        </div>
+      </div>
+
+      <!-- Visual Content (Asymmetrical) -->
+      <div class="relative hidden md:block" data-aos="fade-left" data-aos-duration="1200">
+        <!-- Main Image Card -->
+        <div
+          class="absolute top-0 right-0 w-80 h-96 bg-white rounded-2xl shadow-2xl overflow-hidden transform rotate-3 z-10 border border-teal-100">
+          <div class="p-6 h-full flex flex-col justify-between bg-gradient-to-br from-white to-teal-50">
+            <div class="flex justify-between items-start">
+              <span class="text-4xl font-serif font-bold text-dark">01</span>
+              <span class="bg-primary text-white text-xs px-2 py-1 rounded">1日目</span>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-dark mb-2">AI Prompting</h3>
+              <p class="text-sm text-slate-500">自然言語でシステムを構築する技術</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secondary Image Card -->
+        <div
+          class="absolute top-20 right-40 w-72 h-80 bg-dark rounded-2xl shadow-xl overflow-hidden transform -rotate-6 z-0">
+          <div class="p-6 h-full flex flex-col justify-between text-white">
+            <div class="flex justify-between items-start">
+              <span class="text-4xl font-serif font-bold text-secondary">07</span>
+              <span class="bg-white/20 text-white text-xs px-2 py-1 rounded">7日目</span>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold mb-2">Full Stack</h3>
+              <p class="text-sm text-gray-400">実務レベルのアプリケーション完成</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Decorative Elements -->
+        <div class="absolute top-60 right-10 w-24 h-24 bg-secondary rounded-full opacity-20 blur-2xl animate-pulse">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================
+       Marquee (Trust Indicators)
+       ======================================== -->
+  <div class="bg-white/90 border-y border-teal-100 py-6 overflow-hidden relative z-10">
+    <div class="marquee-container">
+      <div class="marquee-content flex gap-16 items-center">
+        <!-- Duplicate items for seamless loop -->
+        <span class="text-xl font-bold text-gray-400 font-serif">TECHSTARS AI</span>
+        <span class="text-xl font-bold text-gray-400 font-serif">NEXT GENERATION</span>
+        <span class="text-xl font-bold text-gray-400 font-serif">AI POWERED</span>
+        <span class="text-xl font-bold text-gray-400 font-serif">HIGH SPEED</span>
+        <span class="text-xl font-bold text-gray-400 font-serif">PRACTICAL SKILLS</span>
+        <span class="text-xl font-bold text-gray-400 font-serif">TECHSTARS AI</span>
+        <span class="text-xl font-bold text-gray-400 font-serif">NEXT GENERATION</span>
+        <span class="text-xl font-bold text-gray-400 font-serif">AI POWERED</span>
+        <span class="text-xl font-bold text-gray-400 font-serif">HIGH SPEED</span>
+        <span class="text-xl font-bold text-gray-400 font-serif">PRACTICAL SKILLS</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================
+       Problem Section (Magazine Layout)
+       ======================================== -->
+  <section id="problem" class="py-32 bg-white relative">
+    <div class="max-w-7xl mx-auto px-4">
+
+      <div class="grid md:grid-cols-12 gap-12 items-start">
+        <!-- Left Column: Title & Context -->
+        <div class="md:col-span-5 sticky top-32">
+          <span class="text-secondary font-bold tracking-widest text-sm uppercase mb-4 block">市場機会</span>
+          <h2 class="text-4xl md:text-5xl font-bold text-dark mb-8 leading-tight">
+            巨大な<br>
+            <span class="text-primary">空白地帯</span>が<br>
+            そこにある。
+          </h2>
+          <p class="text-slate-600 text-lg leading-relaxed mb-8">
+            中小企業の70%がDXを望んでいるにも関わらず、担い手は圧倒的に不足しています。<br><br>
+            「コスパが悪い」「面倒」と敬遠されるこの領域にこそ、15.8兆円もの未開拓市場が眠っています。
+          </p>
+          <div class="flex items-center gap-4">
+            <div
+              class="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center text-primary font-bold text-xl">
+              70%</div>
+            <div class="text-sm font-bold text-dark">中小企業の<br>DX希望率</div>
+          </div>
+        </div>
+
+        <!-- Right Column: Asymmetrical Cards -->
+        <div class="md:col-span-7 space-y-12 mt-12 md:mt-0">
+
+          <!-- Card 1 -->
+          <div
+            class="bg-light p-10 rounded-tl-[4rem] rounded-br-[4rem] shadow-sm border border-teal-100 relative ml-0 md:ml-12"
+            data-aos="fade-up">
+            <div
+              class="absolute -top-6 -left-6 w-12 h-12 bg-secondary text-white flex items-center justify-center font-bold rounded-full shadow-lg">
+              !</div>
+            <h3 class="text-2xl font-bold text-dark mb-4">需要の爆発</h3>
+            <p class="text-slate-600 mb-6">
+              199万社が潜在顧客。競合他社が参入しない今が、最大のチャンスです。
+            </p>
+            <div class="text-4xl font-serif font-bold text-primary">15.8 Trillion</div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="bg-dark text-white p-10 rounded-tr-[4rem] rounded-bl-[4rem] shadow-xl relative mr-0 md:mr-12"
+            data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-2xl font-bold mb-4 text-accent">供給の不足</h3>
+            <p class="text-gray-400 mb-6">
+              既存のエンジニアは高単価な大手案件に集中。<br>
+              中小企業向け案件は「ブルーオーシャン」です。
+            </p>
+            <div class="flex gap-2">
+              <span class="w-2 h-2 bg-secondary rounded-full"></span>
+              <span class="w-2 h-2 bg-secondary rounded-full"></span>
+              <span class="w-2 h-2 bg-secondary rounded-full"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================
+       Solution (Before/After Slider)
+       ======================================== -->
+  <section id="solution" class="py-32 bg-light/90 diagonal-top diagonal-bottom relative z-10">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="text-center mb-20">
+        <h2 class="text-3xl md:text-5xl font-bold text-dark mb-6">
+          <span class="text-primary">AI</span>がルールを変えた
+        </h2>
+        <p class="text-lg text-slate-600">
+          「学習」から「活用」へ。パラダイムシフトが起きています。
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-0 shadow-2xl rounded-3xl overflow-hidden">
+        <!-- Old Way -->
+        <div class="bg-white p-12 md:p-16 border-r border-gray-100">
+          <div class="text-xs font-bold tracking-widest text-gray-400 mb-6">従来の手法</div>
+          <h3 class="text-2xl font-serif font-bold text-gray-400 mb-8">従来の学習</h3>
+          <ul class="space-y-6">
+            <li class="flex items-start gap-4">
+              <span class="text-gray-300 font-serif text-xl">01</span>
+              <div>
+                <p class="font-bold text-gray-500">学習期間: 6ヶ月〜2年</p>
+                <p class="text-sm text-gray-400">多くの人が挫折</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-4">
+              <span class="text-gray-300 font-serif text-xl">02</span>
+              <div>
+                <p class="font-bold text-gray-500">開発時間: 200時間</p>
+                <p class="text-sm text-gray-400">一つの案件に時間がかかる</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- New Way -->
+        <div class="bg-primary p-12 md:p-16 text-white relative overflow-hidden">
+          <div
+            class="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2">
+          </div>
+
+          <div class="relative z-10">
+            <div class="text-xs font-bold tracking-widest text-accent mb-6">AI時代の開発</div>
+            <h3 class="text-2xl font-serif font-bold text-white mb-8">AI時代の開発</h3>
+            <ul class="space-y-6">
+              <li class="flex items-start gap-4">
+                <span class="text-accent font-serif text-xl">01</span>
+                <div>
+                  <p class="font-bold text-white text-xl">学習期間: たった7日</p>
+                  <p class="text-sm text-teal-100">誰でも習得可能</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-4">
+                <span class="text-accent font-serif text-xl">02</span>
+                <div>
+                  <p class="font-bold text-white text-xl">開発時間: 30時間</p>
+                  <p class="text-sm text-teal-100">工数85%削減</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       Curriculum Detail (Timeline) - NEW
+       ======================================== -->
+  <section id="service" class="py-32 bg-white/90 relative z-10">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-20">
+        <span class="text-secondary font-bold tracking-widest text-sm uppercase mb-2 block">学習ロードマップ</span>
+        <h2 class="text-3xl md:text-5xl font-bold text-dark mb-6">7 Days Roadmap</h2>
+        <p class="text-lg text-slate-600">無駄を極限まで削ぎ落とした、実践特化型カリキュラム</p>
+      </div>
+
+      <div class="relative">
+        <!-- Center Line -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-teal-100 hidden md:block"></div>
+
+        <div class="space-y-12">
+          <!-- Day 1-2 -->
+          <div class="flex flex-col md:flex-row items-center justify-between gap-8 group">
+            <div class="w-full md:w-5/12 text-right order-2 md:order-1">
+              <h3 class="text-xl font-bold text-dark">AI Prompt Engineering</h3>
+              <p class="text-slate-500 text-sm mt-2">AIへの指示出し（プロンプト）の基礎から応用まで。意図通りのコードを出力させる技術。</p>
+            </div>
+            <div
+              class="w-12 h-12 rounded-full bg-white border-4 border-primary z-10 flex items-center justify-center font-bold text-primary shadow-sm order-1 md:order-2 group-hover:scale-110 transition-transform">
+              1-2</div>
+            <div class="w-full md:w-5/12 order-3">
+              <span class="bg-teal-50 text-primary text-xs font-bold px-3 py-1 rounded-full">基礎構築</span>
+            </div>
+          </div>
+
+          <!-- Day 3-4 -->
+          <div class="flex flex-col md:flex-row items-center justify-between gap-8 group">
+            <div class="w-full md:w-5/12 text-right md:text-left order-2 md:order-3">
+              <h3 class="text-xl font-bold text-dark">Frontend & UI/UX</h3>
+              <p class="text-slate-500 text-sm mt-2">HTML/CSS/Tailwind CSSを用いたモダンなUI構築。AIを使ったデザインカンプからのコーディング。</p>
+            </div>
+            <div
+              class="w-12 h-12 rounded-full bg-white border-4 border-secondary z-10 flex items-center justify-center font-bold text-secondary shadow-sm order-1 md:order-2 group-hover:scale-110 transition-transform">
+              3-4</div>
+            <div class="w-full md:w-5/12 order-3 md:order-1 text-right">
+              <span class="bg-orange-50 text-secondary text-xs font-bold px-3 py-1 rounded-full">実装力</span>
+            </div>
+          </div>
+
+          <!-- Day 5-6 -->
+          <div class="flex flex-col md:flex-row items-center justify-between gap-8 group">
+            <div class="w-full md:w-5/12 text-right order-2 md:order-1">
+              <h3 class="text-xl font-bold text-dark">Backend & Database</h3>
+              <p class="text-slate-500 text-sm mt-2">Supabase/Firebaseを活用したサーバーレス開発。認証機能やデータベース連携の実装。</p>
+            </div>
+            <div
+              class="w-12 h-12 rounded-full bg-white border-4 border-primary z-10 flex items-center justify-center font-bold text-primary shadow-sm order-1 md:order-2 group-hover:scale-110 transition-transform">
+              5-6</div>
+            <div class="w-full md:w-5/12 order-3">
+              <span class="bg-teal-50 text-primary text-xs font-bold px-3 py-1 rounded-full">機能開発</span>
+            </div>
+          </div>
+
+          <!-- Day 7 -->
+          <div class="flex flex-col md:flex-row items-center justify-between gap-8 group">
+            <div class="w-full md:w-5/12 text-right md:text-left order-2 md:order-3">
+              <h3 class="text-xl font-bold text-dark">Deployment & Release</h3>
+              <p class="text-slate-500 text-sm mt-2">Vercelへのデプロイ、独自ドメイン設定。Webサービスとして世界に公開する。</p>
+            </div>
+            <div
+              class="w-12 h-12 rounded-full bg-dark border-4 border-dark z-10 flex items-center justify-center font-bold text-white shadow-sm order-1 md:order-2 group-hover:scale-110 transition-transform">
+              7</div>
+            <div class="w-full md:w-5/12 order-3 md:order-1 text-right">
+              <span class="bg-gray-100 text-dark text-xs font-bold px-3 py-1 rounded-full">公開</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       Instructor Story - NEW
+       ======================================== -->
+  <section id="instructor" class="py-32 bg-dark text-white relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-1/2 h-full bg-gray-800 transform skew-x-12 translate-x-20 opacity-50"></div>
+
+    <div class="max-w-6xl mx-auto px-4 relative z-10">
+      <div class="grid md:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="text-secondary font-bold tracking-widest text-sm uppercase mb-4 block">講師紹介</span>
+          <h2 class="text-4xl md:text-5xl font-bold mb-8 font-serif">
+            「文系・未経験」だった<br>私だからこそ、<br>伝えられることがある。
+          </h2>
+          <p class="text-gray-400 leading-relaxed mb-8">
+            元々は完全な非エンジニア。営業職として働く中で、非効率な業務に疑問を持ち、プログラミング学習を開始。<br>
+            しかし、従来の学習方法では挫折の連続でした。<br><br>
+            転機はAIの登場。「コードを書く」のではなく「AIに書かせる」ことにシフトした瞬間、開発スピードが劇的に向上。<br>
+            そのノウハウを体系化したのが、このTECHSTARS AIです。
+          </p>
+          <div class="flex gap-8 border-t border-gray-700 pt-8">
+            <div>
+              <p class="text-3xl font-bold text-white">240<span class="text-secondary text-lg">+</span></p>
+              <p class="text-xs text-gray-500">Projects</p>
+            </div>
+            <div>
+              <p class="text-3xl font-bold text-white">82M<span class="text-secondary text-lg">JPY</span></p>
+              <p class="text-xs text-gray-500">Sales</p>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="aspect-[3/4] bg-gray-700 rounded-2xl overflow-hidden relative">
+            <!-- Placeholder for Instructor Image -->
+            <div class="absolute inset-0 flex items-center justify-center bg-gray-800 text-gray-600 font-bold">
+              Instructor Image
+            </div>
+            <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent">
+              <p class="text-white font-bold text-lg">Taro Yamada</p>
+              <p class="text-secondary text-sm">TECHSTARS AI Founder</p>
+            </div>
+          </div>
+          <!-- Decorative Frame -->
+          <div class="absolute -top-4 -right-4 w-full h-full border-2 border-secondary rounded-2xl -z-10"></div>
+        </div>
+      </div>
+
+      <!-- Feature 2: Explanation Level (Interactive Feel) -->
+      <div class="flex flex-col md:flex-row-reverse items-center gap-16">
+        <div class="w-full md:w-1/2" data-aos="fade-left">
+          <div class="relative">
+            <!-- Decorative Circle -->
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-orange-50 rounded-full opacity-50 blur-3xl -z-10">
+            </div>
+
+            <img src="assets/images/explanation-level.png" alt="Explanation Level Selection"
+              class="relative rounded-2xl shadow-xl border border-gray-100 w-full md:w-3/4 mx-auto transform rotate-3 hover:rotate-0 transition duration-500">
+
+            <!-- Context Box -->
+            <div
+              class="absolute -left-4 top-1/2 -translate-y-1/2 bg-dark text-white p-6 rounded-2xl shadow-2xl max-w-xs hidden md:block">
+              <p class="text-sm font-medium mb-2 text-gray-400">Selected Level</p>
+              <p class="text-xl font-bold text-secondary">Beginner Mode</p>
+              <div class="w-full h-1 bg-gray-700 rounded-full mt-3 overflow-hidden">
+                <div class="w-1/3 h-full bg-secondary"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full md:w-1/2" data-aos="fade-right">
+
+          <h3 class="text-3xl md:text-4xl font-bold text-dark mb-6 font-serif">
+            解説のわかりやすさを、<br>
+            <span class="text-secondary">3段階</span>で選べます
+          </h3>
+          <p class="text-slate-600 text-lg leading-relaxed mb-8">
+            専門用語ばかりの解説では意味がありません。<br>
+            あなたの現在のスキルレベルに合わせて、AIが解説の「噛み砕き度」を調整します。
+          </p>
+
+          <div class="space-y-4">
+            <div class="bg-white p-4 rounded-xl border border-teal-100 shadow-sm flex items-center gap-4">
+              <span class="bg-teal-100 text-primary text-xs font-bold px-2 py-1 rounded">Beginner</span>
+              <p class="text-sm text-slate-600">専門用語を使わず、比喩を用いて直感的に解説</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center gap-4 opacity-60">
+              <span class="bg-gray-100 text-gray-500 text-xs font-bold px-2 py-1 rounded">Intermediate</span>
+              <p class="text-sm text-slate-600">実務で使われる標準的な用語で解説</p>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center gap-4 opacity-60">
+              <span class="bg-gray-100 text-gray-500 text-xs font-bold px-2 py-1 rounded">Advanced</span>
+              <p class="text-sm text-slate-600">内部構造やパフォーマンスへの影響まで深く解説</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================
+       Comparison Table - NEW
+       ======================================== -->
+  <section class="py-32 bg-white/90 relative z-10">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-dark mb-4">他社スクールとの比較</h2>
+      </div>
+
+      <div class="overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-gray-50">
+              <th class="p-6 text-sm font-bold text-slate-500">特徴</th>
+              <th class="p-6 text-sm font-bold text-slate-500">一般的なスクール</th>
+              <th class="p-6 text-lg font-bold text-primary bg-teal-50 border-b-2 border-primary">TECHSTARS AI</th>
+            </tr>
+          </thead>
+          <tbody class="text-dark">
+            <tr class="border-b border-gray-100">
+              <td class="p-6 font-bold">学習期間</td>
+              <td class="p-6 text-slate-600">3ヶ月〜6ヶ月</td>
+              <td class="p-6 font-bold text-primary bg-teal-50/30">7日間</td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="p-6 font-bold">カリキュラム</td>
+              <td class="p-6 text-slate-600">文法暗記中心</td>
+              <td class="p-6 font-bold text-primary bg-teal-50/30">AI活用・実践中心</td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="p-6 font-bold">講師</td>
+              <td class="p-6 text-slate-600">学生バイトの場合も</td>
+              <td class="p-6 font-bold text-primary bg-teal-50/30">現役AIエンジニア</td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="p-6 font-bold">案件獲得</td>
+              <td class="p-6 text-slate-600">サポートなし</td>
+              <td class="p-6 font-bold text-primary bg-teal-50/30">テンプレート提供</td>
+            </tr>
+            <tr>
+              <td class="p-6 font-bold">価格</td>
+              <td class="p-6 text-slate-600">60万〜80万円</td>
+              <td class="p-6 font-bold text-primary bg-teal-50/30">327,800円</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       Workflow (Sticky Scroll)
+       ======================================== -->
+  <section id="workflow" class="py-32 bg-light/90 diagonal-top relative z-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-20">
+        <h2 class="text-3xl md:text-5xl font-bold text-dark mb-6">学習の流れ</h2>
+        <p class="text-lg text-slate-600">シンプルかつ強力な4ステップ</p>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-12">
+        <!-- Sticky Image Side -->
+        <div class="hidden md:block w-1/2">
+          <div
+            class="sticky-container bg-white rounded-[2.5rem] aspect-square flex items-center justify-center shadow-xl border border-teal-100 relative overflow-hidden">
+            <div class="absolute inset-0 bg-light opacity-50"></div>
+            <div class="relative z-10 text-center">
+              <div class="text-9xl font-serif font-bold text-teal-50">AI</div>
+              <div class="text-2xl text-primary font-bold mt-4">Powered Workflow</div>
+            </div>
+            <!-- Decorative circle -->
+            <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-secondary rounded-full opacity-10 blur-3xl"></div>
+          </div>
+        </div>
+
+        <!-- Scrollable Text Side -->
+        <div class="w-full md:w-1/2 space-y-24 py-12">
+          <!-- Step 1 -->
+          <div class="bg-white p-10 rounded-[2rem] shadow-sm border border-gray-100 relative" data-aos="fade-up">
+            <div
+              class="absolute -left-4 top-10 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+              1</div>
+            <h3 class="text-2xl font-bold text-dark mb-4 pl-6">指示 (Prompt)</h3>
+            <p class="text-slate-600 text-lg pl-6">
+              「こんな機能が欲しい」とAIに伝えるだけ。<br>
+              専門用語は不要。あなたの言葉で指示を出します。
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="bg-white p-10 rounded-[2rem] shadow-sm border border-gray-100 relative" data-aos="fade-up">
+            <div
+              class="absolute -left-4 top-10 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+              2</div>
+            <h3 class="text-2xl font-bold text-dark mb-4 pl-6">生成 (Generate)</h3>
+            <p class="text-slate-600 text-lg pl-6">
+              AIが数秒で高品質なコードを生成。<br>
+              人間なら数時間かかる作業が一瞬で完了します。
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="bg-white p-10 rounded-[2rem] shadow-sm border border-gray-100 relative" data-aos="fade-up">
+            <div
+              class="absolute -left-4 top-10 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+              3</div>
+            <h3 class="text-2xl font-bold text-dark mb-4 pl-6">理解 (Understand)</h3>
+            <p class="text-slate-600 text-lg pl-6">
+              TECHSTARS AIシステムがコードを解説。<br>
+              ブラックボックス化せず、あなたの知識として定着させます。
+            </p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="bg-white p-10 rounded-[2rem] shadow-sm border border-gray-100 relative" data-aos="fade-up">
+            <div
+              class="absolute -left-4 top-10 w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white font-bold">
+              4</div>
+            <h3 class="text-2xl font-bold text-dark mb-4 pl-6">調整 (Customize)</h3>
+            <p class="text-slate-600 text-lg pl-6">
+              理解したコードを自由にカスタマイズ。<br>
+              世界に一つだけのアプリケーションが完成します。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       Pricing Section
+       ======================================== -->
+  <section id="pricing" class="py-32 bg-white/90 relative z-10">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="text-center mb-20">
+        <h2 class="text-3xl md:text-5xl font-bold text-dark mb-6">料金プラン</h2>
+        <p class="text-lg text-slate-600">未来への投資</p>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-primary to-teal-700 rounded-[3rem] p-10 md:p-20 text-center text-white relative overflow-hidden shadow-2xl">
+        <!-- Background decoration -->
+        <div
+          class="absolute top-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2">
+        </div>
+
+        <div class="relative z-10">
+          <p class="text-xl font-bold mb-4 opacity-90">受講料（税込）</p>
+          <div class="text-6xl md:text-8xl font-bold mb-6 tracking-tight font-serif">
+            327,800<span class="text-3xl md:text-4xl font-bold sans-serif">円</span>
+          </div>
+          <p class="text-sm opacity-80 mb-12">※分割払い対応可能</p>
+
+          <div class="flex flex-col md:flex-row justify-center gap-6 text-left">
+            <div class="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 flex-1">
+              <h4 class="font-bold text-lg mb-2 text-accent">全て込み</h4>
+              <p class="text-sm opacity-90">教材費・システム利用料・サポート費すべて込み</p>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 flex-1">
+              <h4 class="font-bold text-lg mb-2 text-secondary">無制限サポート</h4>
+              <p class="text-sm opacity-90">期間中の質問・相談は無制限対応</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bonus -->
+      <div class="mt-12 bg-orange-50 border border-orange-100 rounded-[2rem] p-8 md:p-12">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div>
+            <span
+              class="bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full mb-4 inline-block animate-pulse">先着100名限定</span>
+            <h3 class="text-2xl font-bold text-dark mb-2">特典: 案件獲得スターターキット</h3>
+            <p class="text-slate-600 font-medium">テンプレート集（5万円相当） & 営業ノウハウ動画（3万円相当）</p>
+          </div>
+          <div class="text-right">
+            <p class="text-4xl font-black text-secondary">FREE</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       FAQ Section
+       ======================================== -->
+  <section id="faq" class="py-32 bg-light/90 relative z-10">
+    <div class="max-w-3xl mx-auto px-4">
+      <div class="text-center mb-20">
+        <h2 class="text-3xl md:text-5xl font-bold text-dark mb-6">FAQ</h2>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Q1 -->
+        <div
+          class="faq-item bg-white rounded-2xl p-8 shadow-sm cursor-pointer hover:shadow-md transition-all border border-gray-100">
+          <div class="flex justify-between items-center">
+            <h3 class="font-bold text-dark pr-8">Q. プログラミング完全未経験でも大丈夫ですか？</h3>
+            <svg class="faq-icon w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer hidden mt-4 pt-4 border-t border-gray-100">
+            <p class="text-slate-600 text-sm leading-relaxed">
+              はい、問題ありません。講師自身も営業職からのスタートで、プログラミング経験ゼロでした。AIを活用することで、従来の学習方法とは全く異なるアプローチが可能です。</p>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div
+          class="faq-item bg-white rounded-2xl p-8 shadow-sm cursor-pointer hover:shadow-md transition-all border border-gray-100">
+          <div class="flex justify-between items-center">
+            <h3 class="font-bold text-dark pr-8">Q. 本当に7日で実務レベルになれますか？</h3>
+            <svg class="faq-icon w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer hidden mt-4 pt-4 border-t border-gray-100">
+            <p class="text-slate-600 text-sm leading-relaxed">
+              はい。「AIを使いこなす力」を習得するという意味で実務レベルに到達します。AIに指示を出し、生成されたコードを理解・修正する能力を7日間で身につけます。</p>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div
+          class="faq-item bg-white rounded-2xl p-8 shadow-sm cursor-pointer hover:shadow-md transition-all border border-gray-100">
+          <div class="flex justify-between items-center">
+            <h3 class="font-bold text-dark pr-8">Q. どんな人に向いていますか？</h3>
+            <svg class="faq-icon w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div class="faq-answer hidden mt-4 pt-4 border-t border-gray-100">
+            <p class="text-slate-600 text-sm leading-relaxed">副業で収入を増やしたい方、中小企業のDX支援に興味がある方、AIを活用した新しいスキルを身につけたい方に最適です。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================
+       CTA Section (Diagonal Cut)
+       ======================================== -->
+  <section id="cta" class="py-32 bg-dark text-white relative overflow-hidden diagonal-top">
+    <div class="absolute inset-0 bg-[url('assets/images/noise.png')] opacity-5 mix-blend-overlay"></div>
+
+    <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+      <h2 class="text-4xl md:text-6xl font-bold mb-12 leading-tight font-serif">
+        今、この瞬間も<br>
+        <span class="text-secondary">199万社</span>が<br>あなたを待っている
+      </h2>
+
+      <div
+        class="bg-gray-800/80 backdrop-blur-xl rounded-[3rem] p-10 md:p-20 shadow-2xl border border-gray-700 relative overflow-hidden group">
+
+        <!-- Background Glow -->
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-r from-primary/20 to-secondary/20 opacity-30 blur-3xl rounded-full pointer-events-none">
+        </div>
+
+        <div class="relative z-10 flex flex-col items-center">
+
+          <!-- Dynamic Counter Badge -->
+          <div
+            class="bg-dark/60 backdrop-blur-md border border-white/10 p-6 rounded-2xl inline-block mb-12 shadow-lg transform hover:scale-105 transition-transform duration-300">
+            <div class="flex items-center gap-6">
+              <!-- Live Indicator -->
+              <div class="flex items-center gap-2">
+                <span class="relative flex h-3 w-3">
+                  <span
+                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+                <span class="font-bold tracking-widest text-xs uppercase text-red-400">LIVE STATUS</span>
+              </div>
+
+              <div class="h-8 w-px bg-white/10"></div>
+
+              <!-- Counter -->
+              <div class="flex items-end gap-3">
+                <span class="text-sm font-medium text-gray-300 mb-2">残り枠</span>
+                <div class="flex items-baseline gap-1">
+                  <span id="spots-counter"
+                    class="text-5xl font-black text-secondary tabular-nums leading-none tracking-tighter transition-all duration-200">13</span>
+                  <span class="text-lg font-medium text-gray-500">/ 100</span>
+                </div>
+              </div>
+            </div>
+            <!-- Progress Bar -->
+            <div class="w-full h-1.5 bg-gray-700 rounded-full mt-4 overflow-hidden">
+              <div id="spots-progress"
+                class="h-full bg-gradient-to-r from-secondary to-red-500 w-[13%] transition-all duration-500"></div>
+            </div>
+            <p class="text-xs text-gray-400 mt-2 text-right">※ 申し込みが殺到しています</p>
+          </div>
+
+          <button
+            class="w-full md:w-auto bg-gradient-to-r from-secondary to-orange-600 text-white text-2xl md:text-3xl font-bold px-16 py-8 rounded-full shadow-[0_0_40px_rgba(249,115,22,0.4)] hover:shadow-[0_0_60px_rgba(249,115,22,0.6)] hover:scale-105 transition-all duration-300 mb-8 border-t border-white/20">
+            今すぐPMエンジニアへの道を始める
+          </button>
+
+          <p class="text-sm text-gray-400">※ クリック後、申し込みフォームに移動します</p>
+        </div>
+      </div>
+
+      <div class="mt-16 flex flex-col items-center gap-6">
+        <p class="font-bold text-gray-400">主催: 合同会社リバイラル</p>
+        <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm text-gray-500 font-medium">
+          <a href="./tokushoho.html" target="_blank" rel="noopener noreferrer"
+            class="hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5">特定商取引法</a>
+          <span class="hidden md:inline">|</span>
+          <a href="./privacy.html" target="_blank" rel="noopener noreferrer"
+            class="hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5">プライバシーポリシー</a>
+          <span class="hidden md:inline">|</span>
+          <a href="./terms.html" target="_blank" rel="noopener noreferrer"
+            class="hover:text-white transition-colors border-b border-transparent hover:border-white pb-0.5">利用規約</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      once: true,
+      offset: 50,
+      easing: 'ease-out-cubic'
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    // Add mobile menu logic here if needed
+
+    // FAQ Toggle
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const answer = item.querySelector('.faq-answer');
+        const icon = item.querySelector('.faq-icon');
+
+        answer.classList.toggle('hidden');
+        if (answer.classList.contains('hidden')) {
+          icon.style.transform = 'rotate(0deg)';
+        } else {
+          icon.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+
+    // Dynamic Counter Animation
+    const counterElement = document.getElementById('spots-counter');
+    const progressElement = document.getElementById('spots-progress');
+    let count = 13;
+    const minCount = 3;
+
+    function updateCounter() {
+      counterElement.innerText = count;
+      progressElement.style.width = count + '%';
+
+      // Visual pop effect
+      counterElement.classList.add('text-white', 'scale-110');
+      setTimeout(() => {
+        counterElement.classList.remove('text-white', 'scale-110');
+      }, 200);
+    }
+
+    function decreaseCounter() {
+      if (count > minCount) {
+        // Random chance to decrease to simulate organic traffic
+        if (Math.random() > 0.4) {
+          count--;
+          updateCounter();
+        }
+
+        // Schedule next check
+        // Random interval between 2s and 6s
+        setTimeout(decreaseCounter, Math.random() * 4000 + 2000);
+      }
+    }
+
+    // Start counter when CTA section is in view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setTimeout(decreaseCounter, 1500); // Start shortly after viewing
+          observer.disconnect();
+        }
+      });
+    });
+
+    const ctaSection = document.getElementById('cta');
+    if (ctaSection) {
+      observer.observe(ctaSection);
+    }
+
+    // Tech Particles Generator
+    function createParticles() {
+      const container = document.getElementById('particles-container');
+      const particleCount = 20; // Number of particles
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('tech-particle');
+
+        // Random size
+        const size = Math.random() * 10 + 2; // 2px to 12px
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+
+        // Random position
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+
+        // Random opacity
+        particle.style.opacity = Math.random() * 0.3 + 0.05;
+
+        // Random animation duration
+        const duration = Math.random() * 20 + 10; // 10s to 30s
+        particle.style.transition = `transform ${duration}s linear`;
+
+        container.appendChild(particle);
+
+        // Animate
+        animateParticle(particle);
+      }
+    }
+
+    function animateParticle(particle) {
+      // Move to a new random position
+      const x = (Math.random() - 0.5) * 200; // -100px to 100px
+      const y = (Math.random() - 0.5) * 200; // -100px to 100px
+
+      particle.style.transform = `translate(${x}px, ${y}px)`;
+
+      // Loop animation
+      setTimeout(() => {
+        animateParticle(particle);
+      }, Math.random() * 5000 + 5000);
+    }
+
+    // Initialize particles
+    createParticles();
+  </script>
+</body>
+
+</html>
