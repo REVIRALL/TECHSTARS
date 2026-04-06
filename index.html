@@ -373,7 +373,7 @@
 
       <div class="grid md:grid-cols-12 gap-12 items-start">
         <!-- Left Column: Title & Context -->
-        <div class="md:col-span-5 sticky top-32">
+        <div class="md:col-span-5 md:sticky top-32">
           <span class="text-secondary font-bold tracking-widest text-sm uppercase mb-4 block">市場機会</span>
           <h2 class="text-4xl md:text-5xl font-bold text-dark mb-8 leading-tight">
             巨大な<br>
@@ -381,14 +381,21 @@
             そこにある。
           </h2>
           <p class="text-slate-600 text-lg leading-relaxed mb-8">
-            中小企業の70%がDXを望んでいるにも関わらず、担い手は圧倒的に不足しています。<br><br>
-            「コスパが悪い」「面倒」と敬遠されるこの領域にこそ、15.8兆円もの未開拓市場が眠っています。
+            中小企業の70%がDXを望んでいるにも関わらず、<br class="hidden md:inline">担い手は圧倒的に不足しています。<br><br>
+            「コスパが悪い」「面倒」と敬遠されるこの領域にこそ、<br class="hidden md:inline">15.8兆円もの未開拓市場が眠っています。
           </p>
-          <div class="flex items-center gap-4">
+          <div
+            class="bg-white/80 backdrop-blur-sm p-6 rounded-2xl border border-teal-100 shadow-lg flex items-center gap-6 max-w-sm">
             <div
-              class="w-16 h-16 rounded-full bg-teal-50 flex items-center justify-center text-primary font-bold text-xl">
-              70%</div>
-            <div class="text-sm font-bold text-dark">中小企業の<br>DX希望率</div>
+              class="w-20 h-20 rounded-full bg-gradient-to-br from-teal-50 to-teal-100 flex items-center justify-center text-primary font-black text-2xl shrink-0 shadow-inner">
+              70<span class="text-sm font-bold">%</span>
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-400 mb-1">MARKET DATA</div>
+              <div class="text-base font-bold text-dark leading-tight">
+                中小企業の<br>DX導入希望率
+              </div>
+            </div>
           </div>
         </div>
 
@@ -575,6 +582,95 @@
   </section>
 
   <!-- ========================================
+       Learning Tool Section - NEW
+       ======================================== -->
+  <section class="py-32 bg-dark text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-[url('assets/images/noise.png')] opacity-10 mix-blend-overlay"></div>
+    <div class="max-w-6xl mx-auto px-4 relative z-10">
+
+      <!-- Part 1: Learning Tool -->
+      <div class="flex flex-col md:flex-row items-center gap-16 mb-32">
+        <div class="w-full md:w-1/2" data-aos="fade-right">
+          <span class="text-secondary font-bold tracking-widest text-sm uppercase mb-4 block">学習環境</span>
+          <h2 class="text-3xl md:text-5xl font-bold text-white mb-8 leading-tight">
+            <span class="text-primary">自社開発ツール</span>で<br>
+            迷わず学べる。
+          </h2>
+          <p class="text-gray-400 text-lg leading-relaxed mb-8">
+            「何から始めればいいかわからない」<br>
+            そんな悩みは、TECHSTARS AI独自の学習サポートツールが解決します。<br><br>
+            AIによるコード解説、進捗管理、そして次にやるべきことの提示まで。<br>
+            まるで専属メンターが隣にいるような感覚で、学習に没頭できます。
+          </p>
+        </div>
+        <div class="w-full md:w-1/2" data-aos="fade-left">
+          <div class="relative">
+            <!-- Decorative elements -->
+            <div class="absolute -inset-4 bg-gradient-to-r from-primary to-teal-400 rounded-3xl opacity-20 blur-2xl">
+            </div>
+            <img src="assets/images/learning-tool.png" alt="Learning Support Tool Screen"
+              class="relative rounded-2xl shadow-2xl border border-white/10 w-full transform hover:scale-[1.02] transition-transform duration-500">
+          </div>
+        </div>
+      </div>
+
+      <!-- Part 2: Explanation Level -->
+      <div class="flex flex-col md:flex-row-reverse items-center gap-16">
+        <div class="w-full md:w-1/2" data-aos="fade-left">
+          <div class="relative">
+            <!-- Decorative Circle -->
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-orange-50 rounded-full opacity-10 blur-3xl -z-10">
+            </div>
+
+            <img src="assets/images/explanation-level.png" alt="Explanation Level Selection"
+              class="relative rounded-2xl shadow-xl border border-gray-700 w-full md:w-3/4 mx-auto transform rotate-3 hover:rotate-0 transition duration-500">
+
+            <!-- Context Box -->
+            <div
+              class="absolute -left-4 top-1/2 -translate-y-1/2 bg-gray-800 text-white p-6 rounded-2xl shadow-2xl max-w-xs hidden md:block border border-gray-700">
+              <p class="text-sm font-medium mb-2 text-gray-400">Selected Level</p>
+              <p class="text-xl font-bold text-secondary">Beginner Mode</p>
+              <div class="w-full h-1 bg-gray-700 rounded-full mt-3 overflow-hidden">
+                <div class="w-1/3 h-full bg-secondary"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full md:w-1/2" data-aos="fade-right">
+
+          <h3 class="text-3xl md:text-4xl font-bold text-white mb-6 font-serif">
+            解説のわかりやすさを、<br>
+            <span class="text-secondary">3段階</span>で選べます
+          </h3>
+          <p class="text-gray-400 text-lg leading-relaxed mb-8">
+            専門用語ばかりの解説では意味がありません。<br>
+            あなたの現在のスキルレベルに合わせて、AIが解説の「噛み砕き度」を調整します。
+          </p>
+
+          <div class="space-y-4">
+            <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 shadow-sm flex items-center gap-4">
+              <span
+                class="bg-teal-900/50 text-primary text-xs font-bold px-2 py-1 rounded border border-teal-800">Beginner</span>
+              <p class="text-sm text-gray-300">専門用語を使わず、比喩を用いて直感的に解説</p>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 shadow-sm flex items-center gap-4 opacity-60">
+              <span class="bg-gray-700 text-gray-400 text-xs font-bold px-2 py-1 rounded">Intermediate</span>
+              <p class="text-sm text-gray-400">実務で使われる標準的な用語で解説</p>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-xl border border-gray-700 shadow-sm flex items-center gap-4 opacity-60">
+              <span class="bg-gray-700 text-gray-400 text-xs font-bold px-2 py-1 rounded">Advanced</span>
+              <p class="text-sm text-gray-400">内部構造やパフォーマンスへの影響まで深く解説</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================
        Instructor Story - NEW
        ======================================== -->
   <section id="instructor" class="py-32 bg-dark text-white relative overflow-hidden">
@@ -608,10 +704,10 @@
           <div class="aspect-[3/4] bg-gray-700 rounded-2xl overflow-hidden relative">
             <!-- Placeholder for Instructor Image -->
             <div class="absolute inset-0 flex items-center justify-center bg-gray-800 text-gray-600 font-bold">
-              Instructor Image
+              <img src="assets/images/instructor.jpg" alt="Ryuhei Numakura" class="w-full h-full object-cover">
             </div>
             <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black/80 to-transparent">
-              <p class="text-white font-bold text-lg">Taro Yamada</p>
+              <p class="text-white font-bold text-lg">Ryuhei Numakura</p>
               <p class="text-secondary text-sm">TECHSTARS AI Founder</p>
             </div>
           </div>
@@ -621,56 +717,7 @@
       </div>
 
       <!-- Feature 2: Explanation Level (Interactive Feel) -->
-      <div class="flex flex-col md:flex-row-reverse items-center gap-16">
-        <div class="w-full md:w-1/2" data-aos="fade-left">
-          <div class="relative">
-            <!-- Decorative Circle -->
-            <div
-              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-orange-50 rounded-full opacity-50 blur-3xl -z-10">
-            </div>
 
-            <img src="assets/images/explanation-level.png" alt="Explanation Level Selection"
-              class="relative rounded-2xl shadow-xl border border-gray-100 w-full md:w-3/4 mx-auto transform rotate-3 hover:rotate-0 transition duration-500">
-
-            <!-- Context Box -->
-            <div
-              class="absolute -left-4 top-1/2 -translate-y-1/2 bg-dark text-white p-6 rounded-2xl shadow-2xl max-w-xs hidden md:block">
-              <p class="text-sm font-medium mb-2 text-gray-400">Selected Level</p>
-              <p class="text-xl font-bold text-secondary">Beginner Mode</p>
-              <div class="w-full h-1 bg-gray-700 rounded-full mt-3 overflow-hidden">
-                <div class="w-1/3 h-full bg-secondary"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="w-full md:w-1/2" data-aos="fade-right">
-
-          <h3 class="text-3xl md:text-4xl font-bold text-dark mb-6 font-serif">
-            解説のわかりやすさを、<br>
-            <span class="text-secondary">3段階</span>で選べます
-          </h3>
-          <p class="text-slate-600 text-lg leading-relaxed mb-8">
-            専門用語ばかりの解説では意味がありません。<br>
-            あなたの現在のスキルレベルに合わせて、AIが解説の「噛み砕き度」を調整します。
-          </p>
-
-          <div class="space-y-4">
-            <div class="bg-white p-4 rounded-xl border border-teal-100 shadow-sm flex items-center gap-4">
-              <span class="bg-teal-100 text-primary text-xs font-bold px-2 py-1 rounded">Beginner</span>
-              <p class="text-sm text-slate-600">専門用語を使わず、比喩を用いて直感的に解説</p>
-            </div>
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center gap-4 opacity-60">
-              <span class="bg-gray-100 text-gray-500 text-xs font-bold px-2 py-1 rounded">Intermediate</span>
-              <p class="text-sm text-slate-600">実務で使われる標準的な用語で解説</p>
-            </div>
-            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center gap-4 opacity-60">
-              <span class="bg-gray-100 text-gray-500 text-xs font-bold px-2 py-1 rounded">Advanced</span>
-              <p class="text-sm text-slate-600">内部構造やパフォーマンスへの影響まで深く解説</p>
-            </div>
-          </div>
-        </div>
-      </div>
 
     </div>
   </section>
@@ -684,40 +731,41 @@
         <h2 class="text-3xl font-bold text-dark mb-4">他社スクールとの比較</h2>
       </div>
 
-      <div class="overflow-hidden rounded-2xl border border-gray-200 shadow-sm">
+      <div class="overflow-hidden overflow-x-auto rounded-2xl border border-gray-200 shadow-sm">
         <table class="w-full text-left border-collapse">
           <thead>
             <tr class="bg-gray-50">
-              <th class="p-6 text-sm font-bold text-slate-500">特徴</th>
-              <th class="p-6 text-sm font-bold text-slate-500">一般的なスクール</th>
-              <th class="p-6 text-lg font-bold text-primary bg-teal-50 border-b-2 border-primary">TECHSTARS AI</th>
+              <th class="p-3 md:p-6 text-xs md:text-sm font-bold text-slate-500">特徴</th>
+              <th class="p-3 md:p-6 text-xs md:text-sm font-bold text-slate-500">一般的なスクール</th>
+              <th class="p-3 md:p-6 text-sm md:text-lg font-bold text-primary bg-teal-50 border-b-2 border-primary">
+                TECHSTARS AI</th>
             </tr>
           </thead>
           <tbody class="text-dark">
             <tr class="border-b border-gray-100">
-              <td class="p-6 font-bold">学習期間</td>
-              <td class="p-6 text-slate-600">3ヶ月〜6ヶ月</td>
-              <td class="p-6 font-bold text-primary bg-teal-50/30">7日間</td>
+              <td class="p-3 md:p-6 font-bold text-xs md:text-base">学習期間</td>
+              <td class="p-3 md:p-6 text-slate-600 text-xs md:text-base">3ヶ月〜6ヶ月</td>
+              <td class="p-3 md:p-6 font-bold text-primary bg-teal-50/30 text-xs md:text-base">7日間</td>
             </tr>
             <tr class="border-b border-gray-100">
-              <td class="p-6 font-bold">カリキュラム</td>
-              <td class="p-6 text-slate-600">文法暗記中心</td>
-              <td class="p-6 font-bold text-primary bg-teal-50/30">AI活用・実践中心</td>
+              <td class="p-3 md:p-6 font-bold text-xs md:text-base">カリキュラム</td>
+              <td class="p-3 md:p-6 text-slate-600 text-xs md:text-base">文法暗記中心</td>
+              <td class="p-3 md:p-6 font-bold text-primary bg-teal-50/30 text-xs md:text-base">AI活用・実践中心</td>
             </tr>
             <tr class="border-b border-gray-100">
-              <td class="p-6 font-bold">講師</td>
-              <td class="p-6 text-slate-600">学生バイトの場合も</td>
-              <td class="p-6 font-bold text-primary bg-teal-50/30">現役AIエンジニア</td>
+              <td class="p-3 md:p-6 font-bold text-xs md:text-base">講師</td>
+              <td class="p-3 md:p-6 text-slate-600 text-xs md:text-base">学生バイトの場合も</td>
+              <td class="p-3 md:p-6 font-bold text-primary bg-teal-50/30 text-xs md:text-base">現役AIエンジニア</td>
             </tr>
             <tr class="border-b border-gray-100">
-              <td class="p-6 font-bold">案件獲得</td>
-              <td class="p-6 text-slate-600">サポートなし</td>
-              <td class="p-6 font-bold text-primary bg-teal-50/30">テンプレート提供</td>
+              <td class="p-3 md:p-6 font-bold text-xs md:text-base">案件獲得</td>
+              <td class="p-3 md:p-6 text-slate-600 text-xs md:text-base">サポートなし</td>
+              <td class="p-3 md:p-6 font-bold text-primary bg-teal-50/30 text-xs md:text-base">テンプレート提供</td>
             </tr>
             <tr>
-              <td class="p-6 font-bold">価格</td>
-              <td class="p-6 text-slate-600">60万〜80万円</td>
-              <td class="p-6 font-bold text-primary bg-teal-50/30">327,800円</td>
+              <td class="p-3 md:p-6 font-bold text-xs md:text-base">価格</td>
+              <td class="p-3 md:p-6 text-slate-600 text-xs md:text-base">60万〜80万円</td>
+              <td class="p-3 md:p-6 font-bold text-primary bg-teal-50/30 text-xs md:text-base">327,800円</td>
             </tr>
           </tbody>
         </table>
@@ -740,7 +788,8 @@
         <div class="hidden md:block w-1/2">
           <div
             class="sticky-container bg-white rounded-[2.5rem] aspect-square flex items-center justify-center shadow-xl border border-teal-100 relative overflow-hidden">
-            <div class="absolute inset-0 bg-light opacity-50"></div>
+            <img src="assets/images/workflow.png" alt="AI Powered Workflow"
+              class="absolute inset-0 w-full h-full object-cover opacity-50">
             <div class="relative z-10 text-center">
               <div class="text-9xl font-serif font-bold text-teal-50">AI</div>
               <div class="text-2xl text-primary font-bold mt-4">Powered Workflow</div>
@@ -842,19 +891,7 @@
       </div>
 
       <!-- Bonus -->
-      <div class="mt-12 bg-orange-50 border border-orange-100 rounded-[2rem] p-8 md:p-12">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-          <div>
-            <span
-              class="bg-secondary text-white text-xs font-bold px-3 py-1 rounded-full mb-4 inline-block animate-pulse">先着100名限定</span>
-            <h3 class="text-2xl font-bold text-dark mb-2">特典: 案件獲得スターターキット</h3>
-            <p class="text-slate-600 font-medium">テンプレート集（5万円相当） & 営業ノウハウ動画（3万円相当）</p>
-          </div>
-          <div class="text-right">
-            <p class="text-4xl font-black text-secondary">FREE</p>
-          </div>
-        </div>
-      </div>
+
     </div>
   </section>
 
@@ -920,7 +957,7 @@
        CTA Section (Diagonal Cut)
        ======================================== -->
   <section id="cta" class="py-32 bg-dark text-white relative overflow-hidden diagonal-top">
-    <div class="absolute inset-0 bg-[url('assets/images/noise.png')] opacity-5 mix-blend-overlay"></div>
+    <div class="absolute inset-0 bg-[url('assets/images/noise.png')] opacity-20 mix-blend-overlay"></div>
 
     <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
       <h2 class="text-4xl md:text-6xl font-bold mb-12 leading-tight font-serif">
@@ -973,7 +1010,7 @@
           </div>
 
           <button
-            class="w-full md:w-auto bg-gradient-to-r from-secondary to-orange-600 text-white text-2xl md:text-3xl font-bold px-16 py-8 rounded-full shadow-[0_0_40px_rgba(249,115,22,0.4)] hover:shadow-[0_0_60px_rgba(249,115,22,0.6)] hover:scale-105 transition-all duration-300 mb-8 border-t border-white/20">
+            class="w-full md:w-auto bg-gradient-to-r from-secondary to-orange-600 text-white text-xl md:text-3xl font-bold px-8 py-4 md:px-16 md:py-8 rounded-full shadow-[0_0_40px_rgba(249,115,22,0.4)] hover:shadow-[0_0_60px_rgba(249,115,22,0.6)] hover:scale-105 transition-all duration-300 mb-8 border-t border-white/20">
             今すぐPMエンジニアへの道を始める
           </button>
 
