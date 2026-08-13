@@ -1,12 +1,42 @@
 [build]
-  # No build command is needed for a simple static site
-  command = "echo 'No build command needed'"
-  # Publish the root directory where index.html is located
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
 
+[build.environment]
+  NODE_VERSION = "20"
+
+# SPA Routing - fallback to index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security Headers
 [[headers]]
-  # Optional: Security headers
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

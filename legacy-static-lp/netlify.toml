@@ -1,0 +1,12 @@
+[build]
+  # No build command is needed for a simple static site
+  command = "echo 'No build command needed'"
+  # Publish the root directory where index.html is located
+  publish = "."
+
+[[headers]]
+  # Optional: Security headers
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"

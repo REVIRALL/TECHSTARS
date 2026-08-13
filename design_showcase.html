@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>God Level Design Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            400: '#33ebff',
+                            500: '#00e5ff',
+                            600: '#00acc2',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'bounce-slow': 'bounce 3s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="showcase.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="p-12 min-h-screen">
+
+    <div class="max-w-[1400px] mx-auto">
+        <header class="mb-20 text-center">
+            <h1
+                class="text-6xl font-black mb-4 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-brand-400 to-white">
+                DESIGN SYSTEM
+            </h1>
+            <p class="text-slate-400 font-mono tracking-widest text-sm">PROTOTYPE VARIATIONS // V1.0</p>
+        </header>
+
+        <!-- SECTION 1: SYSTEM CARDS -->
+        <div class="mb-32">
+            <div class="flex items-center gap-4 mb-12">
+                <div class="h-[1px] bg-white/20 flex-1"></div>
+                <h2 class="text-3xl font-bold font-mono text-brand-400">01. DATA CARDS</h2>
+                <div class="h-[1px] bg-white/20 flex-1"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+                <!-- 01: Glass Standard -->
+                <div
+                    class="glass-card p-8 rounded-2xl relative group overflow-hidden transition-all duration-500 hover:shadow-[0_0_30px_rgba(0,229,255,0.2)] hover:-translate-y-2">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 to-transparent"></div>
+                    <div class="flex justify-between items-start mb-8">
+                        <span
+                            class="font-mono text-[10px] text-brand-400 border border-brand-500/30 px-2 py-1 rounded">OUTPUT</span>
+                        <i data-lucide="cpu"
+                            class="text-slate-500 w-5 h-5 group-hover:text-brand-500 transition-colors"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div
+                            class="text-5xl font-black text-white mb-1 group-hover:scale-110 transition-transform origin-left">
+                            3</div>
+                        <div class="text-sm font-bold text-slate-400">種のシステム</div>
+                    </div>
+                    <div
+                        class="absolute -bottom-10 -right-10 w-32 h-32 bg-brand-500/10 rounded-full blur-2xl group-hover:bg-brand-500/20 transition-all">
+                    </div>
+                </div>
+
+                <!-- 02: Neon Cyber -->
+                <div
+                    class="relative bg-black border border-slate-800 p-8 group overflow-hidden hover:border-brand-500 transition-colors duration-300">
+                    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20">
+                    </div>
+                    <div
+                        class="absolute -right-4 top-1/2 -translate-y-1/2 text-[120px] font-black text-slate-900 leading-none select-none transition-transform duration-500 group-hover:text-slate-800 group-hover:translate-x-2">
+                        3</div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-2 h-2 bg-brand-500 rounded-full animate-pulse"></div>
+                            <span class="text-xs font-mono text-brand-500 tracking-widest">SYSTEM</span>
+                        </div>
+                        <div class="text-4xl font-bold text-white mb-2 glitch-hover">3 TYPES</div>
+                        <div class="w-12 h-1 bg-brand-500 group-hover:w-full transition-all duration-500"></div>
+                    </div>
+                </div>
+
+                <!-- 03: Floating Hologram -->
+                <div
+                    class="holographic p-8 rounded-xl border border-white/10 group transition-all duration-500 hover:border-brand-500/50">
+                    <div class="flex flex-col h-full justify-between">
+                        <div class="flex justify-between items-center">
+                            <span class="font-mono text-xs text-slate-400">v.3.0</span>
+                            <div
+                                class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center group-hover:border-brand-500 group-hover:text-brand-500 transition-all">
+                                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                            </div>
+                        </div>
+                        <div class="mt-8 text-center">
+                            <div
+                                class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 group-hover:to-brand-400 transition-all">
+                                3</div>
+                            <div class="text-sm tracking-widest font-bold text-slate-300 mt-2">SYSTEMS</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 04: Minimal Typographic -->
+                <div
+                    class="bg-white text-black p-8 relative overflow-hidden group hover:bg-brand-500 transition-colors duration-500">
+                    <div
+                        class="absolute -bottom-6 -left-6 text-[180px] font-black text-slate-100 leading-none group-hover:text-black/10 transition-colors">
+                        3</div>
+                    <div class="relative z-10 flex flex-col h-full justify-between">
+                        <div
+                            class="border-b-2 border-black w-8 group-hover:border-white pb-2 transition-all group-hover:w-16">
+                            <span class="font-bold text-xs tracking-wider">OUTPUT</span>
+                        </div>
+                        <div class="text-right mt-auto">
+                            <p class="font-bold text-lg group-hover:text-white">種のシステム</p>
+                            <p class="text-xs text-slate-500 group-hover:text-black/70">DEVELOPMENT</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 05: Glowing Edge -->
+                <div class="relative p-[2px] rounded-2xl overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-500 via-purple-600 to-brand-500 opacity-50 group-hover:opacity-100 transition-opacity duration-500 animate-spin-slow"
+                        style="animation-duration: 4s;"></div>
+                    <div
+                        class="relative bg-black h-full rounded-2xl p-8 flex flex-col items-center justify-center text-center">
+                        <div
+                            class="w-16 h-16 rounded-full bg-brand-500/10 flex items-center justify-center mb-4 text-brand-400 shadow-[0_0_20px_rgba(0,229,255,0.2)]">
+                            <i data-lucide="layers" class="w-8 h-8"></i>
+                        </div>
+                        <p class="text-4xl font-bold text-white mb-1">3</p>
+                        <p class="text-xs font-mono text-slate-400">AVAILABLE SYSTEMS</p>
+                    </div>
+                </div>
+
+                <!-- 06: Data Display -->
+                <div
+                    class="border border-slate-800 bg-slate-900/50 p-6 font-mono text-[10px] group hover:border-brand-500/50 transition-colors">
+                    <div class="flex justify-between text-slate-500 mb-4 border-b border-white/5 pb-2">
+                        <span>ID: SYS-03</span>
+                        <div class="flex gap-1">
+                            <div class="w-2 h-2 bg-slate-700 rounded-full"></div>
+                            <div class="w-2 h-2 bg-slate-700 rounded-full"></div>
+                            <div class="w-2 h-2 bg-brand-500 rounded-full animate-pulse"></div>
+                        </div>
+                    </div>
+                    <div class="space-y-2 mb-6 text-slate-300">
+                        <div class="flex justify-between"><span>STATUS</span><span class="text-brand-400">ACTIVE</span>
+                        </div>
+                        <div class="flex justify-between"><span>COUNT</span><span>03</span></div>
+                        <div class="flex justify-between"><span>TYPE</span><span>VARIATION</span></div>
+                    </div>
+                    <div class="h-1 w-full bg-slate-800 overflow-hidden relative">
+                        <div
+                            class="absolute inset-0 bg-brand-500 w-full animate-[scanline_2s_linear_infinite] opacity-50">
+                        </div>
+                        <div class="h-full bg-brand-500 w-[75%]"></div>
+                    </div>
+                    <p class="text-white font-bold text-lg mt-4">3種のシステム</p>
+                </div>
+
+                <!-- 07: Frost Bubble -->
+                <div
+                    class="relative rounded-3xl overflow-hidden bg-gradient-to-br from-white/10 to-white/0 p-8 backdrop-blur-md hover:scale-105 transition-transform duration-300 border border-white/20">
+                    <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-100 transition-opacity">
+                        <i data-lucide="asterisk" class="w-12 h-12 text-white rotating-icon"></i>
+                    </div>
+                    <p class="text-xs font-bold text-brand-300 mb-2 tracking-widest">COLLECTION</p>
+                    <h3 class="text-6xl font-black text-white drop-shadow-[0_0_15px_rgba(0,229,255,0.3)]">3</h3>
+                    <p class="text-slate-200 mt-2 font-medium">System Types</p>
+                </div>
+
+                <!-- 08: Brutalist -->
+                <div
+                    class="bg-brand-500 p-1 hover:-translate-y-2 hover:-translate-x-2 transition-transform duration-200">
+                    <div class="bg-black text-white h-full p-6 border-2 border-transparent">
+                        <div class="flex justify-between items-baseline border-b-2 border-brand-500 pb-4 mb-4">
+                            <span class="text-3xl font-black">03</span>
+                            <span class="text-xs font-bold bg-brand-500 text-black px-1">SYSTEMS</span>
+                        </div>
+                        <p class="font-bold text-xl leading-tight">THREE<br>DISTINCT<br>TYPES</p>
+                    </div>
+                </div>
+
+                <!-- 09: Soft Neumorphism (Dark) -->
+                <div
+                    class="rounded-2xl bg-[#0a0a0c] p-8 shadow-[-10px_-10px_30px_#141418,10px_10px_30px_#000] hover:shadow-none transition-shadow duration-300 group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-[#0a0a0c] lg:mb-6 mb-4 flex items-center justify-center shadow-[inset_-5px_-5px_10px_#141418,inset_5px_5px_10px_#000] group-hover:text-brand-500 transition-colors">
+                        <i data-lucide="box" class="w-6 h-6"></i>
+                    </div>
+                    <div class="text-3xl font-bold text-slate-200">3 Types</div>
+                    <div class="text-xs text-slate-500 mt-1">Application Systems</div>
+                </div>
+
+                <!-- 10: Interactive Reveal -->
+                <div class="relative h-[200px] rounded-xl overflow-hidden group cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=500&q=80"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 group-hover:opacity-20">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6">
+                        <div class="translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+                            <p
+                                class="text-brand-500 text-xs font-mono mb-1 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
+                                DISCOVER</p>
+                            <h3 class="text-2xl font-bold text-white mb-2">3 Systems</h3>
+                            <p
+                                class="text-xs text-slate-400 h-0 group-hover:h-auto opacity-0 group-hover:opacity-100 transition-all duration-300 delay-200">
+                                Explore our comprehensive suite of AI solutions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- SECTION 2: ICON BOXES -->
+        <div>
+            <div class="flex items-center gap-4 mb-12">
+                <div class="h-[1px] bg-white/20 flex-1"></div>
+                <h2 class="text-3xl font-bold font-mono text-brand-400">02. ICON GRIDS</h2>
+                <div class="h-[1px] bg-white/20 flex-1"></div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
+
+                <!-- 01: Standard Glow -->
+                <div
+                    class="w-24 h-24 bg-white/5 border border-white/10 flex items-center justify-center group hover:bg-brand-500 transition-all duration-300 rounded-lg">
+                    <i data-lucide="code" class="w-8 h-8 text-brand-500 group-hover:text-black transition-colors"></i>
+                </div>
+
+                <!-- 02: Rotating Border -->
+                <div class="w-24 h-24 relative flex items-center justify-center group">
+                    <div
+                        class="absolute inset-0 border-2 border-dashed border-slate-700 rounded-full group-hover:border-brand-500 group-hover:animate-spin-slow transition-colors">
+                    </div>
+                    <i data-lucide="terminal"
+                        class="w-8 h-8 text-white group-hover:text-brand-500 transition-colors"></i>
+                </div>
+
+                <!-- 03: 3D Float -->
+                <div
+                    class="w-24 h-24 bg-gradient-to-br from-slate-800 to-black rounded-2xl shadow-lg flex items-center justify-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_-5px_rgba(0,229,255,0.3)] border border-white/5">
+                    <i data-lucide="cpu" class="w-8 h-8 text-slate-300"></i>
+                </div>
+
+                <!-- 04: Diamond Gradient -->
+                <div class="w-24 h-24 flex items-center justify-center">
+                    <div
+                        class="w-16 h-16 bg-slate-900 rotate-45 border border-brand-500/30 group hover:bg-brand-500 hover:scale-110 transition-all duration-300 shadow-[0_0_15px_rgba(0,229,255,0.1)] flex items-center justify-center">
+                        <i data-lucide="zap"
+                            class="w-6 h-6 text-brand-500 -rotate-45 group-hover:text-black transition-colors"></i>
+                    </div>
+                </div>
+
+                <!-- 05: Inset Neumorph -->
+                <div
+                    class="w-24 h-24 rounded-full bg-[#050507] shadow-[inset_-5px_-5px_10px_rgba(255,255,255,0.05),inset_5px_5px_10px_#000] flex items-center justify-center group hover:shadow-[0_0_15px_var(--brand)] transition-shadow duration-300">
+                    <i data-lucide="braces"
+                        class="w-8 h-8 text-slate-400 group-hover:text-brand-500 transition-colors"></i>
+                </div>
+
+                <!-- 06: Ripple Pulse -->
+                <div class="w-24 h-24 relative flex items-center justify-center group">
+                    <div class="absolute inset-0 bg-brand-500 rounded-full opacity-0 group-hover:animate-ping"></div>
+                    <div
+                        class="relative z-10 w-full h-full bg-slate-900 rounded-full border border-slate-700 flex items-center justify-center group-hover:border-brand-500 transition-colors">
+                        <i data-lucide="activity" class="w-8 h-8 text-white"></i>
+                    </div>
+                </div>
+
+                <!-- 07: Hexagon Clip -->
+                <div
+                    class="w-24 h-24 bg-slate-800 hex-clip flex items-center justify-center hover:bg-brand-500 transition-colors duration-300 group">
+                    <i data-lucide="database"
+                        class="w-8 h-8 text-slate-400 group-hover:text-black transition-colors"></i>
+                </div>
+
+                <!-- 08: Corner Accent -->
+                <div class="w-24 h-24 bg-white/5 relative flex items-center justify-center group overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 w-0 h-0 border-t-[30px] border-r-[30px] border-t-transparent border-r-brand-500 transition-all duration-300 group-hover:border-r-white">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 w-2 h-2 bg-slate-700 group-hover:bg-brand-500 transition-colors">
+                    </div>
+                    <i data-lucide="server"
+                        class="w-8 h-8 text-white group-hover:scale-125 transition-transform duration-300"></i>
+                </div>
+
+                <!-- 09: Icon Glow Filter -->
+                <div class="w-24 h-24 flex items-center justify-center group">
+                    <div class="relative">
+                        <div
+                            class="absolute inset-0 bg-brand-500 blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-300">
+                        </div>
+                        <i data-lucide="globe"
+                            class="relative z-10 w-10 h-10 text-white group-hover:text-brand-100 transition-colors"></i>
+                    </div>
+                </div>
+
+                <!-- 10: Slide Reveal -->
+                <div
+                    class="w-24 h-24 bg-slate-900 border border-slate-800 relative overflow-hidden flex items-center justify-center group">
+                    <div
+                        class="absolute inset-0 bg-brand-500 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    </div>
+                    <i data-lucide="smartphone"
+                        class="relative z-10 w-8 h-8 text-slate-500 group-hover:text-black transition-colors duration-300"></i>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SECTION 3: PROCESS / TIMELINE -->
+    <div class="mb-32">
+        <div class="flex items-center gap-4 mb-12">
+            <div class="h-[1px] bg-white/20 flex-1"></div>
+            <h2 class="text-3xl font-bold font-mono text-brand-400">03. PROCESS & TIMELINE</h2>
+            <div class="h-[1px] bg-white/20 flex-1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-12">
+
+            <!-- 01: Vertical Neon Line -->
+            <div class="p-8 bg-black border border-white/10 rounded-xl relative overflow-hidden">
+                <div class="absolute left-8 top-0 bottom-0 w-[1px] bg-slate-800"></div>
+                <div class="absolute left-8 top-0 h-[50%] w-[1px] bg-brand-500 shadow-[0_0_10px_var(--brand)]"></div>
+                <div class="space-y-8 relative z-10">
+                    <div class="flex items-start gap-6 group">
+                        <div class="w-3 h-3 rounded-full bg-brand-500 mt-2 shadow-[0_0_10px_var(--brand)] timeline-dot">
+                        </div>
+                        <div>
+                            <h4 class="text-brand-500 font-mono text-xs mb-1">DAY 01</h4>
+                            <p class="text-white font-bold text-lg group-hover:translate-x-1 transition-transform">
+                                IGNITE</p>
+                            <p class="text-slate-500 text-sm mt-1">AIとの出会い</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-6 group">
+                        <div class="w-2 h-2 rounded-full bg-slate-600 mt-2 group-hover:bg-brand-500 transition-colors">
+                        </div>
+                        <div>
+                            <h4 class="text-slate-500 font-mono text-xs mb-1 group-hover:text-brand-400 text-brand-400">
+                                DAY 02</h4>
+                            <p
+                                class="text-slate-300 font-bold text-lg group-hover:translate-x-1 transition-transform group-hover:text-white">
+                                CREATE</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 02: Horizontal Step Cards -->
+            <div class="p-2 border border-white/5 rounded-xl bg-white/5 flex flex-col justify-center">
+                <div class="flex gap-2">
+                    <div
+                        class="flex-1 bg-brand-500 p-4 rounded-lg relative overflow-hidden group h-32 flex flex-col justify-between hover:w-[120%] transition-all duration-500">
+                        <span class="text-[40px] font-black text-black/20 absolute -right-2 -bottom-4">01</span>
+                        <p class="text-xs font-bold text-black bg-white/20 px-2 py-1 rounded w-fit">STEP 1</p>
+                        <p class="font-bold text-black leading-tight">Concept<br>Setup</p>
+                    </div>
+                    <div
+                        class="flex-1 bg-slate-800 p-4 rounded-lg relative overflow-hidden group hover:bg-slate-700 transition-colors">
+                        <span class="text-[40px] font-black text-white/5 absolute -right-2 -bottom-4">02</span>
+                        <p class="text-xs font-bold text-slate-400 mb-2">STEP 2</p>
+                        <p class="font-bold text-slate-300 leading-tight">Dev<br>Phase</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 03: Zigzag Path -->
+            <div
+                class="p-8 relative min-h-[250px] flex items-center justify-center bg-slate-900 border border-slate-800 rounded-xl overflow-hidden group">
+                <svg class="absolute top-1/2 left-0 w-full h-20 -translate-y-1/2 stroke-slate-700 fill-none"
+                    viewBox="0 0 300 100" preserveAspectRatio="none">
+                    <path d="M0,50 L50,80 L100,20 L150,80 L200,20 L250,50 L300,50" stroke-width="2" />
+                </svg>
+                <svg class="absolute top-1/2 left-0 w-full h-20 -translate-y-1/2 stroke-brand-500 fill-none"
+                    viewBox="0 0 300 100" preserveAspectRatio="none">
+                    <path d="M0,50 L50,80 L100,20 L150,80 L200,20" stroke-width="2" stroke-dasharray="300"
+                        stroke-dashoffset="300" class="group-hover:animate-[dash_2s_linear_forwards]" />
+                </svg>
+                <div class="relative z-10 grid grid-cols-3 w-full text-center gap-4">
+                    <div
+                        class="bg-black border border-brand-500 p-2 rounded shadow-[0_0_15px_rgba(0,229,255,0.2)] transform translate-y-8">
+                        <p class="text-xs font-bold text-brand-500">START</p>
+                    </div>
+                    <div class="bg-black border border-slate-700 p-2 rounded transform -translate-y-8">
+                        <p class="text-xs font-bold text-slate-400">MIDDLE</p>
+                    </div>
+                    <div class="bg-black border border-slate-700 p-2 rounded transform translate-y-8">
+                        <p class="text-xs font-bold text-slate-400">GOAL</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 04: Glass Steps Stack -->
+            <div class="relative h-[250px] flex items-center justify-center p-8">
+                <div
+                    class="absolute p-6 w-48 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl transform -translate-x-4 translate-y-4 z-10 transition-transform group-hover:-translate-x-8 group-hover:translate-y-8">
+                    <span class="text-slate-500 font-mono text-xs">Step 02</span>
+                </div>
+                <div
+                    class="absolute p-6 w-48 bg-black backdrop-blur-md border border-brand-500/50 rounded-xl z-20 shadow-xl transition-transform hover:scale-105">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-brand-500 font-mono text-xs">Step 01</span>
+                        <i data-lucide="check-circle" class="w-4 h-4 text-brand-500"></i>
+                    </div>
+                    <p class="font-bold">Initialization</p>
+                </div>
+            </div>
+
+            <!-- 05: Numbered Circle Flow -->
+            <div class="flex flex-col justify-between py-4 px-8 bg-white rounded-xl h-[250px]">
+                <div
+                    class="flex items-center gap-4 group cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors">
+                    <div
+                        class="w-10 h-10 rounded-full border-2 border-slate-200 flex items-center justify-center text-slate-400 font-black group-hover:border-black group-hover:text-black transition-all">
+                        1</div>
+                    <div>
+                        <p class="font-bold text-slate-900">Planning</p>
+                        <p class="text-xs text-slate-500">Initial Request</p>
+                    </div>
+                </div>
+                <div class="w-[2px] h-6 bg-slate-200 ml-5"></div>
+                <div
+                    class="flex items-center gap-4 group cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors">
+                    <div
+                        class="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center font-black shadow-lg">
+                        2</div>
+                    <div>
+                        <p class="font-bold text-black">Execution</p>
+                        <p class="text-xs text-slate-500">Development</p>
+                    </div>
+                </div>
+                <div class="w-[2px] h-6 bg-slate-200 ml-5"></div>
+                <div
+                    class="flex items-center gap-4 group cursor-pointer hover:bg-slate-50 p-2 rounded-lg transition-colors">
+                    <div
+                        class="w-10 h-10 rounded-full border-2 border-slate-200 flex items-center justify-center text-slate-400 font-black">
+                        3</div>
+                    <div>
+                        <p class="font-bold text-slate-400">Launch</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 06: Terminal Log -->
+            <div
+                class="bg-slate-950 p-6 rounded-lg font-mono text-xs h-[250px] overflow-hidden border border-slate-800">
+                <div class="flex gap-2 mb-4">
+                    <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                    <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex gap-2">
+                        <span class="text-green-500">➜</span>
+                        <span class="text-brand-400">init project</span>
+                        <span class="text-slate-500">--done</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="text-green-500">➜</span>
+                        <span class="text-brand-400">install dependencies</span>
+                        <span class="text-slate-500">[2s]</span>
+                    </div>
+                    <div class="flex gap-2 opacity-50">
+                        <span class="text-slate-500">➜</span>
+                        <span class="text-slate-300">running build...</span>
+                    </div>
+                    <div class="mt-4 p-2 bg-brand-500/10 border-l-2 border-brand-500 text-brand-300">
+                        Current Status: Building...
+                    </div>
+                </div>
+            </div>
+
+            <!-- 07: Minimalist Connector -->
+            <div class="p-8 flex items-center justify-center gap-1 group">
+                <div
+                    class="w-24 h-24 border border-white/20 hover:border-brand-500 transition-colors flex flex-col items-center justify-center text-center p-2 rounded-full hover:bg-brand-500/5 cursor-pointer">
+                    <p class="text-xs font-mono text-slate-500">PHASE 1</p>
+                    <i data-lucide="search" class="w-4 h-4 my-1 text-white"></i>
+                </div>
+                <div class="w-12 h-[1px] bg-white/20"></div>
+                <div
+                    class="w-24 h-24 bg-white hover:bg-brand-400 transition-colors flex flex-col items-center justify-center text-center p-2 rounded-full cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                    <p class="text-xs font-mono text-black font-bold">PHASE 2</p>
+                    <i data-lucide="code" class="w-4 h-4 my-1 text-black"></i>
+                </div>
+            </div>
+
+            <!-- 08: Floating Island -->
+            <div class="relative h-[250px] flex items-center justify-center">
+                <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-48 h-12 bg-black/50 blur-xl rounded-[100%]">
+                </div>
+                <div
+                    class="relative z-10 w-full max-w-[200px] bg-gradient-to-br from-slate-800 to-black p-6 rounded-2xl border-t border-white/10 shadow-2xl animate-[float_4s_ease-in-out_infinite]">
+                    <div
+                        class="w-8 h-8 bg-brand-500 rounded-lg mb-4 flex items-center justify-center text-black font-bold">
+                        03</div>
+                    <h4 class="text-white font-bold mb-1">Automation</h4>
+                    <div class="h-1 w-full bg-slate-800 rounded-full overflow-hidden mt-2">
+                        <div class="h-full bg-brand-500 w-[60%]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 09: Neon Arrow Flow -->
+            <div class="bg-black p-8 flex flex-col justify-center gap-4">
+                <div
+                    class="flex items-center justify-between text-slate-500 group cursor-pointer hover:text-brand-500 transition-colors">
+                    <span class="font-mono">01. RESEARCH</span>
+                    <i data-lucide="arrow-right"
+                        class="w-5 h-5 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
+                </div>
+                <div
+                    class="flex items-center justify-between text-white border-l-2 border-brand-500 pl-4 bg-gradient-to-r from-brand-500/10 to-transparent py-2">
+                    <span class="font-mono font-bold tracking-widest">02. DESIGN</span>
+                    <div class="w-2 h-2 bg-brand-500 rounded-full animate-pulse"></div>
+                </div>
+                <div
+                    class="flex items-center justify-between text-slate-500 group cursor-pointer hover:text-brand-500 transition-colors">
+                    <span class="font-mono">03. DEVELOP</span>
+                    <i data-lucide="arrow-right"
+                        class="w-5 h-5 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
+                </div>
+            </div>
+
+            <!-- 10: Circular Progress -->
+            <div class="flex items-center justify-center relative p-8">
+                <svg class="w-32 h-32 transform -rotate-90">
+                    <circle cx="64" cy="64" r="60" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="none" />
+                    <circle cx="64" cy="64" r="60" stroke="#00e5ff" stroke-width="8" fill="none" stroke-dasharray="377"
+                        stroke-dashoffset="94" stroke-linecap="round" />
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                    <span class="text-3xl font-black text-white">4/5</span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-widest">Steps</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- SECTION 4: TEAM / PROFILES -->
+    <div class="mb-32">
+        <div class="flex items-center gap-4 mb-12">
+            <div class="h-[1px] bg-white/20 flex-1"></div>
+            <h2 class="text-3xl font-bold font-mono text-brand-400">04. TEAM PROFILES</h2>
+            <div class="h-[1px] bg-white/20 flex-1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+            <!-- 01: Vertical Hover Slide -->
+            <div
+                class="group relative h-[400px] overflow-hidden rounded-lg bg-slate-900 border border-slate-800 hover:border-brand-500/50 transition-colors">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80"
+                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 w-full p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <p class="text-brand-500 font-mono text-xs mb-2">LEAD INSTRUCTOR</p>
+                    <h3 class="text-2xl font-bold text-white mb-4">Sarah Connor</h3>
+                    <div class="h-0 group-hover:h-auto overflow-hidden transition-all duration-300">
+                        <p
+                            class="text-sm text-slate-400 leading-relaxed border-t border-slate-700 pt-4 opacity-0 group-hover:opacity-100 transition-opacity delay-100">
+                            AI Architecture specialist with 10 years of experience.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 02: Hexagon Clip -->
+            <div class="flex flex-col items-center text-center p-6 group">
+                <div
+                    class="w-32 h-32 bg-slate-800 hex-profile mb-6 relative overflow-hidden group-hover:scale-110 transition-transform duration-300">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
+                        class="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-opacity" />
+                    <div class="absolute inset-0 bg-brand-500/20 hidden group-hover:block mix-blend-overlay"></div>
+                </div>
+                <h3 class="text-xl font-bold text-white">James Bond</h3>
+                <p class="text-xs text-brand-500 font-mono mt-1">SECURITY EXPERT</p>
+            </div>
+
+            <!-- 03: Glitch Card -->
+            <div class="relative bg-black p-1">
+                <div
+                    class="absolute inset-0 bg-brand-500 transform translate-x-1 translate-y-1 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform z-0">
+                </div>
+                <div class="relative z-10 bg-[#050507] p-6 border border-slate-800 h-full">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 rounded bg-slate-800 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80"
+                                class="w-full h-full object-cover glitch-img" />
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white group-hover:text-brand-400 transition-colors">T. Anderson
+                            </h4>
+                            <p class="text-[10px] text-slate-500 font-mono">MATRIX ARCHITECT</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-400">"The code is the reality."</p>
+                </div>
+            </div>
+
+            <!-- 04: Circle Reveal -->
+            <div
+                class="relative h-[300px] rounded-full overflow-hidden border-2 border-slate-800 hover:border-brand-500 transition-colors group w-[300px] mx-auto bg-black">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+                    class="w-full h-full object-cover opacity-50 group-hover:opacity-100 transition-opacity duration-500 mix-blend-luminosity group-hover:mix-blend-normal" />
+                <div
+                    class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 group-hover:bg-transparent transition-colors duration-300 group-hover:opacity-0">
+                    <h3 class="text-2xl font-black text-white tracking-tighter">ELENA</h3>
+                    <p class="text-brand-500 text-xs tracking-widest">DESIGNER</p>
+                </div>
+            </div>
+
+            <!-- 05: Minimal Bauhaus -->
+            <div class="bg-[#f0f0f0] p-6 text-black relative group overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-20 h-20 bg-brand-500 rounded-bl-full transform translate-x-10 -translate-y-10 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-300">
+                </div>
+                <div class="w-16 h-16 bg-black rounded-full mb-4 overflow-hidden border-2 border-black">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80"
+                        class="w-full h-full object-cover" />
+                </div>
+                <h3 class="font-black text-2xl uppercase tracking-tighter">Marcus</h3>
+                <p class="font-bold text-xs mt-1 border-t-2 border-black inline-block pt-1">FULL STACK</p>
+            </div>
+
+            <!-- 06: Glass Overlay -->
+            <div class="relative h-[350px] rounded-2xl overflow-hidden group">
+                <img src="https://images.unsplash.com/photo-1542206395-9feb3edaa68d?auto=format&fit=crop&w=400&q=80"
+                    class="w-full h-full object-cover" />
+                <div
+                    class="absolute bottom-4 left-4 right-4 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl transform translate-y-[120%] group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 class="text-white font-bold text-lg">Lara Croft</h3>
+                    <p class="text-xs text-brand-300">Explorer</p>
+                </div>
+            </div>
+
+            <!-- 07: Rotating Border -->
+            <div class="flex flex-col items-center p-8 bg-black/50 rounded-xl relative group">
+                <div
+                    class="absolute inset-0 border border-dashed border-slate-700 rounded-xl group-hover:border-brand-500 transition-colors">
+                </div>
+                <div
+                    class="w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-brand-500 to-transparent mb-4 group-hover:rotate-180 transition-transform duration-700">
+                    <div
+                        class="w-full h-full rounded-full overflow-hidden bg-black border border-black transform group-hover:-rotate-180 transition-transform duration-700">
+                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80"
+                            class="w-full h-full object-cover" />
+                    </div>
+                </div>
+                <h3 class="text-lg font-bold">Diana</h3>
+                <p class="text-xs text-slate-500">ENGINEER</p>
+            </div>
+
+            <!-- 08: Split Tone -->
+            <div class="bg-slate-900 grid grid-cols-2 h-[200px] rounded-lg overflow-hidden group">
+                <div class="h-full relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?auto=format&fit=crop&w=300&q=80"
+                        class="absolute inset-0 w-full h-full object-cover filter grayscale group-hover:filter-none transition-all duration-500" />
+                </div>
+                <div class="p-4 flex flex-col justify-center bg-black group-hover:bg-brand-900/20 transition-colors">
+                    <h3 class="text-xl font-bold text-white mb-2">Alex</h3>
+                    <div class="w-8 h-1 bg-brand-500 mb-2"></div>
+                    <p class="text-[10px] text-slate-400">
+                        Leading the frontend revolution.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 09: Floating Avatar -->
+            <div class="pt-8 text-center group">
+                <div
+                    class="w-24 h-24 mx-auto rounded-full shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] transform group-hover:-translate-y-4 transition-transform duration-300 border-4 border-slate-800 group-hover:border-brand-500 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?auto=format&fit=crop&w=200&q=80"
+                        class="w-full h-full object-cover" />
+                </div>
+                <div class="mt-8 bg-white/5 border border-white/10 rounded-xl p-4 relative">
+                    <div
+                        class="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white/5 border-l border-t border-white/10 rotate-45">
+                    </div>
+                    <h3 class="font-bold text-white">Ken</h3>
+                    <p class="text-xs text-brand-500">CTO</p>
+                </div>
+            </div>
+
+            <!-- 10: Cyberpunk Badge -->
+            <div class="border border-brand-500/30 bg-black p-1 relative group cursor-pointer">
+                <div
+                    class="absolute top-0 right-0 bg-brand-500 text-black text-[10px] font-bold px-1 group-hover:px-2 transition-all">
+                    PRO</div>
+                <div class="flex gap-4 p-4 items-center">
+                    <div class="w-12 h-12 bg-slate-800 shrink-0 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80"
+                            class="w-full h-full object-cover mix-blend-screen" />
+                    </div>
+                    <div class="overflow-hidden">
+                        <h3
+                            class="font-mono text-sm font-bold text-white group-hover:translate-x-1 transition-transform">
+                            CODE_MASTER</h3>
+                        <p class="text-[10px] text-slate-500 truncate group-hover:text-brand-500">LEVEL 99 ENGINEERING
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- SECTION 5: INPUTS & BUTTONS -->
+    <div class="mb-32">
+        <div class="flex items-center gap-4 mb-12">
+            <div class="h-[1px] bg-white/20 flex-1"></div>
+            <h2 class="text-3xl font-bold font-mono text-brand-400">05. FORMS & CONTROLS</h2>
+            <div class="h-[1px] bg-white/20 flex-1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+
+            <!-- 01: Neon Underline -->
+            <div class="p-8 bg-black border border-white/10 rounded-xl text-center">
+                <div class="input-underline mb-6">
+                    <input type="text" placeholder="Enter your email"
+                        class="w-full bg-transparent border-b border-slate-700 py-2 text-white outline-none placeholder:text-slate-600 font-mono" />
+                </div>
+                <button
+                    class="w-full py-3 bg-brand-500 text-black font-bold tracking-widest hover:bg-white transition-colors duration-300 rounded-sm">
+                    SUBSCRIBE
+                </button>
+            </div>
+
+            <!-- 02: Floating Label Material -->
+            <div class="p-8 bg-white text-black rounded-xl">
+                <div class="relative mb-6 floating-label-group">
+                    <input type="text" placeholder=" "
+                        class="block w-full px-4 py-3 bg-slate-100 border-2 border-transparent rounded-lg focus:bg-white focus:border-brand-500 outline-none transition-colors peer" />
+                    <label
+                        class="absolute left-4 top-3 text-slate-500 transition-all duration-200 pointer-events-none">Username</label>
+                </div>
+                <button
+                    class="px-6 py-2 bg-black text-white rounded-lg hover:shadow-[0_4px_14px_0_rgba(0,0,0,0.39)] transition-shadow width-full">
+                    Sign In
+                </button>
+            </div>
+
+            <!-- 03: Glass Search -->
+            <div class="p-8 bg-gradient-to-br from-purple-900 to-black rounded-xl flex items-center justify-center">
+                <div class="relative w-full max-w-xs group">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i data-lucide="search"
+                            class="h-5 w-5 text-slate-400 group-focus-within:text-brand-500 transition-colors"></i>
+                    </div>
+                    <input type="text"
+                        class="block w-full pl-10 pr-3 py-3 border border-white/10 rounded-full leading-5 bg-white/5 text-white placeholder-slate-400 focus:outline-none focus:bg-white/10 focus:ring-1 focus:ring-brand-500 sm:text-sm backdrop-blur-sm transition-all"
+                        placeholder="Search..." />
+                    <div class="absolute inset-y-0 right-0 pr-2 flex items-center">
+                        <kbd
+                            class="inline-flex items-center border border-white/20 rounded px-2 text-sm font-sans font-medium text-slate-400">⌘K</kbd>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 04: Cyberpunk Terminal Input -->
+            <div
+                class="p-6 bg-[#0a0a0c] border border-brand-500/30 rounded font-mono text-sm relative overflow-hidden group">
+                <div class="flex items-center gap-2 mb-4 text-brand-500">
+                    <i data-lucide="terminal" class="w-4 h-4"></i>
+                    <span>ROOT_ACCESS</span>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <span class="text-green-500">$</span>
+                    <input type="text" class="bg-transparent border-none text-white outline-none w-full"
+                        placeholder="Enter command..." />
+                    <div class="w-2 h-4 bg-brand-500 animate-pulse"></div>
+                </div>
+                <div
+                    class="absolute bottom-0 right-0 bg-brand-500/20 px-2 py-1 text-[10px] text-brand-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                    SYS.READY</div>
+            </div>
+
+            <!-- 05: Neumorphic Switch -->
+            <div
+                class="p-8 bg-[#e0e5ec] rounded-xl flex flex-col items-center gap-6 shadow-[inset_0_0_20px_rgba(255,255,255,0.5)]">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-8 rounded-full p-1 bg-[#e0e5ec] shadow-[inset_3px_3px_6px_#bec3c9,inset_-3px_-3px_6px_#ffffff] cursor-pointer relative transition-all"
+                        onclick="this.classList.toggle('active')">
+                        <div
+                            class="w-6 h-6 rounded-full bg-brand-500 shadow-[3px_3px_6px_rgba(0,0,0,0.2)] transform transition-transform duration-300">
+                        </div>
+                    </div>
+                    <span class="text-slate-500 font-bold text-sm">AI MODE</span>
+                </div>
+                <button
+                    class="px-8 py-3 rounded-xl bg-[#e0e5ec] text-brand-600 font-black shadow-[6px_6px_12px_#bec3c9,-6px_-6px_12px_#ffffff] hover:shadow-[inset_4px_4px_8px_#bec3c9,inset_-4px_-4px_8px_#ffffff] transition-shadow active:scale-95">
+                    ACTIVATE
+                </button>
+            </div>
+
+            <!-- 06: Magnetic Button & Minimal Input -->
+            <div class="p-8 bg-white border border-slate-200 rounded-xl flex flex-col gap-4">
+                <input type="email" placeholder="email@example.com"
+                    class="w-full px-4 py-3 bg-transparent border-2 border-black rounded-none focus:ring-4 ring-brand-500/30 outline-none transition-shadow" />
+                <button class="w-full py-4 bg-black text-white font-bold text-lg relative overflow-hidden group">
+                    <span class="relative z-10 group-hover:text-brand-500 transition-colors">GET STARTED</span>
+                    <div
+                        class="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500">
+                    </div>
+                </button>
+            </div>
+
+            <!-- 07: Gradient Border Focus -->
+            <div class="p-8 bg-slate-900 rounded-xl">
+                <div
+                    class="relative p-[1px] rounded-lg bg-slate-700 focus-within:bg-gradient-to-r focus-within:from-brand-500 focus-within:to-purple-600 transition-colors duration-300">
+                    <div class="bg-slate-900 rounded-lg flex items-center">
+                        <input type="text" placeholder="Search..."
+                            class="w-full bg-transparent px-4 py-3 text-white outline-none rounded-lg" />
+                        <i data-lucide="search" class="w-5 h-5 text-slate-500 mr-4"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 08: Beam Button -->
+            <div class="p-8 bg-black rounded-xl flex items-center justify-center">
+                <button
+                    class="relative px-8 py-4 bg-transparent border border-brand-500 text-brand-500 font-mono text-sm tracking-widest uppercase overflow-hidden hover:text-black hover:bg-brand-500 transition-colors duration-300 group beam-border">
+                    <span class="relative z-10">Initializing</span>
+                </button>
+            </div>
+
+            <!-- 09: Dot Pattern Field -->
+            <div class="p-8 bg-slate-50 rounded-xl relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10"
+                    style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 10px 10px;">
+                </div>
+                <label class="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">Project Name</label>
+                <input type="text"
+                    class="w-full bg-white border border-slate-300 px-4 py-2 text-lg font-bold text-black border-dashed focus:border-solid focus:border-brand-500 outline-none transition-all"
+                    placeholder="Untitled Project" />
+            </div>
+
+            <!-- 10: Shake Error State -->
+            <div class="p-8 bg-white border border-red-100 rounded-xl relative group">
+                <label class="block text-xs font-bold text-red-500 mb-1">Error: Invalid ID</label>
+                <div class="relative">
+                    <input type="text" value="admin_root"
+                        class="w-full bg-red-50 border-2 border-red-500 text-red-900 px-4 py-2 rounded outline-none animate-[shake_0.5s_ease-in-out]"
+                        readonly />
+                    <i data-lucide="alert-circle"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-red-500 w-5 h-5"></i>
+                </div>
+                <p class="text-[10px] text-red-400 mt-2">Please contact system administrator.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
