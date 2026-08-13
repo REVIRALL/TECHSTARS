@@ -1,20 +1,22 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# REVIRALL/TECHSTARS
 
-# Run and deploy your AI Studio app
+> ## ★このリポジトリは正本ではありません
+>
+> **https://techstars.studio の正本は [REVIRALL/TECHSTARS-STUDIO](https://github.com/REVIRALL/TECHSTARS-STUDIO) です。**
+> LPを直すときはそちらを編集してください。
 
-This contains everything you need to run your app locally.
+## 経緯
 
-View your app in AI Studio: https://ai.studio/apps/drive/1Hi4U8HCcWireqNVPK5cuKO347wdVhpl5
+このリポジトリの `main` に長く入っていた静的HTML（白×ティール、4ページ）は、
+**本番 techstars.studio の中身ではなかった**。本番は React+Vite の SPA で、そのソースは
+どのリポジトリにも入っていなかった。
 
-## Run Locally
+2026-08-13 に一度その本番ソースをここへ取り込んだ（PR #1）が、同日
+`REVIRALL/TECHSTARS-STUDIO` を正本として切り出したため、**ここの内容は複製**になっている。
 
-**Prerequisites:**  Node.js
+## 中身
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+| パス | 中身 |
+|---|---|
+| ルート | 本番LPソースの複製（2026-08-13 時点）。**更新しないこと** |
+| `legacy-static-lp/` | 旧・静的LP 4ページ。どこにも配信されていない。会社表記は合同会社リバイラルのまま |
