@@ -1,0 +1,6 @@
+# TechStars AI - Robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap (update URL after deployment)
+# Sitemap: https://your-domain.netlify.app/sitemap.xml

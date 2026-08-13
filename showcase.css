@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;700;900&display=swap');
+
+:root {
+    --brand: #00e5ff;
+    --brand-dark: #00b8cc;
+    --bg-dark: #050507;
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.02);
+}
+
+body {
+    background-color: var(--bg-dark);
+    font-family: 'Outfit', sans-serif;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Utilities */
+.text-brand {
+    color: var(--brand);
+}
+
+.bg-brand {
+    background-color: var(--brand);
+}
+
+.border-brand {
+    borderColor: var(--brand);
+}
+
+/* Animation Keyframes */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 15px -5px var(--brand);
+    }
+
+    50% {
+        box-shadow: 0 0 25px 0px var(--brand);
+    }
+}
+
+@keyframes scanline {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes gradient-xy {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Custom Effects */
+
+/* 1. Glass Card */
+.glass-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* 2. Neon Border */
+.neon-border {
+    position: relative;
+    background: #000;
+    overflow: hidden;
+}
+
+.neon-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--brand), transparent);
+    animation: slide-right 2s linear infinite;
+}
+
+/* 3. Holographic */
+.holographic {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(0, 229, 255, 0.05));
+    position: relative;
+    overflow: hidden;
+}
+
+.holographic::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.holographic:hover::after {
+    transform: translateX(100%);
+}
+
+/* 4. Cyberpunk Grid */
+.cyber-grid {
+    background-image: linear-gradient(rgba(0, 229, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-position: center;
+}
+
+/* Icons Specific */
+.icon-glow::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    background: var(--brand);
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: -1;
+}
+
+.icon-glow:hover::before {
+    opacity: 0.4;
+}
+
+.hex-clip {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* Mouse Spotlight Placeholder (simple CSS version) */
+.spotlight-card:hover {
+    background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(0, 229, 255, 0.06), transparent 40%);
+}
+
+/* Glitch Text Helpers */
+.glitch-hover:hover {
+    animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0)
+    }
+
+    20% {
+        transform: translate(-2px, 2px)
+    }
+
+    40% {
+        transform: translate(-2px, -2px)
+    }
+
+    60% {
+        transform: translate(2px, 2px)
+    }
+
+    80% {
+        transform: translate(2px, -2px)
+    }
+
+    100% {
+        transform: translate(0)
+    }
+}
+
+/* --- NEW ADDITIONS FOR PROCESS / TEAM / INPUTS --- */
+
+/* Timeline Pulse */
+.timeline-dot {
+    position: relative;
+}
+
+.timeline-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid var(--brand);
+    animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Zigzag Line */
+.zigzag-line {
+    background-image: linear-gradient(135deg, #00e5ff 25%, transparent 25%), linear-gradient(225deg, #00e5ff 25%, transparent 25%), linear-gradient(45deg, #00e5ff 25%, transparent 25%), linear-gradient(315deg, #00e5ff 25%, transparent 25%);
+    background-position: 10px 0, 10px 0, 0 0, 0 0;
+    background-size: 20px 20px;
+    background-repeat: repeat;
+}
+
+/* Hexagon Profile */
+.hex-profile {
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* Glitch Image */
+.glitch-img:hover {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'glitch\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0\' in=\'SourceGraphic\' result=\'colormatrix\'/><feOffset dx=\'-3\' dy=\'0\' result=\'offsetred\'/><feOffset dx=\'3\' dy=\'0\' result=\'offsetcyan\'/><feMerge><feMergeNode in=\'offsetred\'/><feMergeNode in=\'offsetcyan\'/><feMergeNode in=\'colormatrix\'/></feMerge></filter></svg>#glitch");
+}
+
+/* Input Animations */
+.input-underline {
+    position: relative;
+}
+
+.input-underline::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--brand);
+    transition: width 0.3s ease;
+}
+
+.input-underline:focus-within::after {
+    width: 100%;
+}
+
+.floating-label-group:focus-within label,
+.floating-label-group input:not(:placeholder-shown)+label {
+    transform: translateY(-24px) scale(0.8);
+    color: var(--brand);
+}
+
+/* Beam Effect */
+.beam-border {
+    position: relative;
+    overflow: hidden;
+}
+
+.beam-border::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.8), transparent);
+    transform: skewX(-20deg) translateX(-150%);
+    animation: beam-slide 3s infinite;
+}
+
+@keyframes beam-slide {
+    0% {
+        transform: skewX(-20deg) translateX(-150%);
+    }
+
+    20% {
+        transform: skewX(-20deg) translateX(500%);
+    }
+
+    100% {
+        transform: skewX(-20deg) translateX(500%);
+    }
+}
+
+/* Ping animation for timeline-dot */
+@keyframes ping {
+    75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+/* Slide right animation for neon-border */
+@keyframes slide-right {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
